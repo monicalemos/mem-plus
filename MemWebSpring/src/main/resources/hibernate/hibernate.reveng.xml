@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd" >
+
+<hibernate-reverse-engineering>
+  <table-filter match-catalog="memdb" match-name="atividade"/>
+  <table-filter match-catalog="memdb" match-name="categoria"/>
+  <table-filter match-catalog="memdb" match-name="evento"/>
+  <table-filter match-catalog="memdb" match-name="familiar"/>
+  <table-filter match-catalog="memdb" match-name="imagem"/>
+  <table-filter match-catalog="memdb" match-name="interacao"/>
+  <table-filter match-catalog="memdb" match-name="interesse"/>
+  <table-filter match-catalog="memdb" match-name="jogo"/>
+  <table-filter match-catalog="memdb" match-name="morada"/>
+  <table-filter match-catalog="memdb" match-name="paciente"/>
+  <table-filter match-catalog="memdb" match-name="paciente_has_atividade"/>
+  <table-filter match-catalog="memdb" match-name="paciente_has_interesse"/>
+  <table-filter match-catalog="memdb" match-name="questionario"/>
+  <table-filter match-catalog="memdb" match-name="relacao_familiar_familiar"/>
+  <table-filter match-catalog="memdb" match-name="relacao_paciente_familiar"/>
+  <table-filter match-catalog="memdb" match-name="tecnico"/>
+</hibernate-reverse-engineering>
