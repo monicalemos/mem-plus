@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+	"-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+	"http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+
+	<!-- ###### Eventos ###### -->
+	<definition 	name="verEvento" 		extends="DefaultTemplate">
+		<put-attribute 	name="title" 		value="Dados do Evento" />
+		<put-attribute 	name="body" 		value="/WEB-INF/views/evento/verEvento.jsp" />
+	</definition>
+	
+	<definition 	name="editarEvento" 	extends="DefaultTemplate">
+		<put-attribute 	name="title" 		value="Editar Evento" />
+		<put-attribute 	name="body" 		value="/WEB-INF/views/evento/editarEvento.jsp" />
+	</definition>
+	
+	<definition 	name="listarEventos" extends="DefaultTemplate">
+		<put-attribute 	name="title" 		value="Lista de Eventos" />
+		<put-attribute 	name="body" 		value="/WEB-INF/views/evento/listarEventos.jsp" />
+	</definition>
+	
+	<definition name="inserirEvento" 		extends="DefaultTemplate">
+		<put-attribute name="title" 		value="Inserir Evento" />
+		<put-attribute name="body" 			value="/WEB-INF/views/evento/inserirEvento.jsp" />
+	</definition>
+	
+</tiles-definitions>
