@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 26/Jun/2015 18:13:05 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="model.Interacao" table="interacao" catalog="memdb" optimistic-lock="version">
+        <id name="idInteracao" type="int">
+            <column name="idInteracao" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="paciente" class="model.Paciente" fetch="select">
+            <column name="Paciente_idPaciente" not-null="true" />
+        </many-to-one>
+        <property name="data" type="date">
+            <column name="data" length="10" not-null="true" />
+        </property>
+        <set name="questionarios" table="questionario" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="Interacao_idInteracao" not-null="true" />
+            </key>
+            <one-to-many class="model.Questionario" />
+        </set>
+        <set name="jogos" table="jogo" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="Interacao_idInteracao" not-null="true" />
+            </key>
+            <one-to-many class="model.Jogo" />
+        </set>
+    </class>
+</hibernate-mapping>

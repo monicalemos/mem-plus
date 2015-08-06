@@ -1,0 +1,47 @@
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
+     http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+    version="2.0">
+
+ <persistence-unit name="tarefas">
+
+   <!-- provedor/implementacao do JPA -->
+   <provider>org.hibernate.ejb.HibernatePersistence</provider>
+
+   	<!-- entidade mapeada -->
+   	<class>com.mem.app.mode.Atividade</class>
+   	<class>com.mem.app.mode.Categoria</class>
+   	<class>com.mem.app.mode.Evento</class>
+   	<class>com.mem.app.mode.Famniliar</class>
+   	<class>com.mem.app.mode.Imagem</class>
+	<class>com.mem.app.mode.Interacao</class>
+	<class>com.mem.app.mode.Interesse</class>
+	<class>com.mem.app.mode.Jogo</class>
+	<class>com.mem.app.mode.Morada</class>
+	<class>com.mem.app.mode.Paciente</class>
+	<class>com.mem.app.mode.Questionário</class>
+	<class>com.mem.app.mode.RelacaoFamiliarFamiliar</class>
+	<class>com.mem.app.mode.RelacaoFamiliarFamiliarId</class>
+	<class>com.mem.app.mode.RelacaoPacienteFamiliar</class>
+	<class>com.mem.app.mode.RelacaoPacienteFamiliarId</class>
+	<class>com.mem.app.mode.Tecnico</class>
+	<class>com.mem.app.mode.Utilizador</class>
+
+   <properties>
+  <!-- dados da conexao -->
+   <property name="javax.persistence.jdbc.driver"  value="jdbc:mysql://localhost:3306/memdb" />
+  <property name="javax.persistence.jdbc.user" value="root" />
+  <property name="javax.persistence.jdbc.password" value="" />
+
+   <!--  propriedades do hibernate -->
+   <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
+  <property name="hibernate.show_sql" value="true" />
+  <property name="hibernate.format_sql" value="true" />
+
+  <!--  atualiza o banco, gera as tabelas se for preciso -->
+  <property name="hibernate.hbm2ddl.auto" value="update" />
+    
+   </properties>
+ </persistence-unit>
+</persistence>

@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 26/Jun/2015 18:13:05 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="model.Morada" table="morada" catalog="memdb" optimistic-lock="version">
+        <id name="idMorada" type="int">
+            <column name="idMorada" />
+            <generator class="assigned" />
+        </id>
+        <property name="pais" type="string">
+            <column name="pais" length="45" />
+        </property>
+        <property name="regiao" type="string">
+            <column name="regiao" length="45" />
+        </property>
+        <property name="cidade" type="string">
+            <column name="cidade" length="45" />
+        </property>
+        <set name="familiarsForMoradaIdMorada" table="familiar" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="Morada_idMorada" not-null="true" />
+            </key>
+            <one-to-many class="model.Familiar" />
+        </set>
+        <set name="familiarsForLocalNascimentoIdMorada" table="familiar" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="Local_Nascimento_idMorada" not-null="true" />
+            </key>
+            <one-to-many class="model.Familiar" />
+        </set>
+        <set name="eventos" table="evento" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="local_Evento_idMorada" not-null="true" />
+            </key>
+            <one-to-many class="model.Evento" />
+        </set>
+        <set name="pacientesForMoradaIdMorada" table="paciente" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="Morada_idMorada" not-null="true" />
+            </key>
+            <one-to-many class="model.Paciente" />
+        </set>
+        <set name="pacientesForLocalNascimentoIdMorada" table="paciente" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="LocalNascimento_idMorada" not-null="true" />
+            </key>
+            <one-to-many class="model.Paciente" />
+        </set>
+    </class>
+</hibernate-mapping>
