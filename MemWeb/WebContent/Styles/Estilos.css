@@ -1,0 +1,326 @@
+@CHARSET "ISO-8859-1";
+html, body {
+ font-family: "Helvetica Neue", Helvetica, sans-serif;
+ color: #444;
+background: url(../images/gradiente02.png) repeat-x; 
+}
+   
+h2 {
+	color:#ffffff;
+	font-size:200%;
+	
+}
+#logo{
+	position:relative;
+	float:left;
+	margin-left:10%;
+	margin-top:5%;
+	
+}
+
+#page{
+	width:85%;
+	height:100%;
+	margin:0 auto;
+	position:relative;
+}
+
+#headerProfile{
+	margin:2%;
+	color:#000000;
+	font-size:20px;
+}
+
+.line{
+	margin-bottom:1%;
+	position:relative;
+	height:1px;
+	background-color:#ccd4ff;
+	border-bottom:1px solid #ccd4ff;
+}
+
+#general {
+    margin: 0 auto; 
+    width: 1000px; 
+    text-align: center;
+}
+
+#secondary {
+    width: 100%;
+    padding-top: 10px;
+}
+
+#botoes{
+    background-color: transparent;
+    border: 0;
+    text-decoration: underline;
+    color: #000;
+}
+
+#signup{
+	 background-color: transparent;
+    border: 0;
+    text-decoration: underline;
+    color: #000;
+}
+
+#signup:hover{
+	color: blue;
+	cursor: pointer;
+}
+
+/*********************TABELA_REGISTO***************************/
+#tabela_registo{
+	float: center;
+}
+
+#tabela_registo td{
+    height: 40px; 
+       
+}
+#header {
+    font-family: sans-serif;
+    font-size: 15px;
+}
+
+/******************************PÁGINA LOGIN*********************/
+#tabela_login td{
+	align: left;
+}
+
+#headerLogin{
+	font-family: sans-serif;
+    font-size: 15px;
+    text-align: center;
+    position:relative;
+    
+}
+
+#headerRegister{
+	text-align: center;
+    position:relative;
+    top:-33px;
+}
+
+/***********************************************COISAS************************/
+#three-column {
+	overflow: hidden;
+	position:absolute;
+	right:70px;
+	top:121px;
+}
+
+#three-column .tbox1 {
+	width: 1100px;
+	height: 500px;
+}
+
+.box-style {
+	background: rgba(255, 255, 255, .5);
+	text-align: center;
+	width: 1100px;
+	height:500px;
+}
+
+.box-style01 {
+	background: rgba(255, 255, 255, .7);
+	text-align: center;
+	width: 1100px;
+	height:500px;
+}
+
+#boxContactos{
+	float:left;
+	border-style:solid;
+	border-color:transparent;
+}
+
+#accountLabels{
+	font-weight:bold;
+}
+
+.box-style .content {
+	overflow: hidden;
+	width: 1100px;
+	height:500px;
+	padding-top:60px;
+}
+
+/**************************** Página Logada ****************************/
+
+header{
+	/*border-style:solid;
+	border-color:red;*/
+	height:160px;
+	margin:auto;
+}
+
+
+#messagemEntrada{
+	/*border-style:solid;
+	border-color:orange;*/
+	margin-top:5%;
+	margin-right:10%;
+	position:relative;
+	float:right;
+}
+
+
+
+.ladoEsq{
+	width: 47%;
+	padding: 2px;
+	float: left;
+}
+.boxProfileLeft{
+	width:40%;
+	margin-left:2%;
+	float:left;
+}
+
+#tabelaPerfil{
+	width:50%;
+	float:right;
+}
+
+.ladoDir{
+	width: 47%;
+	padding: 2px;
+	float: right;
+}
+
+#menu{
+	/*border-style:solid;
+	border-color:green;*/
+	position:relative;
+	margin-top: 10px;
+	float:left;
+	width:100%;
+}
+
+#menu ul {
+	padding:0px;
+	margin:0px;
+	background-color:#EDEDED;
+	list-style:none;
+	
+}
+
+#menu ul li { 
+	display: inline;
+}
+
+#menu ul li a {
+	padding: 2px 80px;
+	display: inline-block;
+ 
+	/* visual do link */
+	background-color:#EDEDED;
+	color: #333;
+	text-decoration: none;
+	font-weight:bold;
+	border-bottom:3px solid #EDEDED;
+}
+
+#menu ul li a.selected{
+	background-color:rgba(255, 255, 255, .2);
+	color: #6D6D6D;
+	border-bottom:3px solid #828282;
+}
+
+#menu ul li a:hover {
+	background-color:rgba(255, 255, 255, .2);
+	color: #6D6D6D;
+	border-bottom:3px solid #828282;
+}
+
+
+#textoSimples{
+	margin:20px;
+	color: #555;
+}
+
+
+#tabela{
+	
+	margin: 20px;
+	background: #ccd4ff;
+	border: 1px solid #686868;
+	cellspacing: 1;
+}
+
+#box.box-style02{
+	/*border-style:solid;
+	border-color:blue;*/
+	margin-top:2.3%;
+	background-color:#ccd4ff;
+	width:100%;
+	float:left;
+	border: 1px solid #686868;
+}
+
+#box.box-style03{
+	/*border-style:solid;
+	border-color:blue;*/
+	margin-top:20px;
+	background-color:#ccd4ff;
+	width:100%;
+	float:left;
+	border: 1px solid #686868;
+}
+
+#box.box-style04{
+	padding-bottom:5%;
+	margin-top:2.3%;
+	background-color:#ccd4ff;
+	width:100%;
+	height:100%;
+	float:left;
+	border: 1px solid #686868;
+}
+
+#tabelaPerfil{
+	position:relative;
+	float:left;
+	margin-top:2.3%;
+	background-color: #ccd4ff;
+	border: 1px solid #686868;
+	cellspacing: 3;
+}
+footer{
+	position:relative;
+	float:right;
+	width:100%;
+	margin-top:10%;
+	margin-right:5%;
+	text-align:right;
+	font-size:0.825em;
+}
+
+#resetButton {
+    height: 3em;
+    font-size:16px;
+}
+
+#info{
+	float:left;
+	width:50%;
+	height:200px;
+}
+
+#addSuper{
+	float:right;
+	width:50%;
+	height:200px;
+}
+
+.styled-select select {
+   background: transparent;
+   width: 268px;
+   margin: 25px;
+   
+  
+   }
+
+
+
