@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<viewpoint:DAnalysis xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:modisco.xml="http://www.eclipse.org/MoDisco/Xml/0.1.incubation/XML" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmlns:viewpoint="http://www.eclipse.org/sirius/1.1.0" xmi:id="_aKpzcIVwEeS95rfPdXhhWg" version="8.1.1">
+  <models xmi:type="uml:Model" href="my.uml#_bBGTQIVwEeS95rfPdXhhWg"/>
+  <models xmi:type="ecore:EPackage" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#/"/>
+  <models xmi:type="ecore:EPackage" href="platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#/"/>
+  <models xmi:type="ecore:EPackage" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#/"/>
+  <models xmi:type="modisco.xml:Root" href="target/classes/log4j.xml#/"/>
+  <models xmi:type="modisco.xml:Root" href="target/test-classes/log4j.xml#/"/>
+</viewpoint:DAnalysis>
