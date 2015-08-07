@@ -166,14 +166,6 @@
 				</select> 
 				<br> 
 				
-				<label for="nome_utilizador">Nome de Utilizador:</label> 
-                                <input type="text" id="nome_utilizador" name="nome_utilizador" size="40px" value='<%=p.getNome_utilizador()%>'> 
-				<br> 
-				
-				<label for="password">Password:</label> 
-				<input type="password" id="password" name="password" size="40px" value='<%=p.getPassword()%>'>
-				<br>
-
 				<div id="lower">
 					<input type="submit" value="Editar">
 				</div>
