@@ -1,0 +1,5 @@
+package enumerados;
+
+public enum TipoEscolaridade {
+	ENSINO_BASICO, ENSINO_SECUNDARIO, LICENCIATURA, MESTRADO, POS_GRADUACAO, DOUTURAMENTO;
+}
