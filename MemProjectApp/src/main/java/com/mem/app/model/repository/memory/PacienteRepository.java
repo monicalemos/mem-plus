@@ -15,15 +15,15 @@ public class PacienteRepository implements IRepository<Paciente> {
 	{
 		Paciente model = new Paciente();
 		model.setIdPaciente(1234);
-		model.setDataDeNascimento(GenericUtils.getDate("1977-05-27"));
+		model.setDataNascimento(GenericUtils.getDate("1977-05-27"));
 		model.setNomeProprio("Nuno");
 		model.setGenero("Masculino");
 		model.setApelido("Cancelo");
 		model.setEstadoCivil("Casado");
 		model.setProfissao("Informático");
-		model.getMoradaByLocalNascimentoIdMorada().setCidade("Lisboa");
-		model.getMoradaByLocalNascimentoIdMorada().setPais("Portugal");
-		model.getMoradaByLocalNascimentoIdMorada().setRegiao("Lisboa");
+		model.getMoradaByIdLocalNascimento().setCidade("Lisboa");
+		model.getMoradaByIdLocalNascimento().setPais("Portugal");
+		model.getMoradaByIdLocalNascimento().setRegiao("Lisboa");
 		return model;
 	}
 

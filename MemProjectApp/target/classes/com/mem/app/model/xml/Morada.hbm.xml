@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 26/Jun/2015 18:13:05 by Hibernate Tools 4.3.1 -->
+<!-- Generated 21/Ago/2015 16:26:39 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="model.Morada" table="morada" catalog="memdb" optimistic-lock="version">
+    <class name="Morada" table="morada" catalog="memdb" optimistic-lock="version">
         <id name="idMorada" type="int">
             <column name="idMorada" />
             <generator class="assigned" />
@@ -17,35 +17,35 @@
         <property name="cidade" type="string">
             <column name="cidade" length="45" />
         </property>
-        <set name="familiarsForMoradaIdMorada" table="familiar" inverse="true" lazy="true" fetch="select">
+        <set name="familiarsForIdLocalNascimento" table="familiar" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="Morada_idMorada" not-null="true" />
+                <column name="idLocalNascimento" not-null="true" />
             </key>
-            <one-to-many class="model.Familiar" />
-        </set>
-        <set name="familiarsForLocalNascimentoIdMorada" table="familiar" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="Local_Nascimento_idMorada" not-null="true" />
-            </key>
-            <one-to-many class="model.Familiar" />
+            <one-to-many class="Familiar" />
         </set>
         <set name="eventos" table="evento" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="local_Evento_idMorada" not-null="true" />
+                <column name="idLocalEvento" not-null="true" />
             </key>
-            <one-to-many class="model.Evento" />
+            <one-to-many class="Evento" />
         </set>
-        <set name="pacientesForMoradaIdMorada" table="paciente" inverse="true" lazy="true" fetch="select">
+        <set name="pacientesForIdLocalNascimento" table="paciente" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="Morada_idMorada" not-null="true" />
+                <column name="idLocalNascimento" not-null="true" />
             </key>
-            <one-to-many class="model.Paciente" />
+            <one-to-many class="Paciente" />
         </set>
-        <set name="pacientesForLocalNascimentoIdMorada" table="paciente" inverse="true" lazy="true" fetch="select">
+        <set name="familiarsForIdMorada" table="familiar" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="LocalNascimento_idMorada" not-null="true" />
+                <column name="idMorada" not-null="true" />
             </key>
-            <one-to-many class="model.Paciente" />
+            <one-to-many class="Familiar" />
+        </set>
+        <set name="pacientesForIdMorada" table="paciente" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idMorada" not-null="true" />
+            </key>
+            <one-to-many class="Paciente" />
         </set>
     </class>
 </hibernate-mapping>

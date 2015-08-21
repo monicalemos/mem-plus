@@ -33,35 +33,35 @@ public class PacienteDAOImpl implements PacienteDAO {
 		if (paciente.getIdPaciente() > 0) {
 			// update
 			String sql = "UPDATE paciente "
-					+ "SET nome_completo=?, "
-					+ "nome_proprio=?, "
+					+ "SET nomeCompleto=?, "
+					+ "nomeProprio=?, "
 					+ "apelido=?,"
-					+ "data_de_nascimento=?, "
-					+ "LocalNascimento_idMorada=?, "
-					+ "Morada_idMorada=?, "
+					+ "dataNascimento=?, "
+					+ "idLocalNascimento=?, "
+					+ "idMorada=?, "
 					+ "genero=?, "
 					+ "profissao=?, "
 					+ "escolaridade=?, "
-					+ "estado_civil=?, "
-					+ "nivel_de_doenca=?, "
-					+ "nome_medico=?, "
-					+ "especialidade_medico=?, "
-					+ "nivel_sessao=?, "
-					+ "Tecnico_idTecnico=? "
+					+ "estadoCivil=?, "
+					+ "nivelDoenca=?, "
+					+ "nomeMedico=?, "
+					+ "especialidadeMedico=?, "
+					+ "nivelSessao=?, "
+					+ "idTecnico=? "
 					+ "WHERE idPaciente=?";
 
 			jdbcTemplate.update(sql, 
 					paciente.getNomeCompleto(),
 					paciente.getNomeProprio(),
 					paciente.getApelido(),
-					paciente.getDataDeNascimento(),
-					paciente.getMoradaByLocalNascimentoIdMorada().getIdMorada(),
-					paciente.getMoradaByMoradaIdMorada().getIdMorada(),
+					paciente.getDataNascimento(),
+					paciente.getMoradaByIdLocalNascimento().getIdMorada(),
+					paciente.getMoradaByIdMorada().getIdMorada(),
 					paciente.getGenero(),
 					paciente.getProfissao(),
 					paciente.getEscolaridade(),
 					paciente.getEstadoCivil(),
-					paciente.getNivelDeDoenca(),
+					paciente.getNivelDoenca(),
 					paciente.getNomeMedico(),
 					paciente.getEspecialidadeMedico(),
 					paciente.getNivelSessao(),
@@ -71,21 +71,21 @@ public class PacienteDAOImpl implements PacienteDAO {
 			// insert
 			String sql = "INSERT INTO paciente "
 					+ "(idPaciente, "
-					+ "nome_completo, "
-					+ "nome_proprio, "
+					+ "nomeCompleto, "
+					+ "nomeProprio, "
 					+ "apelido,"
-					+ "data_de_nascimento, "
-					+ "LocalNascimento_idMorada, "
-					+ "Morada_idMorada, "
+					+ "dataNascimento, "
+					+ "idLocalNascimento, "
+					+ "idMorada, "
 					+ "genero, "
 					+ "profissao, "
 					+ "escolaridade, "
-					+ "estado_civil, "
-					+ "nivel_de_doenca, "
-					+ "nome_medico, "
-					+ "especialidade_medico, "
-					+ "nivel_sessao "
-					+ "Tecnico_idTecnico)"
+					+ "estadoCivil, "
+					+ "nivelDoenca, "
+					+ "nomeMedico, "
+					+ "especialidadeMedico, "
+					+ "nivelSessao "
+					+ "idTecnico)"
 					+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 			jdbcTemplate.update(sql, 
@@ -93,14 +93,14 @@ public class PacienteDAOImpl implements PacienteDAO {
 					paciente.getNomeCompleto(),
 					paciente.getNomeProprio(),
 					paciente.getApelido(),
-					paciente.getDataDeNascimento(),
-					paciente.getMoradaByLocalNascimentoIdMorada().getIdMorada(),
-					paciente.getMoradaByMoradaIdMorada().getIdMorada(),
+					paciente.getDataNascimento(),
+					paciente.getMoradaByIdLocalNascimento().getIdMorada(),
+					paciente.getMoradaByIdMorada().getIdMorada(),
 					paciente.getGenero(),
 					paciente.getProfissao(),
 					paciente.getEscolaridade(),
 					paciente.getEstadoCivil(),
-					paciente.getNivelDeDoenca(),
+					paciente.getNivelDoenca(),
 					paciente.getNomeMedico(),
 					paciente.getEspecialidadeMedico(),
 					paciente.getNivelSessao(),
@@ -123,26 +123,26 @@ public class PacienteDAOImpl implements PacienteDAO {
 			public Paciente extractData(ResultSet rs) throws SQLException,
 			DataAccessException {
 				if (rs.next()) {
-					Morada morada = moradaImpl.get(rs.getInt("Morada_idMorada"));
-					Morada local_nascimento = moradaImpl.get(rs.getInt("LocalNascimento_idMorada"));
-					Tecnico tecnico = tecnicoImpl.get(rs.getInt("Tecnico_idTecnico"));
+					Morada morada = moradaImpl.get(rs.getInt("idMorada"));
+					Morada local_nascimento = moradaImpl.get(rs.getInt("idLocalNascimento"));
+					Tecnico tecnico = tecnicoImpl.get(rs.getInt("idTecnico"));
 					
 					Paciente paciente = new Paciente();
 					paciente.setIdPaciente(rs.getInt("idPaciente"));
-					paciente.setNomeCompleto(rs.getString("nome_completo"));
-					paciente.setNomeProprio(rs.getString("nome_proprio"));
+					paciente.setNomeCompleto(rs.getString("nomeCompleto"));
+					paciente.setNomeProprio(rs.getString("nomeProprio"));
 					paciente.setApelido(rs.getString("apelido"));
-					paciente.setDataDeNascimento(rs.getDate("data_de_nascimento"));
-					paciente.setMoradaByLocalNascimentoIdMorada(local_nascimento);
-					paciente.setMoradaByMoradaIdMorada(morada);
+					paciente.setDataNascimento(rs.getDate("dataNascimento"));
+					paciente.setMoradaByIdLocalNascimento(local_nascimento);
+					paciente.setMoradaByIdMorada(morada);
 					paciente.setGenero(rs.getString("genero"));
 					paciente.setProfissao(rs.getString("profissao"));
 					paciente.setEscolaridade(rs.getString("escolaridade"));
-					paciente.setEstadoCivil(rs.getString("estado_civil"));
-					paciente.setNivelDeDoenca(rs.getInt("nivel_de_doenca"));
-					paciente.setNomeMedico(rs.getString("nome_medico"));
-					paciente.setEspecialidadeMedico(rs.getString("especialidade_medico"));
-					paciente.setNivelSessao(rs.getInt("nivel_sessao"));
+					paciente.setEstadoCivil(rs.getString("estadoCivil"));
+					paciente.setNivelDoenca(rs.getInt("nivelDoenca"));
+					paciente.setNomeMedico(rs.getString("nomeMedico"));
+					paciente.setEspecialidadeMedico(rs.getString("especialidadeMedico"));
+					paciente.setNivelSessao(rs.getInt("nivelSessao"));
 					paciente.setTecnico(tecnico);
 					return paciente;
 				}
@@ -156,35 +156,33 @@ public class PacienteDAOImpl implements PacienteDAO {
 	
 	@Override
 	public List<Paciente> list(int idTecnico) {
-		String sql = "SELECT * FROM paciente, morada "
-				+ "WHERE Paciente.Morada_idMorada = Morada.idMorada"
-				+ "and paciente.Tecnico_idTecnico=" + idTecnico;
+		String sql = "SELECT * FROM paciente paciente.idTecnico=" + idTecnico;
 		
 		List<Paciente> listPaciente = jdbcTemplate.query(sql, new RowMapper<Paciente>() {
 
 			@Override
 			public Paciente mapRow(ResultSet rs, int rowNum) throws SQLException {
 				
-				Morada morada = moradaImpl.get(rs.getInt("Morada_idMorada"));
-				Morada local_nascimento = moradaImpl.get(rs.getInt("LocalNascimento_idMorada"));
-				Tecnico tecnico = tecnicoImpl.get(rs.getInt("Tecnico_idTecnico"));
+				Morada morada = moradaImpl.get(rs.getInt("idMorada"));
+				Morada local_nascimento = moradaImpl.get(rs.getInt("idLocalNascimento"));
+				Tecnico tecnico = tecnicoImpl.get(rs.getInt("idTecnico"));
 				
 				Paciente paciente = new Paciente();
 				paciente.setIdPaciente(rs.getInt("idPaciente"));
-				paciente.setNomeCompleto(rs.getString("nome_completo"));
-				paciente.setNomeProprio(rs.getString("nome_proprio"));
+				paciente.setNomeCompleto(rs.getString("nomeCompleto"));
+				paciente.setNomeProprio(rs.getString("nomeProprio"));
 				paciente.setApelido(rs.getString("apelido"));
-				paciente.setDataDeNascimento(rs.getDate("data_de_nascimento"));
-				paciente.setMoradaByLocalNascimentoIdMorada(local_nascimento);
-				paciente.setMoradaByMoradaIdMorada(morada);
+				paciente.setDataNascimento(rs.getDate("dataNascimento"));
+				paciente.setMoradaByIdLocalNascimento(local_nascimento);
+				paciente.setMoradaByIdMorada(morada);
 				paciente.setGenero(rs.getString("genero"));
 				paciente.setProfissao(rs.getString("profissao"));
 				paciente.setEscolaridade(rs.getString("escolaridade"));
-				paciente.setEstadoCivil(rs.getString("estado_civil"));
-				paciente.setNivelDeDoenca(rs.getInt("nivel_de_doenca"));
-				paciente.setNomeMedico(rs.getString("nome_medico"));
-				paciente.setEspecialidadeMedico(rs.getString("especialidade_medico"));
-				paciente.setNivelSessao(rs.getInt("nivel_sessao"));
+				paciente.setEstadoCivil(rs.getString("estadoCivil"));
+				paciente.setNivelDoenca(rs.getInt("nivelDoenca"));
+				paciente.setNomeMedico(rs.getString("nomeMedico"));
+				paciente.setEspecialidadeMedico(rs.getString("especialidadeMedico"));
+				paciente.setNivelSessao(rs.getInt("nivelSessao"));
 				paciente.setTecnico(tecnico);
 				
 				return paciente;

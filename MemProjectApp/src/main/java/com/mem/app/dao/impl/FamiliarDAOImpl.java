@@ -14,16 +14,19 @@ import org.springframework.jdbc.core.RowMapper;
 import com.mem.app.dao.FamiliarDAO;
 import com.mem.app.model.Familiar;
 import com.mem.app.model.Morada;
+import com.mem.app.model.Utilizador;
 
 
 public class FamiliarDAOImpl implements FamiliarDAO {
 
 	private JdbcTemplate jdbcTemplate;
 	private MoradaDAOImpl moradaImpl;
+	private UtilizadorDAOImpl utilizadorImpl;
 
 	public FamiliarDAOImpl(DataSource dataSource) {
 		jdbcTemplate = new JdbcTemplate(dataSource);
 		moradaImpl = new MoradaDAOImpl(dataSource);
+		utilizadorImpl = new UtilizadorDAOImpl(dataSource);
 	}
 
 	@Override
@@ -31,56 +34,53 @@ public class FamiliarDAOImpl implements FamiliarDAO {
 		if (familiar.getIdFamiliar() > 0) {
 			// update
 			String sql = "UPDATE familiar "
-					+ "SET nome_completo=?, "
-					+ "nome_proprio=?, "
+					+ "SET nomeCompleto=?, "
+					+ "nomeProprio=?, "
 					+ "apelido=?,"
-					+ "data_de_nascimento=?, "
-					+ "Local_Nascimento_idMorada=?, "
-					+ "Morada_idMorada=?, "
+					+ "dataNascimento=?, "
+					+ "idLocalNascimento=?, "
+					+ "idMorada=?, "
 					+ "genero=?, "
-					+ "estado_civil=?, "
+					+ "estadoCivil=?, "
 					+ "profissao=?, "
 					+ "telefone=?, "
-					+ "e_cuidador=?, "
-					+ "nome_utilizador=?, "
-					+ "password=?, "
-					+ "data_de_obtio=?"
+					+ "eCuidador=?, "
+					+ "dataObito=?, "
+					+ "idUtilizador=? "
 					+ "WHERE idFamiliar=?";
 
-			jdbcTemplate.update(sql, 
+			jdbcTemplate.update(sql, 		
 					familiar.getNomeCompleto(),
 					familiar.getNomeProprio(),
 					familiar.getApelido(),
-					familiar.getDataDeNascimento(),
-					familiar.getMoradaByLocalNascimentoIdMorada().getIdMorada(),
-					familiar.getMoradaByMoradaIdMorada().getIdMorada(),
+					familiar.getDataNascimento(),
+					familiar.getMoradaByIdLocalNascimento().getIdMorada(),
+					familiar.getMoradaByIdMorada().getIdMorada(),
 					familiar.getGenero(),
 					familiar.getEstadoCivil(),
 					familiar.getProfissao(),
 					familiar.getTelefone(),
-					familiar.getECuidador(),
-					familiar.getNomeUtilizador(),
-					familiar.getPassword(),
-					familiar.getDataDeObito(),
-					familiar.getIdFamiliar() );
+					familiar.getEcuidador(),
+					familiar.getDataObito(),
+					familiar.getUtilizador().getIdUtilizador(),
+					familiar.getIdFamiliar());
 		} else {
 			// insert
 			String sql = "INSERT INTO familiar "
 					+ "( idFamiliar, "
-					+ "nome_completo, "
-					+ "nome_proprio, "
+					+ "nomeCompleto, "
+					+ "nomeProprio, "
 					+ "apelido,"
-					+ "data_de_nascimento, "
-					+ "Local_Nascimento_idMorada, "
-					+ "Morada_idMorada, "
+					+ "dataNascimento, "
+					+ "idLocalNascimento, "
+					+ "idMorada, "
 					+ "genero, "
-					+ "estado_civil, "
+					+ "estadoCivil, "
 					+ "profissao, "
 					+ "telefone, "
-					+ "e_cuidador, "
-					+ "nome_utilizador, "
-					+ "password, "
-					+ "data_de_obtio)"
+					+ "eCuidador, "
+					+ "dataObito,"
+					+ "idUtilizador)"
 					+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 			jdbcTemplate.update(sql, 
@@ -88,17 +88,16 @@ public class FamiliarDAOImpl implements FamiliarDAO {
 					familiar.getNomeCompleto(),
 					familiar.getNomeProprio(),
 					familiar.getApelido(),
-					familiar.getDataDeNascimento(),
-					familiar.getMoradaByLocalNascimentoIdMorada().getIdMorada(),
-					familiar.getMoradaByMoradaIdMorada().getIdMorada(),
+					familiar.getDataNascimento(),
+					familiar.getMoradaByIdLocalNascimento().getIdMorada(),
+					familiar.getMoradaByIdMorada().getIdMorada(),
 					familiar.getGenero(),
 					familiar.getEstadoCivil(),
 					familiar.getProfissao(),
 					familiar.getTelefone(),
-					familiar.getECuidador(),
-					familiar.getNomeUtilizador(),
-					familiar.getPassword(),
-					familiar.getDataDeObito());
+					familiar.getEcuidador(),
+					familiar.getDataObito(),
+					familiar.getUtilizador().getIdUtilizador());
 		}
 	}
 
@@ -117,25 +116,25 @@ public class FamiliarDAOImpl implements FamiliarDAO {
 			public Familiar extractData(ResultSet rs) throws SQLException,
 			DataAccessException {
 				if (rs.next()) {
-					Morada morada = moradaImpl.get(rs.getInt("Morada_idMorada"));
-					Morada local_nascimento = moradaImpl.get(rs.getInt("LocalNascimento_idMorada"));
+					Morada morada = moradaImpl.get(rs.getInt("idMorada"));
+					Morada local_nascimento = moradaImpl.get(rs.getInt("idLocalNascimento"));
+					Utilizador utilizador = utilizadorImpl.get(rs.getInt("idUtilizador"));
 					
 					Familiar familiar = new Familiar();
 					familiar.setIdFamiliar(rs.getInt("idFamiliar"));
-					familiar.setNomeCompleto(rs.getString("nome_completo"));
-					familiar.setNomeProprio(rs.getString("nome_proprio"));
+					familiar.setNomeCompleto(rs.getString("nomeCompleto"));
+					familiar.setNomeProprio(rs.getString("nomeProprio"));
 					familiar.setApelido(rs.getString("apelido"));
-					familiar.setDataDeNascimento(rs.getDate("data_de_nascimento"));
-					familiar.setMoradaByLocalNascimentoIdMorada(local_nascimento);
-					familiar.setMoradaByMoradaIdMorada(morada);
+					familiar.setDataNascimento(rs.getDate("dataNascimento"));
+					familiar.setMoradaByIdLocalNascimento(local_nascimento);
+					familiar.setMoradaByIdMorada(morada);
 					familiar.setGenero(rs.getString("genero"));
-					familiar.setEstadoCivil(rs.getString("estado_civil"));
+					familiar.setEstadoCivil(rs.getString("estadoCivil"));
 					familiar.setProfissao(rs.getString("profissao"));
 					familiar.setTelefone(rs.getInt("telefone"));
-					familiar.setECuidador(rs.getBoolean("e_cuidador"));
-					familiar.setNomeUtilizador(rs.getString("nome_uilizador"));
-					familiar.setPassword(rs.getString("password"));
-					familiar.setDataDeObito(rs.getDate("data_de_obito"));
+					familiar.setEcuidador(rs.getBoolean("eCuidador"));
+					familiar.setDataObito(rs.getDate("dataObito"));
+					familiar.setUtilizador(utilizador);
 					return familiar;
 				}
 
@@ -148,7 +147,7 @@ public class FamiliarDAOImpl implements FamiliarDAO {
 	@Override
 	public Familiar getFromUserName(String user) {
 
-		String sql = "SELECT * FROM familiar WHERE user_name=" + user;
+		String sql = "SELECT f.* FROM familiar f, Utilizador u WHERE f.idUtilizador = u.idUtilizador and nomeUtilizador="+ user;
 		return jdbcTemplate.query(sql, new ResultSetExtractor<Familiar>() {
 
 			@Override
@@ -156,25 +155,25 @@ public class FamiliarDAOImpl implements FamiliarDAO {
 			DataAccessException {
 				if (rs.next()) {
 					
-					Morada morada = moradaImpl.get(rs.getInt("Morada_idMorada"));
-					Morada local_nascimento = moradaImpl.get(rs.getInt("LocalNascimento_idMorada"));
+					Morada morada = moradaImpl.get(rs.getInt("idMorada"));
+					Morada local_nascimento = moradaImpl.get(rs.getInt("idLocalNascimento"));
+					Utilizador utilizador = utilizadorImpl.get(rs.getInt("idUtilizador"));
 					
 					Familiar familiar = new Familiar();
 					familiar.setIdFamiliar(rs.getInt("idFamiliar"));
-					familiar.setNomeCompleto(rs.getString("nome_completo"));
-					familiar.setNomeProprio(rs.getString("nome_proprio"));
+					familiar.setNomeCompleto(rs.getString("nomeCompleto"));
+					familiar.setNomeProprio(rs.getString("nomeProprio"));
 					familiar.setApelido(rs.getString("apelido"));
-					familiar.setDataDeNascimento(rs.getDate("data_de_nascimento"));
-					familiar.setMoradaByLocalNascimentoIdMorada(local_nascimento);
-					familiar.setMoradaByMoradaIdMorada(morada);
+					familiar.setDataNascimento(rs.getDate("dataNascimento"));
+					familiar.setMoradaByIdLocalNascimento(local_nascimento);
+					familiar.setMoradaByIdMorada(morada);
 					familiar.setGenero(rs.getString("genero"));
-					familiar.setEstadoCivil(rs.getString("estado_civil"));
+					familiar.setEstadoCivil(rs.getString("estadoCivil"));
 					familiar.setProfissao(rs.getString("profissao"));
 					familiar.setTelefone(rs.getInt("telefone"));
-					familiar.setECuidador(rs.getBoolean("e_cuidador"));
-					familiar.setNomeUtilizador(rs.getString("nome_uilizador"));
-					familiar.setPassword(rs.getString("password"));
-					familiar.setDataDeObito(rs.getDate("data_de_obito"));
+					familiar.setEcuidador(rs.getBoolean("eCuidador"));
+					familiar.setDataObito(rs.getDate("dataObito"));
+					familiar.setUtilizador(utilizador);
 					return familiar;
 				}
 
@@ -188,32 +187,32 @@ public class FamiliarDAOImpl implements FamiliarDAO {
 	@Override
 	public List<Familiar> list(int idPaciente) {
 		String sql = "SELECT * FROM familiar, relacao_paciente_familiar "
-				+ "WHERE relacao_paciente_familiar.Familiar_idFamiliar = familiar.idFamiliar "
-				+ "and relacao_paciente_familiar.Paciente_idPaciente = " + idPaciente;
+				+ "WHERE relacao_paciente_familiar.idFamiliar = familiar.idFamiliar "
+				+ "and relacao_paciente_familiar.idPaciente = " + idPaciente;
 		
 		List<Familiar> listFamiliar = jdbcTemplate.query(sql, new RowMapper<Familiar>() {
 
 			@Override
 			public Familiar mapRow(ResultSet rs, int rowNum) throws SQLException {
-				Morada morada = moradaImpl.get(rs.getInt("Morada_idMorada"));
-				Morada local_nascimento = moradaImpl.get(rs.getInt("LocalNascimento_idMorada"));
+				Morada morada = moradaImpl.get(rs.getInt("idMorada"));
+				Morada local_nascimento = moradaImpl.get(rs.getInt("idLocalNascimento"));
+				Utilizador utilizador = utilizadorImpl.get(rs.getInt("idUtilizador"));
 				
 				Familiar familiar = new Familiar();
 				familiar.setIdFamiliar(rs.getInt("idFamiliar"));
-				familiar.setNomeCompleto(rs.getString("nome_completo"));
-				familiar.setNomeProprio(rs.getString("nome_proprio"));
+				familiar.setNomeCompleto(rs.getString("nomeCompleto"));
+				familiar.setNomeProprio(rs.getString("nomeProprio"));
 				familiar.setApelido(rs.getString("apelido"));
-				familiar.setDataDeNascimento(rs.getDate("data_de_nascimento"));
-				familiar.setMoradaByLocalNascimentoIdMorada(local_nascimento);
-				familiar.setMoradaByMoradaIdMorada(morada);
+				familiar.setDataNascimento(rs.getDate("dataNascimento"));
+				familiar.setMoradaByIdLocalNascimento(local_nascimento);
+				familiar.setMoradaByIdMorada(morada);
 				familiar.setGenero(rs.getString("genero"));
-				familiar.setEstadoCivil(rs.getString("estado_civil"));
+				familiar.setEstadoCivil(rs.getString("estadoCivil"));
 				familiar.setProfissao(rs.getString("profissao"));
 				familiar.setTelefone(rs.getInt("telefone"));
-				familiar.setECuidador(rs.getBoolean("e_cuidador"));
-				familiar.setNomeUtilizador(rs.getString("nome_uilizador"));
-				familiar.setPassword(rs.getString("password"));
-				familiar.setDataDeObito(rs.getDate("data_de_obito"));
+				familiar.setEcuidador(rs.getBoolean("eCuidador"));
+				familiar.setDataObito(rs.getDate("dataObito"));
+				familiar.setUtilizador(utilizador);
 				return familiar;
 			}
 

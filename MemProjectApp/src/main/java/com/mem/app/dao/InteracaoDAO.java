@@ -8,10 +8,10 @@ public interface InteracaoDAO {
 	
 	void saveOrUpdate(Interacao interacao);
 
-	void delete(int interacaoId);
+	void delete(int idInteracao);
 
-	Interacao get(int interacaoId);
+	Interacao get(int idInteracao);
 
-	List<Interacao> list();
+	List<Interacao> list(int idPaciente);
 
 }

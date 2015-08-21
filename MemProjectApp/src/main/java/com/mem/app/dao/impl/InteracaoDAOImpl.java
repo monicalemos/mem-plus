@@ -32,7 +32,7 @@ public class InteracaoDAOImpl implements InteracaoDAO {
 			// update
 			String sql = "UPDATE interacao SET "
 					+ "data=?, "
-					+ "Paciente_idPaciente=? "
+					+ "idPaciente=? "
 					+ "WHERE idInteracao=?";
 
 			jdbcTemplate.update(sql, 
@@ -44,7 +44,7 @@ public class InteracaoDAOImpl implements InteracaoDAO {
 			String sql = "INSERT INTO interacao "
 					+ "(idInteracao, "
 					+ "data, "
-					+ "Paciente_idPaciente)"
+					+ "idPaciente)"
 					+ " VALUES (?, ?)";
 			jdbcTemplate.update(sql, 
 					interacao.getIdInteracao(), 
@@ -68,7 +68,7 @@ public class InteracaoDAOImpl implements InteracaoDAO {
 			public Interacao extractData(ResultSet rs) throws SQLException,
 			DataAccessException {
 				if (rs.next()) {
-					Paciente paciente = pacienteImpl.get(rs.getInt("Paciente_idPaciente"));
+					Paciente paciente = pacienteImpl.get(rs.getInt("idPaciente"));
 
 					Interacao interacao = new Interacao();
 					interacao.setIdInteracao(rs.getInt("idInteracao"));
@@ -84,13 +84,14 @@ public class InteracaoDAOImpl implements InteracaoDAO {
 	}
 
 	@Override
-	public List<Interacao> list() {
-		String sql = "SELECT * FROM interacao";
+	public List<Interacao> list(int idPaciente) {
+
+		String sql = "SELECT * FROM interacao WHERE interacao.idPaciente " + idPaciente;
 		List<Interacao> listInteracao = jdbcTemplate.query(sql, new RowMapper<Interacao>() {
 
 			@Override
 			public Interacao mapRow(ResultSet rs, int rowNum) throws SQLException {
-				Paciente paciente = pacienteImpl.get(rs.getInt("Paciente_idPaciente"));
+				Paciente paciente = pacienteImpl.get(rs.getInt("idPaciente"));
 
 				Interacao aInteracao = new Interacao();
 				aInteracao.setIdInteracao(rs.getInt("idInteracao"));

@@ -8,10 +8,14 @@ public interface QuestionarioDAO {
 
 	void saveOrUpdate(Questionario questionario);
 
-	void delete(int questionarioId);
+	void delete(int idQuestionario);
 
-	Questionario get(int questionarioId);
+	Questionario get(int idQuestionario);
 
 	List<Questionario> list();
+	
+	List<Questionario> listByInteracao(int idInteracao);
+	
+	List<Questionario> listByCategoria(int idCategoria);
 	
 }

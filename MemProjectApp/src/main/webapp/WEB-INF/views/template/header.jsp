@@ -20,17 +20,16 @@
 						<a href="${homeUrl}">Home</a>
 					</li>
 					<li>
-						<spring:url value="/listarPacientes" var="listarPacientesUrl" htmlEscape="true" /> 
+						<spring:url value="/Paciente" var="listarPacientesUrl" htmlEscape="true" /> 
 						<a href="${listarPacientesUrl}">Ver Pacientes</a>
 					</li>
 					<li>
-						<spring:url value="/inserirPaciente" var="inserirPacienteUrl" htmlEscape="true" /> 
+						<spring:url value="/Paciente/inserirPaciente" var="inserirPacienteUrl" htmlEscape="true" /> 
 						<a href="${inserirPacienteUrl}">Registrar Novo Paciente</a>
 					</li>
 					<li>
-						<form action="/User?accao=logout" method="post">
-							<input type="submit" name="logout" value="Logout" />
-						</form>
+					<spring:url value="/Utilizador/logout" var="logout" htmlEscape="true" /> 
+						<a href="${logout}">Logout</a>
 					</li>
 				</ul>
 			</div>

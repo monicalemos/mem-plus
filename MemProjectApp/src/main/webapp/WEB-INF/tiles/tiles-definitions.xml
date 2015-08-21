@@ -15,16 +15,4 @@
 	<definition name="home" extends="DefaultTemplate">
 		<put-attribute name="body" value="/WEB-INF/views/home.jsp" />
 	</definition>
-
-	<definition name="publicTemplate" template="/WEB-INF/views/template/publicTemplate.jsp">
-		<put-attribute name="title" value="MEM+" />
-		<put-attribute name="header" value="/WEB-INF/views/template/publicHeader.jsp" />
-		<put-attribute name="body" value="" />
-		<put-attribute name="menu" value="/WEB-INF/views/template/menu.jsp" />
-		<put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp" />
-	</definition>
-
-	<definition name="home-logout" extends="LogoutTemplate">
-		<put-attribute name="body" value="/WEB-INF/views/public/index.jsp" />
-	</definition>
 </tiles-definitions>

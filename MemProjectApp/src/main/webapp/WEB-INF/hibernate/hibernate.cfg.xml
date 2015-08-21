@@ -1,12 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-configuration PUBLIC
 		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
-		"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+		"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
-    <session-factory>
-        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/memdb</property>
-        <property name="hibernate.connection.username">root</property>
-        <property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
-    </session-factory>
+	<session-factory>
+		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/memdb</property>
+		<property name="hibernate.connection.username">root</property>
+		<property name="hibernate.default_schema">memdb</property>
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
+
+		<mapping class="com.mem.app.model.Atividade"/>
+		<mapping class="com.mem.app.model.Categoria"/>
+		<mapping class="com.mem.app.model.Evento"/>
+		<mapping class="com.mem.app.model.EventoId"/>
+		<mapping class="com.mem.app.model.Familiar"/>
+		<mapping class="com.mem.app.model.Imagem"/>
+		<mapping class="com.mem.app.model.Interacao"/>
+		<mapping class="com.mem.app.model.Interesse"/>
+		<mapping class="com.mem.app.model.Jogo"/>
+		<mapping class="com.mem.app.model.Morada"/>
+		<mapping class="com.mem.app.model.Paciente"/>
+		<mapping class="com.mem.app.model.Questionario"/>
+		<mapping class="com.mem.app.model.Relacaofamiliarfamiliar"/>
+		<mapping class="com.mem.app.model.RelacaofamiliarfamiliarId"/>
+		<mapping class="com.mem.app.model.Relacaopacientefamiliar"/>
+		<mapping class="com.mem.app.model.RelacaopacientefamiliarId"/>
+		<mapping class="com.mem.app.model.Tecnico"/>
+		<mapping class="com.mem.app.model.Utilizador"/>
+		
+	</session-factory>
 </hibernate-configuration>

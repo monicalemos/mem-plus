@@ -32,9 +32,9 @@ public class CategoriaDAOImpl implements CategoriaDAO {
 			jdbcTemplate.update(sql, categoria.getNome(), categoria.getIdCategoria() );
 		} else {
 			// insert
-			String sql = "INSERT INTO categoria (nome, idCategoria)"
+			String sql = "INSERT INTO categoria (idCategoria, nome)"
 					+ " VALUES (?, ?)";
-			jdbcTemplate.update(sql,categoria.getNome(), categoria.getIdCategoria());
+			jdbcTemplate.update(sql, categoria.getIdCategoria(), categoria.getNome());
 		}
 	}
 
