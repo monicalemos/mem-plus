@@ -10,24 +10,22 @@
 		<property name="hibernate.default_schema">memdb</property>
 		<property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
 
-		<mapping class="com.mem.app.model.Atividade"/>
-		<mapping class="com.mem.app.model.Categoria"/>
-		<mapping class="com.mem.app.model.Evento"/>
-		<mapping class="com.mem.app.model.EventoId"/>
-		<mapping class="com.mem.app.model.Familiar"/>
-		<mapping class="com.mem.app.model.Imagem"/>
-		<mapping class="com.mem.app.model.Interacao"/>
-		<mapping class="com.mem.app.model.Interesse"/>
-		<mapping class="com.mem.app.model.Jogo"/>
-		<mapping class="com.mem.app.model.Morada"/>
-		<mapping class="com.mem.app.model.Paciente"/>
-		<mapping class="com.mem.app.model.Questionario"/>
-		<mapping class="com.mem.app.model.Relacaofamiliarfamiliar"/>
-		<mapping class="com.mem.app.model.RelacaofamiliarfamiliarId"/>
-		<mapping class="com.mem.app.model.Relacaopacientefamiliar"/>
-		<mapping class="com.mem.app.model.RelacaopacientefamiliarId"/>
-		<mapping class="com.mem.app.model.Tecnico"/>
-		<mapping class="com.mem.app.model.Utilizador"/>
-		
+		<mapping class="com.mem.app.model.Atividade" />
+		<mapping class="com.mem.app.model.Categoria" />
+		<mapping class="com.mem.app.model.Evento" />
+		<mapping class="com.mem.app.model.EventoId" />
+		<mapping class="com.mem.app.model.Familiar" />
+		<mapping class="com.mem.app.model.Imagem" />
+		<mapping class="com.mem.app.model.Interacao" />
+		<mapping class="com.mem.app.model.Interesse" />
+		<mapping class="com.mem.app.model.Jogo" />
+		<mapping class="com.mem.app.model.Morada" />
+		<mapping class="com.mem.app.model.Paciente" />
+		<mapping class="com.mem.app.model.Questionario" />
+		<mapping class="com.mem.app.model.RelacaoFamiliarFamiliar" />
+		<mapping class="com.mem.app.model.RelacaoFamiliarFamiliarId" />
+		<mapping class="com.mem.app.model.RelacaoPacienteFamiliar" />
+		<mapping class="com.mem.app.model.RelacaoPacienteFamiliarId" />
+		<mapping class="com.mem.app.model.Utilizador" />
 	</session-factory>
 </hibernate-configuration>

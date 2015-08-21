@@ -45,10 +45,10 @@
 				<value>com.mem.app.model.Morada</value>
 				<value>com.mem.app.model.Paciente</value>
 				<value>com.mem.app.model.Questionario</value>
-				<value>com.mem.app.model.Relacaofamiliarfamiliar</value>
-				<value>com.mem.app.model.RelacaofamiliarfamiliarId</value>
-				<value>com.mem.app.model.Relacaopacientefamiliar</value>
-				<value>com.mem.app.model.RelacaopacientefamiliarId</value>
+				<value>com.mem.app.model.RelacaoFamiliarFamiliar</value>
+				<value>com.mem.app.model.RelacaoFamiliarFamiliarId</value>
+				<value>com.mem.app.model.RelacaoPacienteFamiliar</value>
+				<value>com.mem.app.model.RelacaoPacienteFamiliarId</value>
 				<value>com.mem.app.model.Tecnico</value>
 				<value>com.mem.app.model.Utilizador</value>
 			</list>

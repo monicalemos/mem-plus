@@ -16,22 +16,22 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "relacaofamiliarfamiliar", catalog = "memdb")
-public class Relacaofamiliarfamiliar implements java.io.Serializable {
+public class RelacaoFamiliarFamiliar implements java.io.Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private RelacaofamiliarfamiliarId id;
+	private RelacaoFamiliarFamiliarId id;
 	private Familiar familiarByIdFamiliar1;
 	private Familiar familiarByIdFamiliar;
 	private Paciente paciente;
 	private String tipoRelacao;
 
-	public Relacaofamiliarfamiliar() {
+	public RelacaoFamiliarFamiliar() {
 	}
 
-	public Relacaofamiliarfamiliar(RelacaofamiliarfamiliarId id, Familiar familiarByIdFamiliar1,
+	public RelacaoFamiliarFamiliar(RelacaoFamiliarFamiliarId id, Familiar familiarByIdFamiliar1,
 			Familiar familiarByIdFamiliar, Paciente paciente) {
 		this.id = id;
 		this.familiarByIdFamiliar1 = familiarByIdFamiliar1;
@@ -39,7 +39,7 @@ public class Relacaofamiliarfamiliar implements java.io.Serializable {
 		this.paciente = paciente;
 	}
 
-	public Relacaofamiliarfamiliar(RelacaofamiliarfamiliarId id, Familiar familiarByIdFamiliar1,
+	public RelacaoFamiliarFamiliar(RelacaoFamiliarFamiliarId id, Familiar familiarByIdFamiliar1,
 			Familiar familiarByIdFamiliar, Paciente paciente, String tipoRelacao) {
 		this.id = id;
 		this.familiarByIdFamiliar1 = familiarByIdFamiliar1;
@@ -54,11 +54,11 @@ public class Relacaofamiliarfamiliar implements java.io.Serializable {
 			@AttributeOverride(name = "idRelacaoFamiliarFamiliar", column = @Column(name = "idRelacaoFamiliarFamiliar", nullable = false) ),
 			@AttributeOverride(name = "idFamiliar", column = @Column(name = "idFamiliar", nullable = false) ),
 			@AttributeOverride(name = "idFamiliar1", column = @Column(name = "idFamiliar1", nullable = false) ) })
-	public RelacaofamiliarfamiliarId getId() {
+	public RelacaoFamiliarFamiliarId getId() {
 		return this.id;
 	}
 
-	public void setId(RelacaofamiliarfamiliarId id) {
+	public void setId(RelacaoFamiliarFamiliarId id) {
 		this.id = id;
 	}
 

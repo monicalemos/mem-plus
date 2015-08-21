@@ -46,8 +46,8 @@ public class Paciente implements java.io.Serializable {
 	private List<Atividade> atividades = new ArrayList<Atividade>(0);
 	private List<Interesse> interesses = new ArrayList<Interesse>(0);
 	private List<Evento> eventos = new ArrayList<Evento>(0);
-	private List<Relacaofamiliarfamiliar> relacaofamiliarfamiliars = new ArrayList<Relacaofamiliarfamiliar>(0);
-	private List<Relacaopacientefamiliar> relacaopacientefamiliars = new ArrayList<Relacaopacientefamiliar>(0);
+	private List<RelacaoFamiliarFamiliar> RelacaoFamiliarFamiliars = new ArrayList<RelacaoFamiliarFamiliar>(0);
+	private List<RelacaoPacienteFamiliar> RelacaoPacienteFamiliars = new ArrayList<RelacaoPacienteFamiliar>(0);
 	private List<Interacao> interacaos = new ArrayList<Interacao>(0);
 
 	public Paciente() {
@@ -64,7 +64,7 @@ public class Paciente implements java.io.Serializable {
 			String nomeCompleto, String nomeProprio, String apelido, Date dataNascimento, String genero,
 			String profissao, String escolaridade, String estadoCivil, Integer nivelDoenca, String nomeMedico,
 			String especialidadeMedico, Integer nivelSessao, List<Atividade> atividades, List<Interesse> interesses, List<Evento> eventos,
-			List<Relacaofamiliarfamiliar> relacaofamiliarfamiliars, List<Relacaopacientefamiliar> relacaopacientefamiliars, List<Interacao> interacaos) {
+			List<RelacaoFamiliarFamiliar> RelacaoFamiliarFamiliars, List<RelacaoPacienteFamiliar> RelacaoPacienteFamiliars, List<Interacao> interacaos) {
 		this.idPaciente = idPaciente;
 		this.moradaByIdLocalNascimento = moradaByIdLocalNascimento;
 		this.moradaByIdMorada = moradaByIdMorada;
@@ -84,8 +84,8 @@ public class Paciente implements java.io.Serializable {
 		this.atividades = atividades;
 		this.interesses = interesses;
 		this.eventos = eventos;
-		this.relacaofamiliarfamiliars = relacaofamiliarfamiliars;
-		this.relacaopacientefamiliars = relacaopacientefamiliars;
+		this.RelacaoFamiliarFamiliars = RelacaoFamiliarFamiliars;
+		this.RelacaoPacienteFamiliars = RelacaoPacienteFamiliars;
 		this.interacaos = interacaos;
 	}
 
@@ -267,21 +267,21 @@ public class Paciente implements java.io.Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "paciente")
-	public List<Relacaofamiliarfamiliar> getRelacaofamiliarfamiliars() {
-		return this.relacaofamiliarfamiliars;
+	public List<RelacaoFamiliarFamiliar> getRelacaoFamiliarFamiliars() {
+		return this.RelacaoFamiliarFamiliars;
 	}
 
-	public void setRelacaofamiliarfamiliars(List<Relacaofamiliarfamiliar> relacaofamiliarfamiliars) {
-		this.relacaofamiliarfamiliars = relacaofamiliarfamiliars;
+	public void setRelacaoFamiliarFamiliars(List<RelacaoFamiliarFamiliar> RelacaoFamiliarFamiliars) {
+		this.RelacaoFamiliarFamiliars = RelacaoFamiliarFamiliars;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "paciente")
-	public List<Relacaopacientefamiliar> getRelacaopacientefamiliars() {
-		return this.relacaopacientefamiliars;
+	public List<RelacaoPacienteFamiliar> getRelacaoPacienteFamiliars() {
+		return this.RelacaoPacienteFamiliars;
 	}
 
-	public void setRelacaopacientefamiliars(List<Relacaopacientefamiliar> relacaopacientefamiliars) {
-		this.relacaopacientefamiliars = relacaopacientefamiliars;
+	public void setRelacaoPacienteFamiliars(List<RelacaoPacienteFamiliar> RelacaoPacienteFamiliars) {
+		this.RelacaoPacienteFamiliars = RelacaoPacienteFamiliars;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "paciente")

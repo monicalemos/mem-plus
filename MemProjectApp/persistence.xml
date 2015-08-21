@@ -22,10 +22,10 @@
 	<class>com.mem.app.model.Morada</class>
 	<class>com.mem.app.model.Paciente</class>
 	<class>com.mem.app.model.Questionario</class>
-	<class>com.mem.app.model.Relacaofamiliarfamiliar</class>
-	<class>com.mem.app.model.RelacaofamiliarfamiliarId</class>
-	<class>com.mem.app.model.Relacaopacientefamiliar</class>
-	<class>com.mem.app.model.RelacaopacientefamiliarId</class>
+	<class>com.mem.app.model.RelacaoFamiliarFamiliar</class>
+	<class>com.mem.app.model.RelacaoFamiliarFamiliarId</class>
+	<class>com.mem.app.model.RelacaoPacienteFamiliar</class>
+	<class>com.mem.app.model.RelacaoPacienteFamiliarId</class>
 	<class>com.mem.app.model.Tecnico</class>
 	<class>com.mem.app.model.Utilizador</class>
 

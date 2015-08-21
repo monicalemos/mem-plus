@@ -40,9 +40,9 @@ public class Familiar implements java.io.Serializable {
 	private Boolean ecuidador;
 	private Date dataObito;
 	private List<Evento> eventos = new ArrayList<Evento>(0);
-	private List<Relacaopacientefamiliar> relacaopacientefamiliars = new ArrayList<Relacaopacientefamiliar>(0);
-	private List<Relacaofamiliarfamiliar> relacaofamiliarfamiliarsForIdFamiliar1 = new ArrayList<Relacaofamiliarfamiliar>(0);
-	private List<Relacaofamiliarfamiliar> relacaofamiliarfamiliarsForIdFamiliar = new ArrayList<Relacaofamiliarfamiliar>(0);
+	private List<RelacaoPacienteFamiliar> RelacaoPacienteFamiliars = new ArrayList<RelacaoPacienteFamiliar>(0);
+	private List<RelacaoFamiliarFamiliar> RelacaoFamiliarFamiliarsForIdFamiliar1 = new ArrayList<RelacaoFamiliarFamiliar>(0);
+	private List<RelacaoFamiliarFamiliar> RelacaoFamiliarFamiliarsForIdFamiliar = new ArrayList<RelacaoFamiliarFamiliar>(0);
 
 	public Familiar() {
 	}
@@ -56,8 +56,8 @@ public class Familiar implements java.io.Serializable {
 	public Familiar(int idFamiliar, Morada moradaByIdLocalNascimento, Morada moradaByIdMorada, Utilizador utilizador,
 			String nomeCompleto, String nomeProprio, String apelido, Date dataNascimento, String genero,
 			String estadoCivil, String profissao, Integer telefone, Boolean ecuidador, Date dataObito, List<Evento> eventos,
-			List<Relacaopacientefamiliar> relacaopacientefamiliars, List<Relacaofamiliarfamiliar> relacaofamiliarfamiliarsForIdFamiliar1,
-			List<Relacaofamiliarfamiliar> relacaofamiliarfamiliarsForIdFamiliar) {
+			List<RelacaoPacienteFamiliar> RelacaoPacienteFamiliars, List<RelacaoFamiliarFamiliar> RelacaoFamiliarFamiliarsForIdFamiliar1,
+			List<RelacaoFamiliarFamiliar> RelacaoFamiliarFamiliarsForIdFamiliar) {
 		this.idFamiliar = idFamiliar;
 		this.moradaByIdLocalNascimento = moradaByIdLocalNascimento;
 		this.moradaByIdMorada = moradaByIdMorada;
@@ -73,9 +73,9 @@ public class Familiar implements java.io.Serializable {
 		this.ecuidador = ecuidador;
 		this.dataObito = dataObito;
 		this.eventos = eventos;
-		this.relacaopacientefamiliars = relacaopacientefamiliars;
-		this.relacaofamiliarfamiliarsForIdFamiliar1 = relacaofamiliarfamiliarsForIdFamiliar1;
-		this.relacaofamiliarfamiliarsForIdFamiliar = relacaofamiliarfamiliarsForIdFamiliar;
+		this.RelacaoPacienteFamiliars = RelacaoPacienteFamiliars;
+		this.RelacaoFamiliarFamiliarsForIdFamiliar1 = RelacaoFamiliarFamiliarsForIdFamiliar1;
+		this.RelacaoFamiliarFamiliarsForIdFamiliar = RelacaoFamiliarFamiliarsForIdFamiliar;
 	}
 
 	@Id
@@ -221,30 +221,30 @@ public class Familiar implements java.io.Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "familiar")
-	public List<Relacaopacientefamiliar> getRelacaopacientefamiliars() {
-		return this.relacaopacientefamiliars;
+	public List<RelacaoPacienteFamiliar> getRelacaoPacienteFamiliars() {
+		return this.RelacaoPacienteFamiliars;
 	}
 
-	public void setRelacaopacientefamiliars(List<Relacaopacientefamiliar> relacaopacientefamiliars) {
-		this.relacaopacientefamiliars = relacaopacientefamiliars;
+	public void setRelacaoPacienteFamiliars(List<RelacaoPacienteFamiliar> RelacaoPacienteFamiliars) {
+		this.RelacaoPacienteFamiliars = RelacaoPacienteFamiliars;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "familiarByIdFamiliar1")
-	public List<Relacaofamiliarfamiliar> getRelacaofamiliarfamiliarsForIdFamiliar1() {
-		return this.relacaofamiliarfamiliarsForIdFamiliar1;
+	public List<RelacaoFamiliarFamiliar> getRelacaoFamiliarFamiliarsForIdFamiliar1() {
+		return this.RelacaoFamiliarFamiliarsForIdFamiliar1;
 	}
 
-	public void setRelacaofamiliarfamiliarsForIdFamiliar1(List<Relacaofamiliarfamiliar> relacaofamiliarfamiliarsForIdFamiliar1) {
-		this.relacaofamiliarfamiliarsForIdFamiliar1 = relacaofamiliarfamiliarsForIdFamiliar1;
+	public void setRelacaoFamiliarFamiliarsForIdFamiliar1(List<RelacaoFamiliarFamiliar> RelacaoFamiliarFamiliarsForIdFamiliar1) {
+		this.RelacaoFamiliarFamiliarsForIdFamiliar1 = RelacaoFamiliarFamiliarsForIdFamiliar1;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "familiarByIdFamiliar")
-	public List<Relacaofamiliarfamiliar> getRelacaofamiliarfamiliarsForIdFamiliar() {
-		return this.relacaofamiliarfamiliarsForIdFamiliar;
+	public List<RelacaoFamiliarFamiliar> getRelacaoFamiliarFamiliarsForIdFamiliar() {
+		return this.RelacaoFamiliarFamiliarsForIdFamiliar;
 	}
 
-	public void setRelacaofamiliarfamiliarsForIdFamiliar(List<Relacaofamiliarfamiliar> relacaofamiliarfamiliarsForIdFamiliar) {
-		this.relacaofamiliarfamiliarsForIdFamiliar = relacaofamiliarfamiliarsForIdFamiliar;
+	public void setRelacaoFamiliarFamiliarsForIdFamiliar(List<RelacaoFamiliarFamiliar> RelacaoFamiliarFamiliarsForIdFamiliar) {
+		this.RelacaoFamiliarFamiliarsForIdFamiliar = RelacaoFamiliarFamiliarsForIdFamiliar;
 	}
 
 }

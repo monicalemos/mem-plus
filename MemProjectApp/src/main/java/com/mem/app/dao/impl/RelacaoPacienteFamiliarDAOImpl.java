@@ -11,33 +11,33 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 
-import com.mem.app.dao.RelacaopacientefamiliarDAO;
+import com.mem.app.dao.RelacaoPacienteFamiliarDAO;
 import com.mem.app.model.Familiar;
 import com.mem.app.model.Paciente;
-import com.mem.app.model.Relacaopacientefamiliar;
-import com.mem.app.model.RelacaopacientefamiliarId;
+import com.mem.app.model.RelacaoPacienteFamiliar;
+import com.mem.app.model.RelacaoPacienteFamiliarId;
 
-public class RelacaopacientefamiliarDAOImpl implements RelacaopacientefamiliarDAO {
+public class RelacaoPacienteFamiliarDAOImpl implements RelacaoPacienteFamiliarDAO {
 
 	private JdbcTemplate jdbcTemplate;
 	private PacienteDAOImpl pacienteImpl;
 	private FamiliarDAOImpl familiarImpl;
 
-	public RelacaopacientefamiliarDAOImpl(DataSource dataSource) {
+	public RelacaoPacienteFamiliarDAOImpl(DataSource dataSource) {
 		jdbcTemplate = new JdbcTemplate(dataSource);
 		pacienteImpl = new PacienteDAOImpl(dataSource);
 		familiarImpl = new FamiliarDAOImpl(dataSource);
 	}
 
 	@Override
-	public void saveOrUpdate(Relacaopacientefamiliar relacaoPacienteFamiliar) {
+	public void saveOrUpdate(RelacaoPacienteFamiliar relacaoPacienteFamiliar) {
 		if (relacaoPacienteFamiliar.getId().getIdRelacaoPacienteFamiliar() > 0) {
 			// update
 			String sql = "UPDATE relacaoPacienteFamiliar SET " 
 					+ "idFamiliar=?, " 
 					+ "idPaciente=?, "
 					+ "tipoRelacao=? " 
-					+ "WHERE idRelacaopacientefamiliar=?";
+					+ "WHERE idRelacaoPacienteFamiliar=?";
 
 			jdbcTemplate.update(sql, 
 					relacaoPacienteFamiliar.getFamiliar().getIdFamiliar(),
@@ -47,7 +47,7 @@ public class RelacaopacientefamiliarDAOImpl implements RelacaopacientefamiliarDA
 		} else {
 			// insert
 			String sql = "INSERT INTO relacaoPacienteFamiliar " 
-					+ "(idRelacaopacientefamiliar, "
+					+ "(idRelacaoPacienteFamiliar, "
 					+ "idFamiliar, " 
 					+ "idPaciente," 
 					+ "tipoRelacao) " 
@@ -68,22 +68,22 @@ public class RelacaopacientefamiliarDAOImpl implements RelacaopacientefamiliarDA
 	}
 
 	@Override
-	public Relacaopacientefamiliar get(int idRelacaopacientefamiliar) {
-		String sql = "SELECT * FROM relacaoPacienteFamiliar " + "WHERE idRelacaopacientefamiliar="
-				+ idRelacaopacientefamiliar;
+	public RelacaoPacienteFamiliar get(int idRelacaoPacienteFamiliar) {
+		String sql = "SELECT * FROM relacaoPacienteFamiliar " + "WHERE idRelacaoPacienteFamiliar="
+				+ idRelacaoPacienteFamiliar;
 
-		return jdbcTemplate.query(sql, new ResultSetExtractor<Relacaopacientefamiliar>() {
+		return jdbcTemplate.query(sql, new ResultSetExtractor<RelacaoPacienteFamiliar>() {
 
 			@Override
-			public Relacaopacientefamiliar extractData(ResultSet rs) throws SQLException, DataAccessException {
+			public RelacaoPacienteFamiliar extractData(ResultSet rs) throws SQLException, DataAccessException {
 				if (rs.next()) {
 					Paciente paciente = pacienteImpl.get(rs.getInt("idPaciente"));
 					Familiar familiar = familiarImpl.get(rs.getInt("idFamiliar"));
 
-					RelacaopacientefamiliarId relId = new RelacaopacientefamiliarId(
-							rs.getInt("idRelacaopacientefamiliar"), paciente.getIdPaciente(), familiar.getIdFamiliar());
+					RelacaoPacienteFamiliarId relId = new RelacaoPacienteFamiliarId(
+							rs.getInt("idRelacaoPacienteFamiliar"), paciente.getIdPaciente(), familiar.getIdFamiliar());
 
-					Relacaopacientefamiliar relacaoPacienteFamiliar = new Relacaopacientefamiliar();
+					RelacaoPacienteFamiliar relacaoPacienteFamiliar = new RelacaoPacienteFamiliar();
 					relacaoPacienteFamiliar.setId(relId);
 					relacaoPacienteFamiliar.setFamiliar(familiar);
 					relacaoPacienteFamiliar.setPaciente(paciente);
@@ -98,23 +98,23 @@ public class RelacaopacientefamiliarDAOImpl implements RelacaopacientefamiliarDA
 	}
 
 	@Override
-	public Relacaopacientefamiliar getWithPatientAndFamily(Paciente paciente, Familiar familiar) {
+	public RelacaoPacienteFamiliar getWithPatientAndFamily(Paciente paciente, Familiar familiar) {
 		String sql = "SELECT * FROM relacaoPacienteFamiliar " 
 				+ "WHERE idPaciente=" + paciente.getIdPaciente()
 				+ "AND idFamiliar=" + familiar.getIdFamiliar();
 
-		return jdbcTemplate.query(sql, new ResultSetExtractor<Relacaopacientefamiliar>() {
+		return jdbcTemplate.query(sql, new ResultSetExtractor<RelacaoPacienteFamiliar>() {
 
 			@Override
-			public Relacaopacientefamiliar extractData(ResultSet rs) throws SQLException, DataAccessException {
+			public RelacaoPacienteFamiliar extractData(ResultSet rs) throws SQLException, DataAccessException {
 				if (rs.next()) {
 					Paciente paciente = pacienteImpl.get(rs.getInt("idPaciente"));
 					Familiar familiar = familiarImpl.get(rs.getInt("idFamiliar"));
 
-					RelacaopacientefamiliarId relId = new RelacaopacientefamiliarId(
-							rs.getInt("idRelacaopacientefamiliar"), paciente.getIdPaciente(), familiar.getIdFamiliar());
+					RelacaoPacienteFamiliarId relId = new RelacaoPacienteFamiliarId(
+							rs.getInt("idRelacaoPacienteFamiliar"), paciente.getIdPaciente(), familiar.getIdFamiliar());
 
-					Relacaopacientefamiliar relacaoPacienteFamiliar = new Relacaopacientefamiliar();
+					RelacaoPacienteFamiliar relacaoPacienteFamiliar = new RelacaoPacienteFamiliar();
 					relacaoPacienteFamiliar.setId(relId);
 					relacaoPacienteFamiliar.setFamiliar(familiar);
 					relacaoPacienteFamiliar.setPaciente(paciente);
@@ -129,24 +129,24 @@ public class RelacaopacientefamiliarDAOImpl implements RelacaopacientefamiliarDA
 	}
 
 	@Override
-	public List<Relacaopacientefamiliar> list(Paciente paciente) {
+	public List<RelacaoPacienteFamiliar> list(Paciente paciente) {
 		String sql = "SELECT * FROM relacaoPacienteFamiliar " 
 				+ "WHERE idPaciente=" + paciente.getIdPaciente();
 
-		List<Relacaopacientefamiliar> listRelacaopacientefamiliar = jdbcTemplate.query(sql,
-				new RowMapper<Relacaopacientefamiliar>() {
+		List<RelacaoPacienteFamiliar> listRelacaoPacienteFamiliar = jdbcTemplate.query(sql,
+				new RowMapper<RelacaoPacienteFamiliar>() {
 
 					@Override
-					public Relacaopacientefamiliar mapRow(ResultSet rs, int rowNum) throws SQLException {
+					public RelacaoPacienteFamiliar mapRow(ResultSet rs, int rowNum) throws SQLException {
 
 						Paciente paciente = pacienteImpl.get(rs.getInt("idPaciente"));
 						Familiar familiar = familiarImpl.get(rs.getInt("idFamiliar"));
 
-						RelacaopacientefamiliarId relId = new RelacaopacientefamiliarId(
-								rs.getInt("idRelacaopacientefamiliar"), paciente.getIdPaciente(),
+						RelacaoPacienteFamiliarId relId = new RelacaoPacienteFamiliarId(
+								rs.getInt("idRelacaoPacienteFamiliar"), paciente.getIdPaciente(),
 								familiar.getIdFamiliar());
 
-						Relacaopacientefamiliar relacaoPacienteFamiliar = new Relacaopacientefamiliar();
+						RelacaoPacienteFamiliar relacaoPacienteFamiliar = new RelacaoPacienteFamiliar();
 						relacaoPacienteFamiliar.setId(relId);
 						relacaoPacienteFamiliar.setFamiliar(familiar);
 						relacaoPacienteFamiliar.setPaciente(paciente);
@@ -156,7 +156,7 @@ public class RelacaopacientefamiliarDAOImpl implements RelacaopacientefamiliarDA
 
 				});
 
-		return listRelacaopacientefamiliar;
+		return listRelacaoPacienteFamiliar;
 	}
 
 }

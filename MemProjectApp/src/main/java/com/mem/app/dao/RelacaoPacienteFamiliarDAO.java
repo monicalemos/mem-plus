@@ -4,17 +4,17 @@ import java.util.List;
 
 import com.mem.app.model.Familiar;
 import com.mem.app.model.Paciente;
-import com.mem.app.model.Relacaopacientefamiliar;
+import com.mem.app.model.RelacaoPacienteFamiliar;
 
-public interface RelacaopacientefamiliarDAO {
+public interface RelacaoPacienteFamiliarDAO {
 
-	void saveOrUpdate(Relacaopacientefamiliar relacaoPacienteFamiliar);
+	void saveOrUpdate(RelacaoPacienteFamiliar relacaoPacienteFamiliar);
 
 	void delete(Familiar familiar);
 
-	Relacaopacientefamiliar get(int idRelacaopacientefamiliar);
+	RelacaoPacienteFamiliar get(int idRelacaoPacienteFamiliar);
 	
-	Relacaopacientefamiliar getWithPatientAndFamily(Paciente paciente, Familiar familiar);
+	RelacaoPacienteFamiliar getWithPatientAndFamily(Paciente paciente, Familiar familiar);
 
-	List<Relacaopacientefamiliar> list(Paciente paciente);
+	List<RelacaoPacienteFamiliar> list(Paciente paciente);
 }
