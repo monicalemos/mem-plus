@@ -22,14 +22,4 @@ public class HomeController {
 		System.out.println("ola home");
 		return new ModelAndView("home");
 	}
-	@RequestMapping(value = "/About", method = RequestMethod.GET)
-	public ModelAndView about() {
-		//TODO Handle the View and Model
-		return new ModelAndView("about");
-	}
-	@RequestMapping(value = "/Contacts", method = RequestMethod.GET)
-	public ModelAndView contacts() {
-		//TODO Handle the View and Model
-		return new ModelAndView("contacts");
-	}
 }

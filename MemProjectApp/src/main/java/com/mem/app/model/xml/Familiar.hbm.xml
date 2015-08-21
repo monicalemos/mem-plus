@@ -1,30 +1,33 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 26/Jun/2015 18:13:05 by Hibernate Tools 4.3.1 -->
+<!-- Generated 21/Ago/2015 16:26:39 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="model.Familiar" table="familiar" catalog="memdb" optimistic-lock="version">
+    <class name="Familiar" table="familiar" catalog="memdb" optimistic-lock="version">
         <id name="idFamiliar" type="int">
             <column name="idFamiliar" />
             <generator class="assigned" />
         </id>
-        <many-to-one name="moradaByMoradaIdMorada" class="model.Morada" fetch="select">
-            <column name="Morada_idMorada" not-null="true" />
+        <many-to-one name="moradaByIdLocalNascimento" class="Morada" fetch="select">
+            <column name="idLocalNascimento" not-null="true" />
         </many-to-one>
-        <many-to-one name="moradaByLocalNascimentoIdMorada" class="model.Morada" fetch="select">
-            <column name="Local_Nascimento_idMorada" not-null="true" />
+        <many-to-one name="moradaByIdMorada" class="Morada" fetch="select">
+            <column name="idMorada" not-null="true" />
+        </many-to-one>
+        <many-to-one name="utilizador" class="Utilizador" fetch="select">
+            <column name="idUtilizador" />
         </many-to-one>
         <property name="nomeCompleto" type="string">
-            <column name="nome_completo" length="45" />
+            <column name="nomeCompleto" length="45" />
         </property>
         <property name="nomeProprio" type="string">
-            <column name="nome_proprio" length="45" />
+            <column name="nomeProprio" length="45" />
         </property>
         <property name="apelido" type="string">
             <column name="apelido" length="45" />
         </property>
-        <property name="dataDeNascimento" type="date">
-            <column name="data_de_nascimento" length="10" />
+        <property name="dataNascimento" type="date">
+            <column name="dataNascimento" length="10" />
         </property>
         <property name="genero" type="string">
             <column name="genero" length="45" />
@@ -38,41 +41,35 @@
         <property name="telefone" type="java.lang.Integer">
             <column name="telefone" />
         </property>
-        <property name="ECuidador" type="java.lang.Boolean">
-            <column name="e_cuidador" />
+        <property name="ecuidador" type="java.lang.Boolean">
+            <column name="eCuidador" />
         </property>
-        <property name="nomeUtilizador" type="string">
-            <column name="nome_utilizador" length="45" />
-        </property>
-        <property name="password" type="string">
-            <column name="password" length="45" />
-        </property>
-        <property name="dataDeObito" type="date">
-            <column name="data_de_obito" length="10" />
+        <property name="dataObito" type="date">
+            <column name="dataObito" length="10" />
         </property>
         <set name="eventos" table="evento" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="Familiar_idFamiliar" />
+                <column name="idFamiliar" not-null="true" />
             </key>
-            <one-to-many class="model.Evento" />
+            <one-to-many class="Evento" />
         </set>
-        <set name="relacaoPacienteFamiliars" table="relacao_paciente_familiar" inverse="true" lazy="true" fetch="select">
+        <set name="relacaopacientefamiliars" table="relacaopacientefamiliar" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="Familiar_idFamiliar" not-null="true" />
+                <column name="idFamiliar" not-null="true" />
             </key>
-            <one-to-many class="model.RelacaoPacienteFamiliar" />
+            <one-to-many class="Relacaopacientefamiliar" />
         </set>
-        <set name="relacaoFamiliarFamiliarsForFamiliarIdFamiliar1" table="relacao_familiar_familiar" inverse="true" lazy="true" fetch="select">
+        <set name="relacaofamiliarfamiliarsForIdFamiliar1" table="relacaofamiliarfamiliar" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="Familiar_idFamiliar1" not-null="true" />
+                <column name="idFamiliar1" not-null="true" />
             </key>
-            <one-to-many class="model.RelacaoFamiliarFamiliar" />
+            <one-to-many class="Relacaofamiliarfamiliar" />
         </set>
-        <set name="relacaoFamiliarFamiliarsForFamiliarIdFamiliar" table="relacao_familiar_familiar" inverse="true" lazy="true" fetch="select">
+        <set name="relacaofamiliarfamiliarsForIdFamiliar" table="relacaofamiliarfamiliar" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="Familiar_idFamiliar" not-null="true" />
+                <column name="idFamiliar" not-null="true" />
             </key>
-            <one-to-many class="model.RelacaoFamiliarFamiliar" />
+            <one-to-many class="Relacaofamiliarfamiliar" />
         </set>
     </class>
 </hibernate-mapping>

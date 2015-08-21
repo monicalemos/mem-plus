@@ -8,10 +8,14 @@ public interface JogoDAO {
 	
 	void saveOrUpdate(Jogo jogo);
 
-	void delete(int jogoId);
+	void delete(int idJogo);
 
-	Jogo get(int jogoId);
+	Jogo get(int idJogo);
 
 	List<Jogo> list();
+	
+	List<Jogo> listByInteracao(int idInteracao);
+	
+	List<Jogo> listByCategoria(int idCategoria);
 	
 }

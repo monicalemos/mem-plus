@@ -34,75 +34,85 @@ public class EventoDAOImpl implements EventoDAO {
 
 	@Override
 	public void saveOrUpdateWithoutFamily(Evento evento) {
-		if (evento.getIdEvento() > 0) {
+		
+		if (evento.getId().getIdEvento() > 0) {
 			// update
 			String sql = "UPDATE evento SET "
 					+ "data=?, "
-					+ "tipo_de_evento=?, "
-					+ "local_Evento_idMorada=?, "
-					+ "descricao=? "
-					+ "WHERE idEvento=?";
-
-			jdbcTemplate.update(sql, 
-					evento.getData(), 
-					evento.getTipoDeEvento(), 
-					evento.getMorada().getIdMorada(),
-					evento.getDescricao(), 
-					evento.getIdEvento());
-		} else {
-			// insert
-			String sql = "INSERT INTO evento (data, "
-					+ "tipo_de_evento, "
-					+ "local_Evento_idMorada,"
-					+ "descricao, "
-					+ "idEvento)"
-					+ " VALUES (?, ?, ?, ?, ?)";
-			jdbcTemplate.update(sql, 
-					evento.getData(), 
-					evento.getTipoDeEvento(), 
-					evento.getTipoDeEvento(), 
-					evento.getMorada().getIdMorada(),
-					evento.getDescricao(), 
-					evento.getIdEvento());
-		}
-	}
-
-	@Override
-	public void saveOrUpdateWithFamily(Evento evento) {
-		if (evento.getIdEvento() > 0) {
-			// update
-			String sql = "UPDATE evento SET "
-					+ "data=?, "
-					+ "tipo_de_evento=?, "
-					+ "local_Evento_idMorada=?, "
+					+ "tipoEvento=?, "
+					+ "idLocalEvento=?, "
 					+ "descricao=?, "
-					+ "Familiar_idFamiliar=? "
+					+ "idPaciente=? "
 					+ "WHERE idEvento=?";
 
 			jdbcTemplate.update(sql, 
 					evento.getData(), 
-					evento.getTipoDeEvento(), 
+					evento.getTipoEvento(), 
 					evento.getMorada().getIdMorada(),
 					evento.getDescricao(), 
-					evento.getFamiliar().getIdFamiliar(),
-					evento.getIdEvento());
+					evento.getPaciente().getIdPaciente(),
+					evento.getId().getIdEvento());
 		} else {
 			// insert
 			String sql = "INSERT INTO evento ("
 					+ "idEvento, "
 					+ "data, "
-					+ "tipo_de_evento, "
-					+ "local_Evento_idMorada,"
+					+ "tipoEvento, "
+					+ "idLocalEvento, "
 					+ "descricao, "
-					+ "Familiar_idFamiliar)"
+					+ "idPaciente)"
 					+ " VALUES (?, ?, ?, ?, ?, ?)";
 			jdbcTemplate.update(sql, 
-					evento.getIdEvento(), 
+					evento.getId().getIdEvento(),
 					evento.getData(), 
-					evento.getTipoDeEvento(), 
+					evento.getTipoEvento(), 
+					evento.getTipoEvento(), 
 					evento.getMorada().getIdMorada(),
 					evento.getDescricao(), 
-					evento.getFamiliar().getIdFamiliar());
+					evento.getPaciente().getIdPaciente());
+		}
+	}
+
+	@Override
+	public void saveOrUpdateWithFamily(Evento evento) {
+		if (evento.getId().getIdEvento() > 0) {
+			// update
+			String sql = "UPDATE evento SET "
+					+ "data=?, "
+					+ "tipoEvento=?, "
+					+ "idLocalEvento=?, "
+					+ "descricao=?, "
+					+ "idFamiliar=?, "
+					+ "idPaciente=? "
+					+ "WHERE idEvento=?";
+
+			jdbcTemplate.update(sql, 
+					evento.getData(), 
+					evento.getTipoEvento(), 
+					evento.getMorada().getIdMorada(),
+					evento.getDescricao(), 
+					evento.getFamiliar().getIdFamiliar(),
+					evento.getPaciente().getIdPaciente(),
+					evento.getId().getIdEvento());
+		} else {
+			// insert
+			String sql = "INSERT INTO evento ("
+					+ "idEvento, "
+					+ "data, "
+					+ "tipoEvento, "
+					+ "idLocalEvento, "
+					+ "descricao, "
+					+ "idFamiliar, "
+					+ "idPaciente)"
+					+ " VALUES (?, ?, ?, ?, ?, ?, ?)";
+			jdbcTemplate.update(sql, 
+					evento.getId().getIdEvento(), 
+					evento.getData(), 
+					evento.getTipoEvento(), 
+					evento.getMorada().getIdMorada(),
+					evento.getDescricao(), 
+					evento.getFamiliar().getIdFamiliar(),
+					evento.getPaciente().getIdPaciente());
 		}
 	}
 
@@ -122,14 +132,14 @@ public class EventoDAOImpl implements EventoDAO {
 			public Evento extractData(ResultSet rs) throws SQLException,
 			DataAccessException {
 				if (rs.next()) {
-					Morada morada = moradaImpl.get(rs.getInt("Morada_idMorada"));
-					Paciente paciente = pacienteImpl.get(rs.getInt("Paciente_idPaciente"));
-					Familiar familiar = familiarImpl.get(rs.getInt("Familiar_idFamiliar"));
+					Morada morada = moradaImpl.get(rs.getInt("idLocalEvento"));
+					Paciente paciente = pacienteImpl.get(rs.getInt("idPaciente"));
+					Familiar familiar = familiarImpl.get(rs.getInt("idFamiliar"));
 
 					Evento evento = new Evento();
-					evento.setIdEvento(rs.getInt("idEvento"));
+					evento.getId().setIdEvento(rs.getInt("idEvento"));
 					evento.setData(rs.getDate("data"));
-					evento.setTipoDeEvento(rs.getString("tipo_de_evento"));
+					evento.setTipoEvento(rs.getString("tipoEvento"));
 					evento.setMorada(morada);
 					evento.setDescricao(rs.getString("descricao"));
 					evento.setFamiliar(familiar);
@@ -147,22 +157,22 @@ public class EventoDAOImpl implements EventoDAO {
 	@Override
 	public List<Evento> list(Paciente paciente) {
 		String sql = "SELECT * FROM Evento, morada "
-				+ "WHERE Evento.Morada_idMorada = Morada.idMorada"
-				+ "and paciente.Paciente_idPaciente=" + paciente.getIdPaciente();
+				+ "WHERE Evento.idLocalEvento = Morada.idMorada"
+				+ "and paciente.idPaciente=" + paciente.getIdPaciente();
 
 		List<Evento> listEventos = jdbcTemplate.query(sql, new RowMapper<Evento>() {
 
 			@Override
 			public Evento mapRow(ResultSet rs, int rowNum) throws SQLException {
 
-				Morada morada = moradaImpl.get(rs.getInt("Morada_idMorada"));
-				Paciente paciente = pacienteImpl.get(rs.getInt("Paciente_idPaciente"));
-				Familiar familiar = familiarImpl.get(rs.getInt("Familiar_idFamiliar"));
+				Morada morada = moradaImpl.get(rs.getInt("idLocalEvento"));
+				Paciente paciente = pacienteImpl.get(rs.getInt("idPaciente"));
+				Familiar familiar = familiarImpl.get(rs.getInt("idFamiliar"));
 
 				Evento evento = new Evento();
-				evento.setIdEvento(rs.getInt("idEvento"));
+				evento.getId().setIdEvento(rs.getInt("idEvento"));
 				evento.setData(rs.getDate("data"));
-				evento.setTipoDeEvento(rs.getString("tipo_de_evento"));
+				evento.setTipoEvento(rs.getString("tipoEvento"));
 				evento.setMorada(morada);
 				evento.setDescricao(rs.getString("descricao"));
 				evento.setFamiliar(familiar);

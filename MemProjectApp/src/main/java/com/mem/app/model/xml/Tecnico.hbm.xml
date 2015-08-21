@@ -1,36 +1,30 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 26/Jun/2015 18:13:05 by Hibernate Tools 4.3.1 -->
+<!-- Generated 21/Ago/2015 16:26:39 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="model.Tecnico" table="tecnico" catalog="memdb" optimistic-lock="version">
+    <class name="Tecnico" table="tecnico" catalog="memdb" optimistic-lock="version">
         <id name="idTecnico" type="int">
             <column name="idTecnico" />
             <generator class="assigned" />
         </id>
-        <property name="nomeCompleto" type="string">
-            <column name="nome_completo" length="45" />
-        </property>
+        <many-to-one name="utilizador" class="Utilizador" fetch="select">
+            <column name="idUtilizador" not-null="true" />
+        </many-to-one>
         <property name="nomeProprio" type="string">
-            <column name="nome_proprio" length="45" />
+            <column name="nomeProprio" length="45" not-null="true" />
         </property>
         <property name="apelido" type="string">
-            <column name="apelido" length="45" />
+            <column name="apelido" length="45" not-null="true" />
         </property>
-        <property name="nomeUtilizador" type="string">
-            <column name="nome_utilizador" length="45" not-null="true" />
-        </property>
-        <property name="password" type="string">
-            <column name="password" length="45" not-null="true" />
-        </property>
-        <property name="email" type="string">
-            <column name="email" length="45" />
+        <property name="telefone" type="int">
+            <column name="telefone" not-null="true" />
         </property>
         <set name="pacientes" table="paciente" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="Tecnico_idTecnico" not-null="true" />
+                <column name="idTecnico" not-null="true" />
             </key>
-            <one-to-many class="model.Paciente" />
+            <one-to-many class="Paciente" />
         </set>
     </class>
 </hibernate-mapping>

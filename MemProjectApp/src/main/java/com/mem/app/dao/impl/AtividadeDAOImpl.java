@@ -32,9 +32,9 @@ public class AtividadeDAOImpl implements AtividadeDAO {
 			jdbcTemplate.update(sql, atividade.getNome(), atividade.getIdAtividade() );
 		} else {
 			// insert
-			String sql = "INSERT INTO atividade (nome, idAtividade)"
+			String sql = "INSERT INTO atividade (idAtividade, nome)"
 					+ " VALUES (?, ?)";
-			jdbcTemplate.update(sql,atividade.getNome(), atividade.getIdAtividade());
+			jdbcTemplate.update(sql, atividade.getIdAtividade(), atividade.getNome());
 		}
 	}
 

@@ -14,16 +14,16 @@ private LinkedList<Familiar> repository;
 	{
 		Familiar model = new Familiar();
 		model.setIdFamiliar(1234);
-		model.setDataDeNascimento(GenericUtils.getDate("1977-05-27"));
+		model.setDataNascimento(GenericUtils.getDate("1977-05-27"));
 		model.setNomeProprio("Nuno");
 		model.setGenero("Masculino");
 		model.setApelido("Cancelo");
 		model.setEstadoCivil("Casado");
 		model.setProfissao("Informático");
-		model.getMoradaByLocalNascimentoIdMorada().setCidade("Lisboa");
-		model.getMoradaByLocalNascimentoIdMorada().setPais("Portugal");
-		model.getMoradaByLocalNascimentoIdMorada().setRegiao("Lisboa");
-		model.setECuidador(false);
+		model.getMoradaByIdLocalNascimento().setCidade("Lisboa");
+		model.getMoradaByIdLocalNascimento().setPais("Portugal");
+		model.getMoradaByIdLocalNascimento().setRegiao("Lisboa");
+		model.setEcuidador(false);
 		return model;
 	}
 

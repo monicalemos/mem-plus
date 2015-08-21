@@ -8,6 +8,7 @@ import javax.sql.DataSource;
 
 import com.mem.app.dao.TecnicoDAO;
 import com.mem.app.model.Tecnico;
+import com.mem.app.model.Utilizador;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -16,26 +17,28 @@ import org.springframework.jdbc.core.RowMapper;
 
 public class TecnicoDAOImpl implements TecnicoDAO {
 	private JdbcTemplate jdbcTemplate;
+	private UtilizadorDAOImpl utilizadorImpl;
 
 	public TecnicoDAOImpl(DataSource dataSource) {
 		jdbcTemplate = new JdbcTemplate(dataSource);
+		utilizadorImpl = new UtilizadorDAOImpl(dataSource);
 	}
 
 	@Override
 	public void saveOrUpdate(Tecnico tecnico) {
 		if (tecnico.getIdTecnico() > 0) {
 			// update
-			String sql = "UPDATE tecnico SET name_completo=?, nome_proprio=?, apelido=?, "
-					+ "nome_utilizador=?, password=?, email=? WHERE idTecnico=?";
+			String sql = "UPDATE tecnico SET nome_proprio=?, apelido=?, "
+					+ "telefone=?, idUtilizador=? WHERE idTecnico=?";
 
-			jdbcTemplate.update(sql, tecnico.getNomeCompleto(), tecnico.getNomeProprio(),
-					tecnico.getApelido(), tecnico.getNomeUtilizador(), tecnico.getPassword(), tecnico.getEmail(), tecnico.getIdTecnico() );
+			jdbcTemplate.update(sql, tecnico.getNomeProprio(), tecnico.getApelido(), tecnico.getTelefone(),
+					tecnico.getUtilizador().getIdUtilizador(), tecnico.getIdTecnico());
 		} else {
 			// insert
-			String sql = "INSERT INTO tecnico (name_completo, nome_proprio, apelido, nome_utilizador, password, email, idTecnico)"
+			String sql = "INSERT INTO tecnico (idUtilizador, nome_proprio, apelido, telefone)"
 					+ " VALUES (?, ?, ?, ?, ?, ?, ?)";
-			jdbcTemplate.update(sql, tecnico.getNomeCompleto(), tecnico.getNomeProprio(),
-					tecnico.getApelido(), tecnico.getNomeUtilizador(), tecnico.getPassword(), tecnico.getEmail(), tecnico.getIdTecnico() );
+			jdbcTemplate.update(sql, tecnico.getIdTecnico(), tecnico.getNomeProprio(), tecnico.getApelido(),
+					tecnico.getTelefone(), tecnico.getUtilizador().getIdUtilizador());
 		}
 	}
 
@@ -54,14 +57,13 @@ public class TecnicoDAOImpl implements TecnicoDAO {
 			@Override
 			public Tecnico mapRow(ResultSet rs, int rowNum) throws SQLException {
 				Tecnico aTecnico = new Tecnico();
-
+				Utilizador utilizador = utilizadorImpl.get(rs.getInt("idUtilizaodr"));
+				
 				aTecnico.setIdTecnico(rs.getInt("idTecnico"));
-				aTecnico.setNomeCompleto(rs.getString("nome_cmpleto"));
 				aTecnico.setNomeProprio(rs.getString("nome_proprio"));
 				aTecnico.setApelido(rs.getString("apelido"));
-				aTecnico.setNomeUtilizador(rs.getString("nome_utilizador"));
-				aTecnico.setPassword(rs.getString("password"));
-				aTecnico.setEmail(rs.getString("email"));
+				aTecnico.setTelefone(rs.getInt("telefone"));
+				aTecnico.setUtilizador(utilizador);
 
 				return aTecnico;
 			}
@@ -77,17 +79,16 @@ public class TecnicoDAOImpl implements TecnicoDAO {
 		return jdbcTemplate.query(sql, new ResultSetExtractor<Tecnico>() {
 
 			@Override
-			public Tecnico extractData(ResultSet rs) throws SQLException,
-			DataAccessException {
+			public Tecnico extractData(ResultSet rs) throws SQLException, DataAccessException {
 				if (rs.next()) {
+					Utilizador utilizador = utilizadorImpl.get(rs.getInt("idUtilizaodr"));
+
 					Tecnico tecnico = new Tecnico();
 					tecnico.setIdTecnico(rs.getInt("idTecnico"));
-					tecnico.setNomeCompleto(rs.getString("nomeCmpleto"));
-					tecnico.setNomeProprio(rs.getString("nomeProprio"));
+					tecnico.setNomeProprio(rs.getString("nome_proprio"));
 					tecnico.setApelido(rs.getString("apelido"));
-					tecnico.setNomeUtilizador(rs.getString("nomeUtilizador"));
-					tecnico.setPassword(rs.getString("password"));
-					tecnico.setEmail(rs.getString("email"));
+					tecnico.setTelefone(rs.getInt("telefone"));
+					tecnico.setUtilizador(utilizador);
 
 					return tecnico;
 				}
@@ -100,21 +101,21 @@ public class TecnicoDAOImpl implements TecnicoDAO {
 
 	@Override
 	public Tecnico getFromEmail(String email) {
-		String sql = "SELECT * FROM tecnico WHERE email=" + email;
+		String sql = "SELECT t.* FROM tecnico t, Utilizador u WHERE t.idUtilizador = u.idUtilizador and u.email="
+				+ email;
 		return jdbcTemplate.query(sql, new ResultSetExtractor<Tecnico>() {
 
 			@Override
-			public Tecnico extractData(ResultSet rs) throws SQLException,
-			DataAccessException {
+			public Tecnico extractData(ResultSet rs) throws SQLException, DataAccessException {
 				if (rs.next()) {
+					Utilizador utilizador = utilizadorImpl.get(rs.getInt("idUtilizaodr"));
+					
 					Tecnico tecnico = new Tecnico();
 					tecnico.setIdTecnico(rs.getInt("idTecnico"));
-					tecnico.setNomeCompleto(rs.getString("nomeCmpleto"));
-					tecnico.setNomeProprio(rs.getString("nomeProprio"));
+					tecnico.setNomeProprio(rs.getString("nome_proprio"));
 					tecnico.setApelido(rs.getString("apelido"));
-					tecnico.setNomeUtilizador(rs.getString("nomeUtilizador"));
-					tecnico.setPassword(rs.getString("password"));
-					tecnico.setEmail(rs.getString("email"));
+					tecnico.setTelefone(rs.getInt("telefone"));
+					tecnico.setUtilizador(utilizador);
 
 					return tecnico;
 				}
@@ -127,21 +128,21 @@ public class TecnicoDAOImpl implements TecnicoDAO {
 
 	@Override
 	public Tecnico getFromUserName(String user) {
-		String sql = "SELECT * FROM tecnico WHERE user_name=" + user;
+		String sql = "SELECT t.* FROM tecnico t, Utilizador u WHERE t.idUtilizador = u.idUtilizador and nomeUtilizador="
+				+ user;
 		return jdbcTemplate.query(sql, new ResultSetExtractor<Tecnico>() {
 
 			@Override
-			public Tecnico extractData(ResultSet rs) throws SQLException,
-			DataAccessException {
+			public Tecnico extractData(ResultSet rs) throws SQLException, DataAccessException {
 				if (rs.next()) {
+					Utilizador utilizador = utilizadorImpl.get(rs.getInt("idUtilizaodr"));
+					
 					Tecnico tecnico = new Tecnico();
 					tecnico.setIdTecnico(rs.getInt("idTecnico"));
-					tecnico.setNomeCompleto(rs.getString("nomeCmpleto"));
-					tecnico.setNomeProprio(rs.getString("nomeProprio"));
+					tecnico.setNomeProprio(rs.getString("nome_proprio"));
 					tecnico.setApelido(rs.getString("apelido"));
-					tecnico.setNomeUtilizador(rs.getString("nomeUtilizador"));
-					tecnico.setPassword(rs.getString("password"));
-					tecnico.setEmail(rs.getString("email"));
+					tecnico.setTelefone(rs.getInt("telefone"));
+					tecnico.setUtilizador(utilizador);
 
 					return tecnico;
 				}

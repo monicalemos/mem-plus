@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 26/Jun/2015 18:13:05 by Hibernate Tools 4.3.1 -->
+<!-- Generated 21/Ago/2015 16:26:39 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="model.Imagem" table="imagem" catalog="memdb" optimistic-lock="version">
+    <class name="Imagem" table="imagem" catalog="memdb" optimistic-lock="version">
         <id name="idImagem" type="int">
             <column name="idImagem" />
             <generator class="assigned" />

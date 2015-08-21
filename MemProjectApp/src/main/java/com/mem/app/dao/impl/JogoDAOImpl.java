@@ -35,8 +35,8 @@ public class JogoDAOImpl implements JogoDAO {
 			String sql = "UPDATE jogo SET "
 					+ "nome=?, "
 					+ "nivel=?, "
-					+ "Interacao_idInteracao=?, "
-					+ "Categoria_idCategoria=? "
+					+ "idInteracao=?, "
+					+ "idCategoria=? "
 					+ "WHERE idJogo=?";
 
 			jdbcTemplate.update(sql, 
@@ -51,8 +51,8 @@ public class JogoDAOImpl implements JogoDAO {
 					+ "(idJogo, "
 					+ "nome, "
 					+ "nivel, "
-					+ "Interacao_idInteracao, "
-					+ "Categoria_idCategoria) "
+					+ "idInteracao, "
+					+ "idCategoria) "
 					+ " VALUES (?, ?, ?, ?, ?)";
 			jdbcTemplate.update(sql, 
 					jogo.getIdJogo(),
@@ -77,8 +77,8 @@ public class JogoDAOImpl implements JogoDAO {
 			public Jogo extractData(ResultSet rs) throws SQLException,
 			DataAccessException {
 				if (rs.next()) {
-					Interacao interacao = interacaoImpl.get(rs.getInt("Interacao_idInteracao"));
-					Categoria categoria = categoriaImpl.get(rs.getInt("Categoria_idCategoria"));
+					Interacao interacao = interacaoImpl.get(rs.getInt("idInteracao"));
+					Categoria categoria = categoriaImpl.get(rs.getInt("idCategoria"));
 					
 					Jogo jogo = new Jogo();
 					jogo.setIdJogo(rs.getInt("idJogo"));
@@ -102,8 +102,8 @@ public class JogoDAOImpl implements JogoDAO {
 
 			@Override
 			public Jogo mapRow(ResultSet rs, int rowNum) throws SQLException {
-				Interacao interacao = interacaoImpl.get(rs.getInt("Interacao_idInteracao"));
-				Categoria categoria = categoriaImpl.get(rs.getInt("Categoria_idCategoria"));
+				Interacao interacao = interacaoImpl.get(rs.getInt("idInteracao"));
+				Categoria categoria = categoriaImpl.get(rs.getInt("idCategoria"));
 				
 				Jogo jogo = new Jogo();
 				jogo.setIdJogo(rs.getInt("idJogo"));
@@ -119,4 +119,52 @@ public class JogoDAOImpl implements JogoDAO {
 		return listJogo;
 	}
 
+	
+	@Override
+	public List<Jogo> listByCategoria(int idCategoria) {
+		String sql = "SELECT * FROM jogo WHERE jogo.idCategoria=" + idCategoria;
+		List<Jogo> listJogo = jdbcTemplate.query(sql, new RowMapper<Jogo>() {
+
+			@Override
+			public Jogo mapRow(ResultSet rs, int rowNum) throws SQLException {
+				Interacao interacao = interacaoImpl.get(rs.getInt("idInteracao"));
+				Categoria categoria = categoriaImpl.get(rs.getInt("idCategoria"));
+				
+				Jogo jogo = new Jogo();
+				jogo.setIdJogo(rs.getInt("idJogo"));
+				jogo.setNome(rs.getString("nome"));
+				jogo.setNivel(rs.getString("nivel"));
+				jogo.setInteracao(interacao);
+				jogo.setCategoria(categoria);
+				return jogo;
+			}
+
+		});
+
+		return listJogo;
+	}
+	
+	@Override
+	public List<Jogo> listByInteracao(int idInteracao) {
+		String sql = "SELECT * FROM jogo WHERE jogo.idInteracao=" + idInteracao;
+		List<Jogo> listJogo = jdbcTemplate.query(sql, new RowMapper<Jogo>() {
+
+			@Override
+			public Jogo mapRow(ResultSet rs, int rowNum) throws SQLException {
+				Interacao interacao = interacaoImpl.get(rs.getInt("idInteracao"));
+				Categoria categoria = categoriaImpl.get(rs.getInt("idCategoria"));
+				
+				Jogo jogo = new Jogo();
+				jogo.setIdJogo(rs.getInt("idJogo"));
+				jogo.setNome(rs.getString("nome"));
+				jogo.setNivel(rs.getString("nivel"));
+				jogo.setInteracao(interacao);
+				jogo.setCategoria(categoria);
+				return jogo;
+			}
+
+		});
+
+		return listJogo;
+	}
 }

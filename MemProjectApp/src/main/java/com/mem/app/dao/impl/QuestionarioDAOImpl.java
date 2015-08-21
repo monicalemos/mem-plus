@@ -33,10 +33,10 @@ public class QuestionarioDAOImpl implements QuestionarioDAO {
 		if (questionario.getIdQuestionario() > 0) {
 			// update
 			String sql = "UPDATE questionario SET "
-					+ "num_perguntas=?, "
+					+ "numPerguntas=?, "
 					+ "nivel=?, "
-					+ "Interacao_idInteracao=?, "
-					+ "Categoria_idCategoria=? "
+					+ "idInteracao=?, "
+					+ "idCategoria=? "
 					+ "WHERE idQuestionario=?";
 
 			jdbcTemplate.update(sql, 
@@ -49,10 +49,10 @@ public class QuestionarioDAOImpl implements QuestionarioDAO {
 			// insert
 			String sql = "INSERT INTO questionario "
 					+ "(idQuestionario, "
-					+ "num_perguntas, "
+					+ "numPerguntas, "
 					+ "nivel, "
-					+ "Interacao_idInteracao, "
-					+ "Categoria_idCategoria) "
+					+ "idInteracao, "
+					+ "idCategoria) "
 					+ " VALUES (?, ?, ?, ?, ?, ?)";
 			jdbcTemplate.update(sql, 
 					questionario.getIdQuestionario(),
@@ -77,12 +77,12 @@ public class QuestionarioDAOImpl implements QuestionarioDAO {
 			public Questionario extractData(ResultSet rs) throws SQLException,
 			DataAccessException {
 				if (rs.next()) {
-					Interacao interacao = interacaoImpl.get(rs.getInt("Interacao_idInteracao"));
-					Categoria categoria = categoriaImpl.get(rs.getInt("Categoria_idCategoria"));
+					Interacao interacao = interacaoImpl.get(rs.getInt("idInteracao"));
+					Categoria categoria = categoriaImpl.get(rs.getInt("idCategoria"));
 					
 					Questionario questionario = new Questionario();
 					questionario.setIdQuestionario(rs.getInt("idQuestionario"));
-					questionario.setNumPerguntas(rs.getInt("num_perguntas"));
+					questionario.setNumPerguntas(rs.getInt("numPerguntas"));
 					questionario.setNivel(rs.getString("nivel"));
 					questionario.setInteracao(interacao);
 					questionario.setCategoria(categoria);
@@ -102,13 +102,63 @@ public class QuestionarioDAOImpl implements QuestionarioDAO {
 
 			@Override
 			public Questionario mapRow(ResultSet rs, int rowNum) throws SQLException {
-				Interacao interacao = interacaoImpl.get(rs.getInt("Interacao_idInteracao"));
-				Categoria categoria = categoriaImpl.get(rs.getInt("Categoria_idCategoria"));
+				Interacao interacao = interacaoImpl.get(rs.getInt("idInteracao"));
+				Categoria categoria = categoriaImpl.get(rs.getInt("idCategoria"));
 				
 				Questionario aQuestionario = new Questionario();
 
 				aQuestionario.setIdQuestionario(rs.getInt("idQuestionario"));
-				aQuestionario.setNumPerguntas(rs.getInt("num_perguntas"));
+				aQuestionario.setNumPerguntas(rs.getInt("numPerguntas"));
+				aQuestionario.setNivel(rs.getString("nivel"));
+				aQuestionario.setInteracao(interacao);
+				aQuestionario.setCategoria(categoria);
+				return aQuestionario;
+			}
+
+		});
+
+		return listQuestionario;
+	}
+	
+	@Override
+	public List<Questionario> listByCategoria(int idCategoria) {
+		String sql = "SELECT * FROM questionario WHERE questionario.idCategoria=" + idCategoria;
+		List<Questionario> listQuestionario = jdbcTemplate.query(sql, new RowMapper<Questionario>() {
+
+			@Override
+			public Questionario mapRow(ResultSet rs, int rowNum) throws SQLException {
+				Interacao interacao = interacaoImpl.get(rs.getInt("idInteracao"));
+				Categoria categoria = categoriaImpl.get(rs.getInt("idCategoria"));
+				
+				Questionario aQuestionario = new Questionario();
+
+				aQuestionario.setIdQuestionario(rs.getInt("idQuestionario"));
+				aQuestionario.setNumPerguntas(rs.getInt("numPerguntas"));
+				aQuestionario.setNivel(rs.getString("nivel"));
+				aQuestionario.setInteracao(interacao);
+				aQuestionario.setCategoria(categoria);
+				return aQuestionario;
+			}
+
+		});
+
+		return listQuestionario;
+	}
+	
+	@Override
+	public List<Questionario> listByInteracao(int idInteracao) {
+		String sql = "SELECT * FROM questionario WHERE questionario.idInteracao=" + idInteracao;
+		List<Questionario> listQuestionario = jdbcTemplate.query(sql, new RowMapper<Questionario>() {
+
+			@Override
+			public Questionario mapRow(ResultSet rs, int rowNum) throws SQLException {
+				Interacao interacao = interacaoImpl.get(rs.getInt("idInteracao"));
+				Categoria categoria = categoriaImpl.get(rs.getInt("idCategoria"));
+				
+				Questionario aQuestionario = new Questionario();
+
+				aQuestionario.setIdQuestionario(rs.getInt("idQuestionario"));
+				aQuestionario.setNumPerguntas(rs.getInt("numPerguntas"));
 				aQuestionario.setNivel(rs.getString("nivel"));
 				aQuestionario.setInteracao(interacao);
 				aQuestionario.setCategoria(categoria);
