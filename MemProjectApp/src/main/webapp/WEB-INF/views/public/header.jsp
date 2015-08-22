@@ -6,7 +6,6 @@
 	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<h3> Olá: <%=session.getAttribute("nome_utilizador")%></h3> 
 				<a class="navbar-brand" href="#"> 
 				<img alt="Brand" src="${pageContext.request.contextPath}/resources/static/img/logo.png">
 				</a>
@@ -15,21 +14,21 @@
 
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav navbar-right container-fluid">
-					<li> 
-						<spring:url value="/home-private" var="homeUrl" htmlEscape="true" /> 
+					<li class="active"> 
+						<spring:url value="/" var="homeUrl" htmlEscape="true" /> 
 						<a href="${homeUrl}">Home</a>
 					</li>
 					<li>
-						<spring:url value="/Paciente/listarPacientes" var="listarPacientesUrl" htmlEscape="true" /> 
-						<a href="${listarPacientesUrl}">Ver Pacientes</a>
+						<spring:url value="/Sobre" var="sobreUrl" htmlEscape="true" /> 
+						<a href="${sobreUrl}">Sobre nós</a>
 					</li>
 					<li>
-						<spring:url value="/Paciente/inserirPaciente" var="inserirPacienteUrl" htmlEscape="true" /> 
-						<a href="${inserirPacienteUrl}">Registrar Novo Paciente</a>
+						<spring:url value="/Contactos" var="contactosUrl" htmlEscape="true" /> 
+						<a href="${contactosUrl}">Contactos</a>
 					</li>
 					<li>
-					<spring:url value="/Utilizador/logout" var="logout" htmlEscape="true" /> 
-						<a href="${logout}">Logout</a>
+					<spring:url value="/Utilizador/login" var="loginUrl" htmlEscape="true" /> 
+						<a href="${loginUrl}">Login</a>
 					</li>
 				</ul>
 			</div>

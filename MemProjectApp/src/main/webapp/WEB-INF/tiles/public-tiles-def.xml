@@ -5,16 +5,18 @@
 <tiles-definitions>
 
 	<!-- ###### Public ###### -->
-	<definition name="about" extends="publicTemplate">
+
+	<definition name="sobre" extends="publicTemplate">
 		<put-attribute name="body" value="/WEB-INF/views/public/about.jsp" />
 	</definition>
-	<definition name="contacts" extends="publicTemplate">
+	<definition name="contactos" extends="publicTemplate">
 		<put-attribute name="body" value="/WEB-INF/views/public/contacts.jsp" />
-	</definition>	
-	
-			<!-- /Account-->
+	</definition>
+
+	<!-- /Account -->
 	<definition name="utilizador-login" extends="publicTemplate">
 		<put-attribute name="menu" value="" />
 		<put-attribute name="body" value="/WEB-INF/views/utilizador/login.jsp" />
-	</definition>	
+	</definition>
+
 </tiles-definitions>

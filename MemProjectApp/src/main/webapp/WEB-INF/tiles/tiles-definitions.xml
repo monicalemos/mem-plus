@@ -4,7 +4,8 @@
         "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <tiles-definitions>
 
-	<definition name="DefaultTemplate" template="/WEB-INF/views/template/SiteTemplate.jsp">
+	<!-- Private -->
+	<definition name="DefaultTemplate" template="/WEB-INF/views/template/template.jsp">
 		<put-attribute name="title" value="MEM+" />
 		<put-attribute name="header" value="/WEB-INF/views/template/header.jsp" />
 		<put-attribute name="menu" value="/WEB-INF/views/template/menu.jsp" />
@@ -12,7 +13,31 @@
 		<put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp" />
 	</definition>
 
-	<definition name="home" extends="DefaultTemplate">
+
+	<!-- Public -->
+	<definition name="publicTemplate" template="/WEB-INF/views/public/layout.jsp">
+		<put-attribute name="title" value="MEM+" />
+		<put-attribute name="header" value="/WEB-INF/views/public/header.jsp" />
+		<put-attribute name="menu" value="" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp" />
+	</definition>
+
+	<!-- PUBLIC -->
+	<definition name="home" extends="publicTemplate">
+		<put-attribute name="body" value="/WEB-INF/views/public/index.jsp" />
+	</definition>
+
+
+	<!-- PRIVATE -->
+	<definition name="home-private" extends="DefaultTemplate">
 		<put-attribute name="body" value="/WEB-INF/views/home.jsp" />
 	</definition>
+	
+	<definition name="utilizador-logout" extends="DefaultTemplate">
+		<put-attribute name="menu" value="" />
+		<put-attribute name="body" value="/WEB-INF/views/utilizador/logout.jsp" />
+	</definition>
+
+
 </tiles-definitions>

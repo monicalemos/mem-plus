@@ -28,6 +28,7 @@
 		<beans:property name="definitions">
 			<beans:list>
 				<beans:value>/WEB-INF/tiles/tiles-definitions.xml</beans:value>
+ 				<beans:value>/WEB-INF/tiles/public-tiles-def.xml</beans:value>
  				<beans:value>/WEB-INF/tiles/paciente-tiles-def.xml</beans:value>
 				<beans:value>/WEB-INF/tiles/familiar-tiles-def.xml</beans:value>
 				<beans:value>/WEB-INF/tiles/evento-tiles-def.xml</beans:value>
