@@ -7,6 +7,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 @Controller
+@RequestMapping(value = "/Familiar")
 public class FamiliaresController {
 //	private static final Logger logger = LoggerFactory.getLogger(FamiliaresController.class);
 //	private static final IRepository<Familiar> repo = DataRepositoryLocator.getFamiliarRepository();

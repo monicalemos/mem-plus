@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 21/Ago/2015 16:26:39 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Utilizador" table="utilizador" catalog="memdb" optimistic-lock="version">
+        <id name="idUtilizador" type="int">
+            <column name="idUtilizador" />
+            <generator class="assigned" />
+        </id>
+        <property name="nomeUtilizador" type="string">
+            <column name="nomeUtilizador" length="45" not-null="true" />
+        </property>
+        <property name="password" type="string">
+            <column name="password" length="45" not-null="true" />
+        </property>
+        <property name="tipoUtilizador" type="string">
+            <column name="tipoUtilizador" length="45" not-null="true" />
+        </property>
+        <property name="email" type="string">
+            <column name="email" length="45" />
+        </property>
+        <set name="tecnicos" table="tecnico" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idUtilizador" not-null="true" />
+            </key>
+            <one-to-many class="Tecnico" />
+        </set>
+        <set name="familiars" table="familiar" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idUtilizador" />
+            </key>
+            <one-to-many class="Familiar" />
+        </set>
+    </class>
+</hibernate-mapping>

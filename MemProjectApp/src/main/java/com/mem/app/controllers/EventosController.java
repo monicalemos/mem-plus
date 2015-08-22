@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
+@RequestMapping(value = "/Evento")
 public class EventosController {
 	
 //	private static final Logger logger = LoggerFactory.getLogger(EventosController.class);
