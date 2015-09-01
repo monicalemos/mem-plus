@@ -12,7 +12,7 @@
 	position: fixed;
 	top: 50%;
 	left: 50%;
-	margin-top: -130px;
+	margin-top: -350px;
 	margin-left: -140px;
 }
 
@@ -30,27 +30,28 @@
 
 <div class="container">
 		<div class="row-fluid" id="LoginForm">
-			<form class="form-signin" role="form" action="login" method="post">
+		
+			<form:form class="form-signin" role="form" method="post" modelAttribute="utilizadorModel" action="login">
 				<h2 class="form-signin-heading">Please sign in</h2>
 				
-				<label for="j_username" class="sr-only">Username</label>
-				<input
-					id="j_username" name="j_username" type="text" class="form-control"
-					placeholder="username" required="required" autofocus> 
-				
-				<label for="j_password" class="sr-only">Password</label>
-				<input
-					id="j_password" name="j_password" type="password" class="form-control"
-					placeholder="password" required="required">
+			<form:label path="nomeUtilizador" class="sr-only">Nome Utilizador</form:label>
+			<form:input path="nomeUtilizador" id="nomeUtilizador"
+				class="form-control" required="required"  placeholder="Telefone" />
+
+			<br>
+			<form:label path="password" class="sr-only">Password</form:label>
+			<form:password path="password" id="password" class="form-control" required="required"  placeholder="Password"/>
 					
-				<div class="checkbox">
-					<label> <input type="checkbox" value="remember-me">
-						Remember me
-					</label>
-				</div>
-				<button class="btn btn-lg btn-primary btn-block" type="submit">Sign
-					in</button>
-			</form>
+			<div class="checkbox">
+				<label> <input type="checkbox" value="remember-me"> Remember me </label>
+			</div>
+				<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+			
+			<br>
+			<spring:url value="/Utilizador/registrarUtilizador" var="registrarUtilizadorUrl" htmlEscape="true" /> 
+			<a href="${registrarUtilizadorUrl}">Registrar no site</a>
+			
+			</form:form>
 		</div>
 		<c:if test="${not empty param.error}">
 			<div id="login-error">

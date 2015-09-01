@@ -18,5 +18,10 @@
 		<put-attribute name="menu" value="" />
 		<put-attribute name="body" value="/WEB-INF/views/utilizador/login.jsp" />
 	</definition>
+	
+	<definition name="utilizador-new" extends="publicTemplate">
+		<put-attribute name="menu" value="" />
+		<put-attribute name="body" value="/WEB-INF/views/utilizador/registoUtilizador.jsp" />
+	</definition>
 
 </tiles-definitions>
