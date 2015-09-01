@@ -4,13 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import pt.memplus.web.daos.EventDao;
 import pt.memplus.web.models.Event;
 @Service("EventService")
 @Transactional
 public class EventServiceImpl implements EventService {
 	@Autowired
-    private EventDao eventDao;
+//    private EventDao eventDao;
 	@Override
 	public void save(Event ev) {
 		// TODO Auto-generated method stub

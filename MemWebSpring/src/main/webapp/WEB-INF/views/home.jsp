@@ -39,11 +39,11 @@
                     </div>
                 </div>
                 <a href="#">
-                    <div class="panel-footer">
+                 <!--    <div class="panel-footer"> -->
                         <span class="pull-left">View Details</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                        <div class="clearfix"></div>
-                    </div>
+                     <!--    <div class="clearfix"></div> -->
+                    <!-- </div> -->
                 </a>
             </div>
         </div>
@@ -61,11 +61,11 @@
                     </div>
                 </div>
                 <a href="#">
-                    <div class="panel-footer">
+                   <!--  <div class="panel-footer"> -->
                         <span class="pull-left">View Details</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                        <div class="clearfix"></div>
-                    </div>
+                     <!--    <div class="clearfix"></div>
+                    </div> -->
                 </a>
             </div>
         </div>
@@ -83,11 +83,11 @@
                     </div>
                 </div>
                 <a href="#">
-                    <div class="panel-footer">
+                  <!--   <div class="panel-footer"> -->
                         <span class="pull-left">View Details</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                        <div class="clearfix"></div>
-                    </div>
+                  <!--       <div class="clearfix"></div>
+                    </div> -->
                 </a>
             </div>
         </div>
@@ -105,11 +105,11 @@
                     </div>
                 </div>
                 <a href="#">
-                    <div class="panel-footer">
+                 <!--    <div class="panel-footer"> -->
                         <span class="pull-left">View Details</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                        <div class="clearfix"></div>
-                    </div>
+                     <!--    <div class="clearfix"></div>
+                    </div> -->
                 </a>
             </div>
         </div>

@@ -68,7 +68,7 @@ public Paciente() {
         this.interesses = new ArrayList<TipoInteresses>();
     }
 
-    private void setRelacoes() {
+//    private void setRelacoes() {
 
 //		if(utilitario.verTodos_Relacao_Paciente_Familiar()!=null){
 //			for(Relacao r: utilitario.verTodos_Relacao_Paciente_Familiar()){
@@ -94,7 +94,7 @@ public Paciente() {
 //				}
 //			}
 //		}
-    }
+//    }
 
     public void setEventos() {
 //        for (Evento e : utilitario.verTodos_Eventos(this)) {

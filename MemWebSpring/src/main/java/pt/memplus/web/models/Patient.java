@@ -2,9 +2,6 @@ package pt.memplus.web.models;
 
 import java.util.LinkedList;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-
 //TODO
 //@Entity
 //@Table(name="Patients")

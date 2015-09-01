@@ -4,22 +4,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import pt.memplus.web.daos.CareGiverDao;
 import pt.memplus.web.models.CareGiver;
 @Service("CareGiverService")
 @Transactional
 public class CareGiverServiceImpl implements CareGiverService {
 	@Autowired
-    private CareGiverDao careGiverDao;
+//    private CareGiverDao careGiverDao;
 	@Override
 	public void save(CareGiver cg) {
-		// TODO Auto-generated method stub
+		//Auto-generated method stub
 
 	}
 
 	@Override
 	public void delete(int id) {
-		// TODO Auto-generated method stub
+		// Auto-generated method stub
 
 	}
 

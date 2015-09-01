@@ -4,13 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import pt.memplus.web.daos.DoctorDao;
 import pt.memplus.web.models.Doctor;
 @Service("DoctorService")
 @Transactional
 public class DoctorServiceImpl implements DoctorService {
 	@Autowired
-    private DoctorDao doctorDao;
+//    private DoctorDao doctorDao;
 	@Override
 	public void save(Doctor doc) {
 		// TODO Auto-generated method stub

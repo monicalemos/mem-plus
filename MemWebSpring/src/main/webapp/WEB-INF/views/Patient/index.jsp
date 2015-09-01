@@ -50,8 +50,8 @@
 					<td><c:out value="${prod.firstName}" /></td>
 					<td><c:out value="${prod.lastName}" /></td>
 					<td><c:out value="${prod.dateOfBirth}" /></td>
-					<td><a class="brand" href="Patient/Relative?patientId=<c:out value="${prod.id}" />">Relatives </td>
-					<td><a class="brand" href="Patient/Event?personId=<c:out value="${prod.id}" />">Events</td>
+					<td><a class="brand" href="Patient/Relative?patientId=<c:out value="${prod.id}" />"></a>Relatives </td>
+					<td><a class="brand" href="Patient/Event?personId=<c:out value="${prod.id}"/>"></a>Events</td>
 					
 			</tr>
 			</c:forEach>

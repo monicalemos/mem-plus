@@ -36,19 +36,18 @@
 
 				<input
 					id="j_username" name="j_username" type="text" class="form-control"
-					placeholder="username" required="" autofocus=""> 
+					placeholder="username" required="required" autofocus> 
 				<label for="j_password" class="sr-only">Password</label>
 
 					<input
 					id="j_password" name="j_password" type="password" class="form-control"
-					placeholder="Password" required="">
+					placeholder="Password" required="required">
 				<div class="checkbox">
 					<label> <input type="checkbox" value="remember-me">
 						Remember me
 					</label>
 				</div>
-				<button class="btn btn-lg btn-primary btn-block" type="submit">Sign
-					in</button>
+				<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
 			</form>
 		</div>
 		<c:if test="${not empty param.error}">

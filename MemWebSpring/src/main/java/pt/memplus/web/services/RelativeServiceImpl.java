@@ -4,13 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import pt.memplus.web.daos.RelativeDao;
 import pt.memplus.web.models.Relative;
 @Service("RelativeService")
 @Transactional
 public class RelativeServiceImpl implements RelativeService {
 	@Autowired
-    private RelativeDao relativeDao;
+//    private RelativeDao relativeDao;
 	@Override
 	public void save(Relative rel) {
 		// TODO Auto-generated method stub

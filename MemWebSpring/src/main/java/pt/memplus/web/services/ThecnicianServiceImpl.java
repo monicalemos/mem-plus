@@ -4,13 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import pt.memplus.web.daos.ThecnicianDao;
 import pt.memplus.web.models.Technician;
 @Service("ThecnicianService")
 @Transactional
 public class ThecnicianServiceImpl implements ThecnicianService {
 	@Autowired
-    private ThecnicianDao thecnicianDao;
+//    private ThecnicianDao thecnicianDao;
 	@Override
 	public void save(Technician tec) {
 		// TODO Auto-generated method stub

@@ -6,7 +6,7 @@ public class Utilizador {
 
 	private String nome_utilizador;
 	private String password;
-	private Paciente paciente;
+//	private Paciente paciente;
 	private Familiar familiar;
 	private Tecnico tecnico;
 	private TipoUtilizador tipo;

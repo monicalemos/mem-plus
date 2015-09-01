@@ -4,14 +4,12 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import pt.memplus.web.models.Address;
 @Repository
 public class AddressDAOImpl extends AbstractDao implements AddressDAO  {
-	private static final Logger logger = LoggerFactory.getLogger(AddressDAOImpl.class);
+//	private static final Logger logger = LoggerFactory.getLogger(AddressDAOImpl.class);
 
 	@Override
 	public void save(Address address) {

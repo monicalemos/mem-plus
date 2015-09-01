@@ -2,8 +2,6 @@ package pt.memplus.web.controllers;
 
 import java.util.Locale;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping(value = "/Manager")
 public class ManagerController {
-	private static final Logger logger = LoggerFactory.getLogger(ManagerController.class);
+//	private static final Logger logger = LoggerFactory.getLogger(ManagerController.class);
 
 	public ManagerController() {
 		// TODO Auto-generated constructor stub

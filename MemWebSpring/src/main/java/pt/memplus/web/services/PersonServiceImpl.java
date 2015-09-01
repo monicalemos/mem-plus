@@ -4,13 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import pt.memplus.web.daos.PersonDao;
 import pt.memplus.web.models.Person;
 @Service("PersonService")
 @Transactional
 public class PersonServiceImpl implements PersonService {
 	@Autowired
-    private PersonDao personDao;
+//    private PersonDao personDao;
 	@Override
 	public void save(Person per) {
 		// TODO Auto-generated method stub
