@@ -7,16 +7,22 @@ public class DataRepositoryLocator {
 	private static final IRepository<Paciente> pacienteRepository = new PacienteRepository();
 	private static final IRepository<Familiar> familiarRepository = new FamiliarRepository();
 	private static final IRepository<Evento> eventoRepository = new EventoRepository();
-	
+	private static final IRepository<Tecnico> tecnicoRepository = new TecnicoRepository();
+	private static final IRepository<Utilizador> utilizadorRepository = new UtilizadorRepository();
 	
 	public static IRepository<Paciente> getPacientRepository() {
 		return pacienteRepository;
 	}
-	public static IRepository<Familiar> getRelativeRepository() {
+	public static IRepository<Familiar> getFamiliarRepository() {
 		return familiarRepository;
 	}
-	public static IRepository<Evento> getEventRepository(){
+	public static IRepository<Evento> getEventoRepository(){
 		return eventoRepository;
 	}
-
+	public static IRepository<Tecnico> getTecnicoRepository(){
+		return tecnicoRepository;
+	}
+	public static IRepository<Utilizador> getUtilizadorRepository(){
+		return utilizadorRepository;
+	}
 }

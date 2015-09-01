@@ -2,6 +2,7 @@ package com.mem.app.model.repository.memory;
 
 import java.util.LinkedList;
 
+import com.mem.app.model.Morada;
 import com.mem.app.model.Paciente;
 import com.mem.app.model.repository.IRepository;
 import com.mem.app.utils.GenericUtils;
@@ -14,6 +15,10 @@ public class PacienteRepository implements IRepository<Paciente> {
 	private Paciente getNewPaciente()
 	{
 		Paciente model = new Paciente();
+		Morada moradaLocalNascimento = new Morada();
+		moradaLocalNascimento.setCidade("Lisboa");
+		moradaLocalNascimento.setRegiao("Lisboa");
+		moradaLocalNascimento.setPais("Portugal");
 		model.setIdPaciente(1234);
 		model.setDataNascimento(GenericUtils.getDate("1977-05-27"));
 		model.setNomeProprio("Nuno");
@@ -21,9 +26,7 @@ public class PacienteRepository implements IRepository<Paciente> {
 		model.setApelido("Cancelo");
 		model.setEstadoCivil("Casado");
 		model.setProfissao("Informático");
-		model.getMoradaByIdLocalNascimento().setCidade("Lisboa");
-		model.getMoradaByIdLocalNascimento().setPais("Portugal");
-		model.getMoradaByIdLocalNascimento().setRegiao("Lisboa");
+		model.setMoradaByIdLocalNascimento(moradaLocalNascimento);
 		return model;
 	}
 
@@ -65,6 +68,12 @@ public class PacienteRepository implements IRepository<Paciente> {
 	public boolean delete(int id) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public Paciente selectObject(Paciente obj) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

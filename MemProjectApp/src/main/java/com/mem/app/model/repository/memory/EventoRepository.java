@@ -41,4 +41,10 @@ public class EventoRepository implements IRepository<Evento> {
 		return false;
 	}
 
+	@Override
+	public Evento selectObject(Evento obj) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

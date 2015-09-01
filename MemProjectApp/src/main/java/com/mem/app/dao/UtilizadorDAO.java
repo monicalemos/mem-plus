@@ -6,11 +6,17 @@ import com.mem.app.model.Utilizador;
 
 public interface UtilizadorDAO {
 	
-    public void saveOrUpdate(Utilizador utilizador);
+    void saveOrUpdate(Utilizador utilizador);
     
-    public void delete(int utilizadorId);
+    void delete(int utilizadorId);
      
-    public Utilizador get(int utilizadorId);
+    Utilizador get(int utilizadorId);
      
-    public List<Utilizador> list();
+    List<Utilizador> list();
+    
+    Utilizador getFromEmail(String email);
+	
+    Utilizador getFromUserName(String user);
+    
+    Utilizador matchUser(String username, String password) ;
 }

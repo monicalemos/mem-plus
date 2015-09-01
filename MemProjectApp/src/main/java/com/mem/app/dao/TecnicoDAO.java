@@ -12,9 +12,5 @@ public interface TecnicoDAO {
 
 	Tecnico get(int tecnicoId);
 	
-	Tecnico getFromEmail(String email);
-	
-	Tecnico getFromUserName(String user);
-
 	List<Tecnico> list();
 }

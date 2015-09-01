@@ -3,6 +3,7 @@ package com.mem.app.model.repository.memory;
 import java.util.LinkedList;
 
 import com.mem.app.model.Familiar;
+import com.mem.app.model.Morada;
 import com.mem.app.model.repository.IRepository;
 
 import com.mem.app.utils.GenericUtils;
@@ -12,6 +13,11 @@ private LinkedList<Familiar> repository;
 	
 	private Familiar getNewFamiliar()
 	{
+		Morada moradaLocalNascimento = new Morada();
+		moradaLocalNascimento.setCidade("Lisboa");
+		moradaLocalNascimento.setRegiao("Lisboa");
+		moradaLocalNascimento.setPais("Portugal");
+		
 		Familiar model = new Familiar();
 		model.setIdFamiliar(1234);
 		model.setDataNascimento(GenericUtils.getDate("1977-05-27"));
@@ -20,9 +26,7 @@ private LinkedList<Familiar> repository;
 		model.setApelido("Cancelo");
 		model.setEstadoCivil("Casado");
 		model.setProfissao("Informático");
-		model.getMoradaByIdLocalNascimento().setCidade("Lisboa");
-		model.getMoradaByIdLocalNascimento().setPais("Portugal");
-		model.getMoradaByIdLocalNascimento().setRegiao("Lisboa");
+		model.setMoradaByIdLocalNascimento(moradaLocalNascimento);
 		model.setEcuidador(false);
 		return model;
 	}
@@ -62,6 +66,12 @@ private LinkedList<Familiar> repository;
 	public boolean delete(int id) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public Familiar selectObject(Familiar obj) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

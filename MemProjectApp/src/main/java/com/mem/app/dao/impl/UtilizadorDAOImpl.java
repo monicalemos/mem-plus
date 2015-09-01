@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 
 import com.mem.app.dao.UtilizadorDAO;
+import com.mem.app.model.Tecnico;
 import com.mem.app.model.Utilizador;
 
 public class UtilizadorDAOImpl implements UtilizadorDAO {
@@ -90,6 +91,75 @@ public class UtilizadorDAOImpl implements UtilizadorDAO {
 		});
 
 		return listUtilizador;
+	}
+	@Override
+	public Utilizador getFromEmail(String email) {
+		String sql = "SELECT * FROM Utilizador WHERE email=" + email;
+		return jdbcTemplate.query(sql, new ResultSetExtractor<Utilizador>() {
+
+
+			@Override
+			public Utilizador extractData(ResultSet rs) throws SQLException, DataAccessException {
+				if (rs.next()) {
+					Utilizador utilizador = new Utilizador();
+					utilizador.setIdUtilizador(rs.getInt("idUtilizador"));
+					utilizador.setNomeUtilizador(rs.getString("nomeUtilizador"));
+					utilizador.setPassword(rs.getString("password"));
+					utilizador.setEmail(rs.getString("email"));
+					
+					return utilizador;
+				}
+
+				return null;
+			}
+
+		});
+	}
+
+	@Override
+	public Utilizador getFromUserName(String user) {
+		String sql = "SELECT * FROM Utilizador u WHERE nomeUtilizador="+ user;
+		return jdbcTemplate.query(sql, new ResultSetExtractor<Utilizador>() {
+
+			@Override
+			public Utilizador extractData(ResultSet rs) throws SQLException, DataAccessException {
+				if (rs.next()) {
+					Utilizador utilizador = new Utilizador();
+					utilizador.setIdUtilizador(rs.getInt("idUtilizador"));
+					utilizador.setNomeUtilizador(rs.getString("nomeUtilizador"));
+					utilizador.setPassword(rs.getString("password"));
+					utilizador.setEmail(rs.getString("email"));
+					
+					return utilizador;
+				}
+
+				return null;
+			}
+
+		});
+	}
+	
+	@Override
+	public Utilizador matchUser(String username, String password) {
+		String sql = "SELECT * FROM Utilizador u WHERE nomeUtilizador="+ username + " and password = " + password;
+		return jdbcTemplate.query(sql, new ResultSetExtractor<Utilizador>() {
+
+			@Override
+			public Utilizador extractData(ResultSet rs) throws SQLException, DataAccessException {
+				if (rs.next()) {
+					Utilizador utilizador = new Utilizador();
+					utilizador.setIdUtilizador(rs.getInt("idUtilizador"));
+					utilizador.setNomeUtilizador(rs.getString("nomeUtilizador"));
+					utilizador.setPassword(rs.getString("password"));
+					utilizador.setEmail(rs.getString("email"));
+					
+					return utilizador;
+				}
+
+				return null;
+			}
+
+		});
 	}
 
 }
