@@ -6,19 +6,21 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import com.mem.app.dao.InteresseDAO;
 import com.mem.app.model.Interesse;
-
+@Repository
 public class InteresseDAOImpl implements InteresseDAO {
 
 	private JdbcTemplate jdbcTemplate;
 
-
+	@Autowired
 	public InteresseDAOImpl(DataSource nomeSource) {
 		jdbcTemplate = new JdbcTemplate(nomeSource);
 	}

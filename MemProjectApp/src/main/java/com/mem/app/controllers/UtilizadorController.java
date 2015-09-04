@@ -1,14 +1,11 @@
 package com.mem.app.controllers;
 
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -19,17 +16,32 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.mem.app.model.Tecnico;
 import com.mem.app.model.Utilizador;
-import com.mem.app.model.repository.DataRepositoryLocator;
-import com.mem.app.model.repository.IRepository;
+import com.mem.app.services.TecnicoService;
+import com.mem.app.services.UtilizadorService;
 
 @Controller
 @RequestMapping(value = "/Utilizador")
 public class UtilizadorController {
 
 	private static final Logger logger = LoggerFactory.getLogger(UtilizadorController.class);
-	
-	private static final IRepository<Tecnico> repo = DataRepositoryLocator.getTecnicoRepository();
-	private static final IRepository<Utilizador> repoUtil = DataRepositoryLocator.getUtilizadorRepository();
+
+	// private static final IRepository<Tecnico> repo =
+	// DataRepositoryLocator.getTecnicoRepository();
+	// private static final IRepository<Utilizador> repoUtil =
+	// DataRepositoryLocator.getUtilizadorRepository();
+
+	private UtilizadorService utilizadorService;
+	private TecnicoService tecnicoService;
+
+	@Autowired
+	public void setUtilizadorService(UtilizadorService utilizadorService) {
+		this.utilizadorService = utilizadorService;
+	}
+
+	@Autowired
+	public void setTecnicoService(TecnicoService tecnicoService) {
+		this.tecnicoService = tecnicoService;
+	}
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public ModelAndView index() {
@@ -44,25 +56,61 @@ public class UtilizadorController {
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String getLoginPage(@RequestParam(value = "error", required = false) boolean error, 
-			@ModelAttribute("utilizadorModel") Utilizador utilizadorModel,  
-			ModelMap model) {
+	public ModelAndView getLoginPage(@RequestParam(value = "error", required = false) boolean error,
+			@ModelAttribute("utilizadorModel") Utilizador utilizadorModel, ModelMap model) {
 		System.out.println("login method post");
-
+		ModelAndView modelView;
+		
 		if (error) {
 			System.out.println("Houve Erros");
 			model.put("login-error", "You have entered an invalid username or password!");
 		} else {
 			model.put("login-error", "");
 			System.out.println("não houve erros");
-			if (repoUtil.selectObject(utilizadorModel) != null){
-				return "home-private";
-			}
-				else{
-					model.put("login-error", "You have entered an invalid username or password or you're note registered");
+			Utilizador utilizador = utilizadorService.get(utilizadorModel.getIdUtilizador());
+
+			if (utilizadorModel.getIdUtilizador() != 0 && utilizador != null) {
+				System.out
+						.println("encontrou o utilizador? " + utilizadorService.get(utilizadorModel.getIdUtilizador()));
+				
+				Object obj = utilizadorService.encontrarUtilizador(utilizador);
+				if (obj instanceof Tecnico) {
+					modelView = new ModelAndView("home-private", "currentTecnico", (Tecnico)obj);
+					return modelView;
+				}				
+			} else {
+				utilizador = utilizadorService.matchUser(utilizadorModel.getNomeUtilizador(),
+						utilizadorModel.getPassword());
+
+				if (utilizador != null) {
+
+					utilizador = utilizadorService.matchUser(utilizadorModel.getNomeUtilizador(),
+							utilizadorModel.getPassword());
+
+					System.out.println("id do match: " + utilizador.getIdUtilizador());
+					System.out.println("tipo de utilizador do match: " + utilizador.getTipoUtilizador());
+
+					System.out.println(
+							"encontrou o utilizador no match? " + utilizadorService.get(utilizador.getIdUtilizador()));
+					
+					System.out.println("o q esta no view? " + this.index().getModel().get("utilizadorModel"));
+					
+					Object obj = utilizadorService.encontrarUtilizador(utilizador);
+					if (obj instanceof Tecnico) {
+//						mv.addObject("currentTecnico", (Tecnico) obj);
+						
+						modelView = new ModelAndView("home-private", "currentTecnico", (Tecnico)obj);
+						System.out.println("o q esta no view? " + modelView.getViewName());
+						return modelView;
+					}
+
+				} else {
+					model.put("login-error",
+							"You have entered an invalid username or password or you're note registered");
 				}
+			}
 		}
-		return "utilizador-login";
+		return new ModelAndView("utilizador-login", "utilizadorModel", new Utilizador());
 	}
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
@@ -73,24 +121,30 @@ public class UtilizadorController {
 
 	@RequestMapping(value = "/registrarUtilizador", method = RequestMethod.GET)
 	public ModelAndView registrar() {
-		// TODO: Do Something to Remove Cookies, Authentication, etc...		
-		return  new ModelAndView("utilizador-new", "tecnicoModel", new Tecnico());
+		// TODO: Do Something to Remove Cookies, Authentication, etc...
+		return new ModelAndView("utilizador-new", "tecnicoModel", new Tecnico());
 	}
-
 
 	@RequestMapping(value = "/registrarUtilizador", method = RequestMethod.POST)
-	public String registrar(@Valid  @ModelAttribute("tecnicoModel") Tecnico tecnicoModel, BindingResult result) {
+	public String registrar(@Valid @ModelAttribute("tecnicoModel") Tecnico tecnicoModel, BindingResult result) {
 
 		if (!result.hasErrors()) {
-			tecnicoModel.setIdTecnico(-1);
-			if (repo.create(tecnicoModel))
-				getLoginPage(false, tecnicoModel.getUtilizador(), new ModelMap()); 
-			else {
-				result.rejectValue("id", "CustomMessage", "Ocorreu um erro");
+			// tecnicoModel.setIdTecnico(0);
+			// tecnicoModel.getUtilizador().setIdUtilizador(0);
+			if (tecnicoModel.getIdTecnico() != 0 && tecnicoService.get(tecnicoModel.getIdTecnico()) != null) {
+				System.out.println("Já existe um utilizador igual");
+				result.rejectValue("idTecnico", "CustomMessage", "Já existe um utilizador igual");
+			} else {
+				System.out.println("vai inserir");
+				tecnicoService.saveOrUpdate(tecnicoModel);
+				System.out.println("ja inseriu");
+				getLoginPage(false, tecnicoModel.getUtilizador(), new ModelMap());
 			}
+			return null;
+		} else {
+			result.rejectValue("id", "CustomMessage", "Ocorreu um erro");
+			logger.debug("Existem Erros:" + result.hasErrors());
+			return "registrarUtilizador";
 		}
-		logger.debug("Existem Erros:" + result.hasErrors());
-		return "registrarUtilizador";
 	}
-
 }

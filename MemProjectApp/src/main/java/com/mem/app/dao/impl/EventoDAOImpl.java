@@ -6,17 +6,19 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import com.mem.app.dao.EventoDAO;
 import com.mem.app.model.Evento;
 import com.mem.app.model.Familiar;
 import com.mem.app.model.Morada;
 import com.mem.app.model.Paciente;
-
+@Repository
 public class EventoDAOImpl implements EventoDAO {
 
 
@@ -25,6 +27,7 @@ public class EventoDAOImpl implements EventoDAO {
 	private PacienteDAOImpl pacienteImpl;
 	private FamiliarDAOImpl familiarImpl;
 
+	@Autowired
 	public EventoDAOImpl(DataSource dataSource) {
 		jdbcTemplate = new JdbcTemplate(dataSource);
 		moradaImpl = new MoradaDAOImpl(dataSource);

@@ -6,24 +6,26 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import com.mem.app.dao.RelacaoFamiliarFamiliarDAO;
 import com.mem.app.model.Familiar;
+import com.mem.app.model.Paciente;
 import com.mem.app.model.RelacaoFamiliarFamiliar;
 import com.mem.app.model.RelacaoFamiliarFamiliarId;
-import com.mem.app.model.Paciente;
-
+@Repository	
 public class RelacaoFamiliarFamiliarDAOImpl implements RelacaoFamiliarFamiliarDAO {
 
 	private JdbcTemplate jdbcTemplate;
 	private PacienteDAOImpl pacienteImpl;
 	private FamiliarDAOImpl familiarImpl;
 
-
+	@Autowired
 	public RelacaoFamiliarFamiliarDAOImpl(DataSource dataSource) {
 		jdbcTemplate = new JdbcTemplate(dataSource);
 		pacienteImpl = new PacienteDAOImpl(dataSource);

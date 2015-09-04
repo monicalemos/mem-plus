@@ -6,22 +6,24 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import com.mem.app.dao.PacienteDAO;
 import com.mem.app.model.Morada;
 import com.mem.app.model.Paciente;
 import com.mem.app.model.Tecnico;
-
+@Repository
 public class PacienteDAOImpl implements PacienteDAO {
 
 	private JdbcTemplate jdbcTemplate;
 	private MoradaDAOImpl moradaImpl;
 	private TecnicoDAOImpl tecnicoImpl;
-
+	@Autowired
 	public PacienteDAOImpl(DataSource dataSource) {
 		jdbcTemplate = new JdbcTemplate(dataSource);
 		moradaImpl = new MoradaDAOImpl(dataSource);
@@ -156,7 +158,7 @@ public class PacienteDAOImpl implements PacienteDAO {
 	
 	@Override
 	public List<Paciente> list(int idTecnico) {
-		String sql = "SELECT * FROM paciente paciente.idTecnico=" + idTecnico;
+		String sql = "SELECT * FROM paciente WHERE idTecnico=" + idTecnico;
 		
 		List<Paciente> listPaciente = jdbcTemplate.query(sql, new RowMapper<Paciente>() {
 

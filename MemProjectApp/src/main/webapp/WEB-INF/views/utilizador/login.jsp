@@ -36,7 +36,7 @@
 				
 			<form:label path="nomeUtilizador" class="sr-only">Nome Utilizador</form:label>
 			<form:input path="nomeUtilizador" id="nomeUtilizador"
-				class="form-control" required="required"  placeholder="Telefone" />
+				class="form-control" required="required"  placeholder="Nome Utilizador" />
 
 			<br>
 			<form:label path="password" class="sr-only">Password</form:label>

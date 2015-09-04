@@ -1,3 +1,6 @@
+<%@ page import="java.util.*"%>
+<%@ page import="com.mem.app.model.*"%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
@@ -6,7 +9,9 @@
 	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<h3> Olá: <%=session.getAttribute("nome_utilizador")%></h3> 
+			<% Tecnico tecnico = (Tecnico)request.getAttribute("currentTecnico"); 
+			%> 
+				<h3>  Olá: <%= tecnico.getNomeProprio() %> </h3> 
 				<a class="navbar-brand" href="#"> 
 				<img alt="Brand" src="${pageContext.request.contextPath}/resources/static/img/logo.png">
 				</a>

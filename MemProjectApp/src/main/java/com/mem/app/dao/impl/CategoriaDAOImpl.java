@@ -6,19 +6,21 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import com.mem.app.dao.CategoriaDAO;
 import com.mem.app.model.Categoria;
-
+@Repository
 public class CategoriaDAOImpl implements CategoriaDAO {
 
 	private JdbcTemplate jdbcTemplate;
 
-
+	@Autowired
 	public CategoriaDAOImpl(DataSource dataSource) {
 		jdbcTemplate = new JdbcTemplate(dataSource);
 	}

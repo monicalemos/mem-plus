@@ -9,6 +9,8 @@ import com.mem.app.model.repository.IRepository;
 public class TecnicoRepository implements IRepository<Tecnico> {
 
 private LinkedList<Tecnico> repository;
+
+
 	
 	private Tecnico getNewTecnico()
 	{

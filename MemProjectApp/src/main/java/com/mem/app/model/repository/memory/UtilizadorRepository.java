@@ -2,14 +2,14 @@ package com.mem.app.model.repository.memory;
 
 import java.util.LinkedList;
 
-import com.mem.app.dao.impl.UtilizadorDAOImpl;
 import com.mem.app.model.Utilizador;
 import com.mem.app.model.repository.IRepository;
 
 public class UtilizadorRepository implements IRepository<Utilizador> {
 
 	private LinkedList<Utilizador> repository;
-	private UtilizadorDAOImpl utilImpl = new UtilizadorDAOImpl();
+	//TODO
+	//private UtilizadorDAOImpl utilImpl = new UtilizadorDAOImpl(null);
 
 	private Utilizador getNewUtilizador() {
 		
@@ -48,8 +48,8 @@ public class UtilizadorRepository implements IRepository<Utilizador> {
 	@Override
 	public Utilizador selectObject(Utilizador utilizador) {
 		
-		String username = utilizador.getNomeUtilizador();
-		String password = utilizador.getPassword();
+		//String username = utilizador.getNomeUtilizador();
+		//String password = utilizador.getPassword();
 		
 		
 		// TODO Auto-generated method stub

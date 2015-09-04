@@ -6,22 +6,25 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import com.mem.app.dao.JogoDAO;
 import com.mem.app.model.Categoria;
 import com.mem.app.model.Interacao;
 import com.mem.app.model.Jogo;
-
+@Repository
 public class JogoDAOImpl implements JogoDAO {
 
 	private JdbcTemplate jdbcTemplate;
 	private InteracaoDAOImpl interacaoImpl;
 	private CategoriaDAOImpl categoriaImpl;
 
+	@Autowired
 	public JogoDAOImpl(DataSource dataSource) {
 		jdbcTemplate = new JdbcTemplate(dataSource);
 		interacaoImpl = new InteracaoDAOImpl(dataSource);

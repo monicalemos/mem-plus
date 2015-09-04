@@ -1,13 +1,28 @@
 package com.mem.app.controllers;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mem.app.model.Paciente;
+import com.mem.app.model.Tecnico;
+import com.mem.app.services.PacienteService;
+
 @Controller
 @RequestMapping(value = "/Paciente")
 public class PacientesController {
+	
+	PacienteService pacienteService;
+	
+	@Autowired
+	public void setPacienteService(PacienteService pacienteService) {
+		this.pacienteService = pacienteService;
+	}
 	
 //	private static final Logger logger = LoggerFactory.getLogger(PacientesController.class);
 // 	private static final IRepository<Paciente> repo = DataRepositoryLocator.getPacienteRepository();
@@ -90,9 +105,12 @@ public class PacientesController {
 //	}
 	
 	@RequestMapping(value = "/listarPacientes",  method = RequestMethod.GET)
-	public ModelAndView listarPaciente()
+	public ModelAndView listarPaciente(@ModelAttribute("currentTecnico") Tecnico tecnico)
 	{
 		System.out.println("listar Paciente");
-		return new ModelAndView("listarPacientes");
+		System.out.println("tecnico: " + tecnico);
+		List<Paciente> listPaciente = pacienteService.list(tecnico.getIdTecnico());
+		tecnico.setPacientes(listPaciente);
+		return new ModelAndView("listarPacientes", "currentTecnico", tecnico);
 	}
 }

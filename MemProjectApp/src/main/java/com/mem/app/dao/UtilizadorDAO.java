@@ -6,7 +6,7 @@ import com.mem.app.model.Utilizador;
 
 public interface UtilizadorDAO {
 	
-    void saveOrUpdate(Utilizador utilizador);
+    int saveOrUpdate(Utilizador utilizador);
     
     void delete(int utilizadorId);
      

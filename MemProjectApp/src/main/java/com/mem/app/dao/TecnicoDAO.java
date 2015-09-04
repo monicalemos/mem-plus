@@ -6,11 +6,13 @@ import com.mem.app.model.Tecnico;
 
 public interface TecnicoDAO {
 	
-	void saveOrUpdate(Tecnico tecnico);
+	int saveOrUpdate(Tecnico tecnico);
 
 	void delete(int tecnicoId);
 
 	Tecnico get(int tecnicoId);
+	
+	Tecnico getByUtilizador(int utilizadorId);
 	
 	List<Tecnico> list();
 }

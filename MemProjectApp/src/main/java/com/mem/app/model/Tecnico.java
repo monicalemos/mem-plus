@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -33,6 +34,8 @@ public class Tecnico implements java.io.Serializable {
 	private List<Paciente> pacientes = new ArrayList<Paciente>(0);
 
 	public Tecnico() {
+		this.utilizador = new Utilizador();
+		this.utilizador.setTipoUtilizador(TipoUtilizador.TECNICO.toString());
 	}
 
 	public Tecnico(int idTecnico, Utilizador utilizador, String nomeProprio, String apelido, int telefone) {
@@ -56,7 +59,7 @@ public class Tecnico implements java.io.Serializable {
 	}
 
 	@Id
-
+	@GeneratedValue
 	@Column(name = "idTecnico", unique = true, nullable = false)
 	public int getIdTecnico() {
 		return this.idTecnico;

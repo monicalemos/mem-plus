@@ -6,18 +6,20 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import com.mem.app.dao.MoradaDAO;
 import com.mem.app.model.Morada;
-
+@Repository
 public class MoradaDAOImpl implements MoradaDAO {
 
 	private JdbcTemplate jdbcTemplate;
-
+	@Autowired
 	public MoradaDAOImpl(DataSource dataSource) {
 		jdbcTemplate = new JdbcTemplate(dataSource);
 	}
