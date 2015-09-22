@@ -6,11 +6,13 @@ import com.mem.app.model.Morada;
 
 public interface MoradaDAO {
 
-	void saveOrUpdate(Morada morada);
+	int saveOrUpdate(Morada morada);
 
 	void delete(int moradaId);
 
 	Morada get(int moradaId);
+	
+	Morada getMoradaCompleta(String pais, String regiao, String cidade);
 
 	List<Morada> list();
 	

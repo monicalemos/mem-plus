@@ -10,9 +10,8 @@
 	width: 280px;
 	height: 260px;
 	position: fixed;
-	top: 50%;
+	top: 20%;
 	left: 50%;
-	margin-top: -350px;
 	margin-left: -140px;
 }
 

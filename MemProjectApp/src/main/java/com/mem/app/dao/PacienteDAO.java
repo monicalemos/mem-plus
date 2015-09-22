@@ -7,7 +7,7 @@ import com.mem.app.model.Paciente;
 
 public interface PacienteDAO {
 
-	void saveOrUpdate(Paciente paciente);
+	int saveOrUpdate(Paciente paciente);
 
 	void delete(int pacienteId);
 

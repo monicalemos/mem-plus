@@ -1,10 +1,13 @@
 package com.mem.app.controllers;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -21,10 +24,12 @@ import com.mem.app.services.UtilizadorService;
 
 @Controller
 @RequestMapping(value = "/Utilizador")
+@Scope("session")
 public class UtilizadorController {
 
 	private static final Logger logger = LoggerFactory.getLogger(UtilizadorController.class);
 
+	HttpSession session = null;
 	// private static final IRepository<Tecnico> repo =
 	// DataRepositoryLocator.getTecnicoRepository();
 	// private static final IRepository<Utilizador> repoUtil =
@@ -57,9 +62,12 @@ public class UtilizadorController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ModelAndView getLoginPage(@RequestParam(value = "error", required = false) boolean error,
-			@ModelAttribute("utilizadorModel") Utilizador utilizadorModel, ModelMap model) {
+			@ModelAttribute("utilizadorModel") Utilizador utilizadorModel, 
+			@ModelAttribute("currentTecnico") Tecnico currentTecnico, ModelMap model, HttpServletRequest request) {
 		System.out.println("login method post");
 		ModelAndView modelView;
+		
+		session = request.getSession();
 		
 		if (error) {
 			System.out.println("Houve Erros");
@@ -76,6 +84,7 @@ public class UtilizadorController {
 				Object obj = utilizadorService.encontrarUtilizador(utilizador);
 				if (obj instanceof Tecnico) {
 					modelView = new ModelAndView("home-private", "currentTecnico", (Tecnico)obj);
+					session.setAttribute("currentTecnico", (Tecnico)obj);
 					return modelView;
 				}				
 			} else {
@@ -98,9 +107,10 @@ public class UtilizadorController {
 					Object obj = utilizadorService.encontrarUtilizador(utilizador);
 					if (obj instanceof Tecnico) {
 //						mv.addObject("currentTecnico", (Tecnico) obj);
-						
+						currentTecnico = (Tecnico)obj;
 						modelView = new ModelAndView("home-private", "currentTecnico", (Tecnico)obj);
 						System.out.println("o q esta no view? " + modelView.getViewName());
+						session.setAttribute("currentTecnico", (Tecnico)obj);
 						return modelView;
 					}
 
@@ -126,11 +136,10 @@ public class UtilizadorController {
 	}
 
 	@RequestMapping(value = "/registrarUtilizador", method = RequestMethod.POST)
-	public String registrar(@Valid @ModelAttribute("tecnicoModel") Tecnico tecnicoModel, BindingResult result) {
+	public String registrar(@Valid @ModelAttribute("tecnicoModel") Tecnico tecnicoModel, 
+			BindingResult result, HttpServletRequest request) {
 
 		if (!result.hasErrors()) {
-			// tecnicoModel.setIdTecnico(0);
-			// tecnicoModel.getUtilizador().setIdUtilizador(0);
 			if (tecnicoModel.getIdTecnico() != 0 && tecnicoService.get(tecnicoModel.getIdTecnico()) != null) {
 				System.out.println("Já existe um utilizador igual");
 				result.rejectValue("idTecnico", "CustomMessage", "Já existe um utilizador igual");
@@ -138,7 +147,7 @@ public class UtilizadorController {
 				System.out.println("vai inserir");
 				tecnicoService.saveOrUpdate(tecnicoModel);
 				System.out.println("ja inseriu");
-				getLoginPage(false, tecnicoModel.getUtilizador(), new ModelMap());
+				getLoginPage(false, tecnicoModel.getUtilizador(), null, new ModelMap(), request);
 			}
 			return null;
 		} else {

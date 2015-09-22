@@ -7,12 +7,11 @@
 #loginForm {
 	border: .2em dotted gray;
 	padding: 10px;
-	width: 350px;
-	height: 470px;
+	width: 400px;
+	height: 460px;
 	position: fixed;
-	top: 50%;
+	top: 20%;
 	left: 50%;
-	margin-top: -350px;
 	margin-left: -140px;
 }
 </style>

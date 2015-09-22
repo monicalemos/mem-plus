@@ -9,9 +9,9 @@
 	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 		<div class="container-fluid">
 			<div class="navbar-header">
-			<% Tecnico tecnico = (Tecnico)request.getAttribute("currentTecnico"); 
+			<% 
+			Tecnico tecnico = (Tecnico)session.getAttribute("currentTecnico"); 
 			%> 
-				<h3>  Olá: <%= tecnico.getNomeProprio() %> </h3> 
 				<a class="navbar-brand" href="#"> 
 				<img alt="Brand" src="${pageContext.request.contextPath}/resources/static/img/logo.png">
 				</a>
@@ -34,7 +34,7 @@
 					</li>
 					<li>
 					<spring:url value="/Utilizador/logout" var="logout" htmlEscape="true" /> 
-						<a href="${logout}">Logout</a>
+						<a href="${logout}">Logout <%-- <%= tecnico.getNomeProprio() %> --%> </a>
 					</li>
 				</ul>
 			</div>
