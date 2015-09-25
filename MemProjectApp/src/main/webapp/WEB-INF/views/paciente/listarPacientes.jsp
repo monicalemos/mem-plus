@@ -8,12 +8,12 @@
 %>
 
 <style>
-#container {
-	position: absolute;
-	width:75%;
+#tableCss {
+	position: fixed;
+	width: 80%;
 	margin-top: 10px;
 	margin-left: 5px;
-	margin-right: 5px;
+	margin-rigth: 5px;
 	background: #fff;
 	border-radius: 5px;
 	border: 1px solid #ccc;
@@ -33,7 +33,9 @@
 	animation-duration: 1s;
 	animation-iteration-count: 1;
 	animation-timing-function: linear;
+	overflow: auto;
 }
+
 .line {
 	margin-bottom: 1%;
 	position: relative;
@@ -41,24 +43,31 @@
 	background-color: #CCCCCC;
 	border-bottom: 1px solid #CCCCCC;
 }
-table{
+
+tr:hover {
+	background-color: #8888ff
+}
+
+table {
 	width: 100%;
 	border-collapse: collapse;
-	border:5px solid #CCCCCC;
+	border: 5px solid #CCCCCC;
 }
 
 th, td {
-    border: 2px solid black;
+	border: 2px solid black;
 }
-th{
+
+th {
 	background-color: #CCCCCC;
 	height: 30px;
 	color: #555;
-	text-align:center;
+	text-align: center;
 	vertical-align: middle;
 	font-size: 13px;
 }
-td{
+
+td {
 	height: 25px;
 	color: #555;
 	margin-left: 18px;
@@ -66,7 +75,6 @@ td{
 	text-align: center;
 	vertical-align: middle;
 }
-
 
 label {
 	color: #555;
@@ -76,11 +84,30 @@ label {
 	font-size: 14px;
 }
 
+.normal {
+	background-color: #ffffff;
+}
+
+.highlight {
+	background-color: red;
+}
+
 </style>
+
+<html>
+
+<script type="text/javascript">
+function onRow(rowID) { 
+	var row = document.getElementById(rowID);
+	var curr = row.className;
+	if(curr.indexOf("normal")>=0) row.className="highlight";
+	else row.className="normal";
+} 
+</script>
 
 <div id="page-wrapper">
 	<h1 class="page-header">LISTAR PACIENTES</h1>
-	<div id="container">
+	<div class="row-fluid" id="tableCss">
 		<table>
 			<%
 				System.out.println("continua c tecnico " + tecnico);
@@ -107,15 +134,25 @@ label {
 				<th>Apelido</th>
 				<th>Nível de Doença</th>
 				<th>Nível de Sessão</th>
+				<th>Dados do Paciente</th>
 			</tr>
 			<c:forEach items="${pacientes}" var="current">
-				<tr>
+				<tr class="normal" id="${current.id}">
 					<td><c:out value="${current.id}" /></td>
 					<td><c:out value="${current.nomeProprio}" /></td>
 					<td><c:out value="${current.apelido}" /></td>
 					<td><c:out value="${current.nivelDoenca}" /></td>
 					<td><c:out value="${current.nivelSessao}" /></td>
 					<td>
+					  <form action="verPaciente" method="post">
+                            <input type="hidden" name="idPaciente" value="${current.id}"/>
+                            <input type="submit" value="Ver"/>
+                      </form> 
+                       <form action="editarPaciente" method="post">
+                            <input type="hidden" name="idPaciente" value="${current.id}"/>
+                            <input type="submit" value="Editar"/>
+                      </form> 
+					</td>
 				</tr>
 			</c:forEach>
 		</table>

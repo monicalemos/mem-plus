@@ -47,6 +47,7 @@ public class PacienteDAOImpl implements PacienteDAO {
 	public int saveOrUpdate(Paciente paciente) {
 		if (paciente.getIdPaciente() > 0) {
 			// update
+			System.out.println("UPDATE");
 			String sql = "UPDATE paciente "
 					+ "SET nomeCompleto=?, "
 					+ "nomeProprio=?, "
@@ -86,6 +87,7 @@ public class PacienteDAOImpl implements PacienteDAO {
 			return paciente.getIdPaciente();
 		} else {
 			// insert
+			System.out.println("INSERT");
 			final String INSERT_SQL = "INSERT INTO paciente "
 					+ "(nomeCompleto, "
 					+ "nomeProprio, "
@@ -107,7 +109,7 @@ public class PacienteDAOImpl implements PacienteDAO {
 			int newId = 0;
 			final String nomeProprio = paciente.getNomeProprio();
 			final String apelido = paciente.getApelido();
-			final String nomeCompleto = apelido + "," + nomeProprio;
+			final String nomeCompleto = apelido + ", " + nomeProprio;
 			final Date dataNascimento = (Date) paciente.getDataNascimento();
 			final int idLocalNascimento = paciente.getMoradaByIdLocalNascimento().getIdMorada();
 			final int idMorada = paciente.getMoradaByIdMorada().getIdMorada();

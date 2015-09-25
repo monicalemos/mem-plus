@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
@@ -90,7 +91,7 @@ public class Paciente implements java.io.Serializable {
 	}
 
 	@Id
-
+	@GeneratedValue
 	@Column(name = "idPaciente", unique = true, nullable = false)
 	public int getIdPaciente() {
 		return this.idPaciente;
@@ -293,4 +294,14 @@ public class Paciente implements java.io.Serializable {
 		this.interacaos = interacaos;
 	}
 
+	@Override
+	public String toString() {
+		return "Paciente [idPaciente=" + idPaciente + ", moradaByIdLocalNascimento=" + moradaByIdLocalNascimento
+				+ ", moradaByIdMorada=" + moradaByIdMorada + ", tecnico=" + tecnico + ", nomeCompleto=" + nomeCompleto
+				+ ", nomeProprio=" + nomeProprio + ", apelido=" + apelido + ", dataNascimento=" + dataNascimento
+				+ ", genero=" + genero + ", profissao=" + profissao + ", escolaridade=" + escolaridade
+				+ ", estadoCivil=" + estadoCivil + ", nivelDoenca=" + nivelDoenca + ", nomeMedico=" + nomeMedico
+				+ ", especialidadeMedico=" + especialidadeMedico + ", nivelSessao=" + nivelSessao + "]";
+	}
+	
 }

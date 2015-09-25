@@ -5,22 +5,22 @@
 <tiles-definitions>
 
 	<!-- ###### Eventos ###### -->
-	<definition 	name="verEvento" 		extends="DefaultTemplate">
+	<definition 	name="verEvento" 		extends="pacienteTemplate">
 		<put-attribute 	name="title" 		value="Dados do Evento" />
 		<put-attribute 	name="body" 		value="/WEB-INF/views/evento/verEvento.jsp" />
 	</definition>
 	
-	<definition 	name="editarEvento" 	extends="DefaultTemplate">
+	<definition 	name="editarEvento" 	extends="pacienteTemplate">
 		<put-attribute 	name="title" 		value="Editar Evento" />
 		<put-attribute 	name="body" 		value="/WEB-INF/views/evento/editarEvento.jsp" />
 	</definition>
 	
-	<definition 	name="listarEventos" extends="DefaultTemplate">
+	<definition 	name="listarEventos" extends="pacienteTemplate">
 		<put-attribute 	name="title" 		value="Lista de Eventos" />
 		<put-attribute 	name="body" 		value="/WEB-INF/views/evento/listarEventos.jsp" />
 	</definition>
 	
-	<definition name="inserirEvento" 		extends="DefaultTemplate">
+	<definition name="inserirEvento" 		extends="pacienteTemplate">
 		<put-attribute name="title" 		value="Inserir Evento" />
 		<put-attribute name="body" 			value="/WEB-INF/views/evento/inserirEvento.jsp" />
 	</definition>

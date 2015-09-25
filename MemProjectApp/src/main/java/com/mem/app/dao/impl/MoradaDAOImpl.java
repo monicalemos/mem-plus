@@ -37,7 +37,9 @@ public class MoradaDAOImpl implements MoradaDAO {
 
 	@Override
 	public int saveOrUpdate(Morada morada) {
-		if (morada.getIdMorada() > 0 && this.getMoradaCompleta(morada.getPais(), morada.getRegiao(), morada.getCidade()) != null) {
+		System.out.println("SAve or update morada");
+		if (morada.getIdMorada() > 0
+				&& this.getMoradaCompleta(morada.getPais(), morada.getRegiao(), morada.getCidade()) != null) {
 			// update
 			String sql = "UPDATE morada SET pais=?, regiao=?, cidade=? WHERE idMorada=?";
 
@@ -45,14 +47,15 @@ public class MoradaDAOImpl implements MoradaDAO {
 			return morada.getIdMorada();
 		} else {
 			// insert
-			if (this.getMoradaCompleta(morada.getPais(), morada.getRegiao(), morada.getCidade()) != null) {
+			if (this.getMoradaCompleta(morada.getPais(), morada.getRegiao(), morada.getCidade()) == null) {
+				System.out.println("ainda não tem esta morada na bd");
 				final String INSERT_SQL = "INSERT INTO morada (pais, regiao, cidade)" + " VALUES (?, ?, ?)";
 				int newId = 0;
 				final String pais = morada.getPais();
 				final String regiao = morada.getRegiao();
 				final String cidade = morada.getCidade();
 
-				System.out.println("variaveis definidas no insert");
+				System.out.println("variaveis definidas no insert da morada");
 
 				PreparedStatement ps;
 				try {
@@ -67,6 +70,7 @@ public class MoradaDAOImpl implements MoradaDAO {
 					if (rs.next()) {
 						System.out.println("tem resultados");
 						newId = rs.getInt(1);
+						System.out.println("novo id morada " + newId);
 					}
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
@@ -75,8 +79,11 @@ public class MoradaDAOImpl implements MoradaDAO {
 
 				System.out.println("novo id da morada: " + newId);
 				return newId;
+			} else {
+				System.out.println("ja tem esta morada na bd");
+				System.out.println(this.getMoradaCompleta(morada.getPais(), morada.getRegiao(), morada.getCidade()).getIdMorada());
+				return this.getMoradaCompleta(morada.getPais(), morada.getRegiao(), morada.getCidade()).getIdMorada();
 			}
-			return morada.getIdMorada();
 		}
 	}
 

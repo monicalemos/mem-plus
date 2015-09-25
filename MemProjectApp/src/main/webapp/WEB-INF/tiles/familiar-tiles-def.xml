@@ -5,22 +5,22 @@
 <tiles-definitions>
 
 	<!-- ###### Familiares ###### -->
-	<definition 	name="verFamiliar" 		extends="DefaultTemplate">
+	<definition 	name="verFamiliar" 		extends="pacienteTemplate">
 		<put-attribute 	name="title" 		value="Dados do Familiar" />
 		<put-attribute 	name="body" 		value="/WEB-INF/views/familiar/verFamiliar.jsp" />
 	</definition>
 	
-	<definition 	name="editarFamiliar" 	extends="DefaultTemplate">
+	<definition 	name="editarFamiliar" 	extends="pacienteTemplate">
 		<put-attribute 	name="title" 		value="Editar Familiar" />
 		<put-attribute 	name="body" 		value="/WEB-INF/views/familiar/editarFamiliar.jsp" />
 	</definition>
 	
-	<definition 	name="listarFamiliares" extends="DefaultTemplate">
+	<definition 	name="listarFamiliares" extends="pacienteTemplate">
 		<put-attribute 	name="title" 		value="Lista de Familiares" />
 		<put-attribute 	name="body" 		value="/WEB-INF/views/familiar/listarFamiliares.jsp" />
 	</definition>
 	
-	<definition name="inserirFamiliar" 		extends="DefaultTemplate">
+	<definition name="inserirFamiliar" 		extends="pacienteTemplate">
 		<put-attribute name="title" 		value="Inserir Familiar" />
 		<put-attribute name="body" 			value="/WEB-INF/views/familiar/inserirFamiliar.jsp" />
 	</definition>

@@ -75,6 +75,7 @@ public class TecnicoDAOImpl implements TecnicoDAO {
 				if (rs.next()) {
 					System.out.println("tem resultados");
 					newId = rs.getInt(1);
+					System.out.println("new id tecnico " + newId);
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block

@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -52,7 +53,7 @@ public class Morada implements java.io.Serializable {
 	}
 
 	@Id
-
+	@GeneratedValue
 	@Column(name = "idMorada", unique = true, nullable = false)
 	public int getIdMorada() {
 		return this.idMorada;
@@ -132,6 +133,11 @@ public class Morada implements java.io.Serializable {
 
 	public void setPacientesForIdMorada(List<Paciente> pacientesForIdMorada) {
 		this.pacientesForIdMorada = pacientesForIdMorada;
+	}
+
+	@Override
+	public String toString() {
+		return "Morada [idMorada=" + idMorada + ", pais=" + pais + ", regiao=" + regiao + ", cidade=" + cidade + "]";
 	}
 
 }

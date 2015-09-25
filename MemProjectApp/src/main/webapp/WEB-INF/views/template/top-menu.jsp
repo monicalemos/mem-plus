@@ -7,7 +7,7 @@
 		<div class="line">
 			<ul>
 				<li>
-					<spring:url value="/" var="homeUrl" htmlEscape="true" /> 
+					<spring:url value="/home" var="homeUrl" htmlEscape="true" /> 
 					<a href="${homeUrl}">Home</a>
 				</li>
 				<li>

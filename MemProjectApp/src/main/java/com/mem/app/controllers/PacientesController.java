@@ -10,10 +10,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mem.app.model.Paciente;
@@ -23,134 +25,174 @@ import com.mem.app.services.PacienteService;
 @Controller
 @RequestMapping(value = "/Paciente")
 public class PacientesController {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(UtilizadorController.class);
 	PacienteService pacienteService;
-	
+
 	HttpSession session = null;
-	
+
 	@Autowired
 	public void setPacienteService(PacienteService pacienteService) {
 		this.pacienteService = pacienteService;
 	}
-	
-	public PacientesController() {}
-	
-	@RequestMapping(value = "", method = RequestMethod.GET)
+
+	public PacientesController() {
+	}
+
+	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public ModelAndView index() {
-		//TODO Handle the View and Model 
-		return new ModelAndView("home");
+		// TODO Handle the View and Model
+		return new ModelAndView("home-private");
 	}
-	
-	@RequestMapping(value = "/verPaciente", method=RequestMethod.GET)
-	public ModelAndView verPaciente(int id)
-	{
+
+	@RequestMapping(value = "/verPaciente", method = RequestMethod.GET)
+	public ModelAndView verPaciente(HttpServletRequest request) {
 		System.out.println("ver Paciente");
-		return new ModelAndView("verPaciente");
+		session = request.getSession();
+		Paciente paciente = (Paciente) session.getAttribute("currentPaciente");
+		System.out.println("paciente session" + paciente);
+		return new ModelAndView("ver-paciente", "currentPaciente", paciente);
 	}
-	
+
 	@RequestMapping(value = "/verPaciente", method = RequestMethod.POST)
-	public ModelAndView  getVerPaciente( int id, BindingResult result) {
+	public ModelAndView getVerPaciente(@RequestParam(value = "error", required = false) boolean error, ModelMap model,
+			HttpServletRequest request) {
+
+		session = request.getSession();
+		Tecnico tecnico = (Tecnico) session.getAttribute("currentTecnico");
+
 		System.out.println("vou ver o paciente q inseri");
-		if (!result.hasErrors()) {
-			if (pacienteService.get(id) != null){
-				System.out.println("encontrou o paciente");
-				return new ModelAndView("verPaciente", "currentPaciente", pacienteService.get(id));
-			}
-			else {
-				result.rejectValue("id", "CustomMessage", "Ocorreu um erro");
+		int idPaciente = 0;
+		if (request.getParameter("idPaciente") != null)
+			idPaciente = Integer.parseInt(request.getParameter("idPaciente"));
+		else {
+			if (session.getAttribute("idPaciente") != null)
+				idPaciente = (Integer) session.getAttribute("idPaciente");
+		}
+
+		if (error) {
+			System.out.println("Houve Erros");
+			model.put("viewProfile-error", "Não conseguiu mostrar os dados do paciente");
+			return new ModelAndView("home-private", "currentTecnico", tecnico);
+		} else {
+			model.put("viewProfile-error", "");
+			System.out.println("não houve erros");
+			if (pacienteService.get(idPaciente) != null) {
+				Paciente paciente = pacienteService.get(idPaciente);
+				System.out.println("encontrou o paciente " + paciente);
+				request.setAttribute("currentPaciente", paciente);
+				
+				session.setAttribute("currentPaciente", paciente);
+				System.out.println("currentPaciente sesssion " + session.getAttribute("currentPaciente"));
+				
+				return new ModelAndView("ver-paciente", "currentPaciente", paciente);
+			} else {
+				model.put("login-error", "Não conseguiu mostrar os dados do paciente");
+				return new ModelAndView("home-private", "currentTecnico", tecnico);
 			}
 		}
-		logger.debug("Existem Erros:" +result.hasErrors());
-		return new ModelAndView("verPaciente", "currentPaciente", null);
 	}
-	
-	
-	@RequestMapping(value="/editarPaciente", method=RequestMethod.GET)
-	public ModelAndView editarPaciente()
-	{
+
+	@RequestMapping(value = "/editarPaciente", method = RequestMethod.GET)
+	public ModelAndView editarPaciente(HttpServletRequest request) {
 		System.out.println("editar Paciente");
-		return new ModelAndView("inserirPaciente");
+		session = request.getSession();
+		Paciente paciente = null;
+		int idPaciente = 0;
+		if (request.getParameter("idPaciente") != null){
+			idPaciente = Integer.parseInt(request.getParameter("idPaciente"));
+			System.out.println("vem do request");
+		}else {
+			if (session.getAttribute("idPaciente") != null){
+				idPaciente = (Integer) session.getAttribute("idPaciente");
+				System.out.println("vem da sessao");
+			}
+		}
+		System.out.println("tem id ? " + idPaciente);
+		paciente = pacienteService.get(idPaciente);
+
+		return new ModelAndView("editarPaciente", "currentPaciente", paciente);
 	}
-	
-//	@RequestMapping(value = "/editarPaciente", method = RequestMethod.GET)
-//	public ModelAndView editarPaciente(int id) {
-//		return new ModelAndView("editarPaciente","pacienteModel",repo.select(id));
-//	}
-	
-//	@RequestMapping(value = "/editarPaciente", method = RequestMethod.GET)
-//	public String  editarPaciente( int idPaciente){
-//		//TODO
-//		return "editarPaciente";
-//}
-	
-//	@RequestMapping(value = "/editarPaciente", method = RequestMethod.POST)
-//	public String  editarPaciente( 
-//			@ModelAttribute("pacienteModel") @Valid Paciente pacienteModel,
-//			BindingResult result) {
-//		if (!result.hasErrors()) {
-//			if (repo.update(pacienteModel))
-//				return "verPaciente";
-//			else {
-//				result.rejectValue("id", "CustomMessage", "Ocorreu um erro");
-//			}
-//		}
-//		logger.debug("Existem Erros:" +result.hasErrors());
-//		return "editarPaciente";
-//	}
-	
-	@RequestMapping(value = "/inserirPaciente",  method = RequestMethod.GET)
-	public ModelAndView inserirPaciente()
-	{
+
+	@RequestMapping(value = "/editarPaciente", method = RequestMethod.POST)
+	public ModelAndView editarPaciente(@ModelAttribute("currentPaciente") @Valid Paciente paciente, BindingResult result,
+			HttpServletRequest request) {
+		System.out.println("vou ver editar o paciente " + paciente.getIdPaciente() + " - " + paciente.getApelido() + " - " + paciente.getNomeProprio());
+
+		if (!result.hasErrors()) {
+			System.out.println("Não tem erros");
+			if (paciente.getIdPaciente() != 0 && pacienteService.get(paciente.getIdPaciente()) == null) {
+				System.out.println("Esse paciente não existe");
+				result.rejectValue("idPaciente", "CustomMessage", "Esse paciente não existe");
+			} else {
+				System.out.println("vai editar paciente");
+				int idPaciente = pacienteService.saveOrUpdate(paciente);
+				System.out.println("ja editou o paciente " + idPaciente);
+				session.setAttribute("idPaciente", idPaciente);
+				int idPacienteSession = (Integer) session.getAttribute("idPaciente");
+				System.out.println("tem o id? " + idPacienteSession);
+				verPaciente(request);
+				paciente.setNomeCompleto(paciente.getApelido() + ", " + paciente.getNomeProprio());
+			}
+			return new ModelAndView("ver-paciente", "currentPaciente", paciente);
+		} else {
+			System.out.println(result.getAllErrors().toString());
+			System.out.println("ocorreu um erro");
+			logger.debug("Existem Erros:" + result.hasErrors());
+			return new ModelAndView("editarPaciente", "currentPaciente", paciente);
+		}
+	}
+
+	@RequestMapping(value = "/inserirPaciente", method = RequestMethod.GET)
+	public ModelAndView inserirPaciente() {
 		System.out.println("inserirPaciente");
 		return new ModelAndView("inserirPaciente", "pacienteModel", new Paciente());
 	}
-	
+
 	@RequestMapping(value = "/inserirPaciente", method = RequestMethod.POST)
-	public String  inserirPaciente( 
-			@Valid @ModelAttribute("pacienteModel") Paciente paciente,
-			BindingResult result,
+	public ModelAndView inserirPaciente(@Valid @ModelAttribute("pacienteModel") Paciente paciente, BindingResult result,
 			HttpServletRequest request) {
-				
+
 		session = request.getSession();
-		Tecnico tecnico = (Tecnico)session.getAttribute("currentTecnico");
+		Tecnico tecnico = (Tecnico) session.getAttribute("currentTecnico");
 		System.out.println("tecnico: " + tecnico);
 		System.out.println("tem nome: " + tecnico.getNomeProprio());
-		
+
 		System.out.println(paciente.getNomeProprio());
 		paciente.setTecnico(tecnico);
-		
+
 		if (!result.hasErrors()) {
 			System.out.println("Não tem erros");
 			if (paciente.getIdPaciente() != 0 && pacienteService.get(paciente.getIdPaciente()) != null) {
 				System.out.println("Já existe um paciente igual");
 				result.rejectValue("idPaciente", "CustomMessage", "Já existe um paciente igual");
 			} else {
-				System.out.println("vai inserir");
-				pacienteService.saveOrUpdate(paciente);
-				System.out.println("ja inseriu");
-				getVerPaciente(paciente.getIdPaciente(), null);
+				System.out.println("vai inserir paciente");
+				int newId = pacienteService.saveOrUpdate(paciente);
+				System.out.println("ja inseriu o paciente " + newId);
+				session.setAttribute("idPaciente", newId);
+				int idPaciente = (Integer) session.getAttribute("idPaciente");
+				System.out.println("tem o id? " + idPaciente);
+				verPaciente(request);
 			}
-			return null;
+			return new ModelAndView("ver-paciente", "currentPaciente", paciente);
 		} else {
 			System.out.println(result.getAllErrors().toString());
-		//	result.rejectValue("id", "CustomMessage", "Ocorreu um erro");
 			System.out.println("ocorreu um erro");
 			logger.debug("Existem Erros:" + result.hasErrors());
-			return "inserirPaciente";
+			return new ModelAndView("inserirPaciente", "pacienteModel", new Paciente());
 		}
 	}
-	
-	@RequestMapping(value = "/listarPacientes",  method = RequestMethod.GET)
-	public ModelAndView listarPaciente(HttpServletRequest request)
-	{
+
+	@RequestMapping(value = "/listarPacientes", method = RequestMethod.GET)
+	public ModelAndView listarPaciente(HttpServletRequest request) {
 		System.out.println("listar Paciente");
 
 		session = request.getSession();
-		Tecnico tecnico = (Tecnico)session.getAttribute("currentTecnico");
+		Tecnico tecnico = (Tecnico) session.getAttribute("currentTecnico");
 		System.out.println("tecnico: " + tecnico);
 		System.out.println("tem nome 2: " + tecnico.getNomeProprio());
-		
+
 		List<Paciente> listPaciente = pacienteService.list(tecnico.getIdTecnico());
 		tecnico.setPacientes(listPaciente);
 		return new ModelAndView("listarPacientes", "currentTecnico", tecnico);

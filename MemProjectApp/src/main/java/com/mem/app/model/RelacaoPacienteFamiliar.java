@@ -87,4 +87,10 @@ public class RelacaoPacienteFamiliar implements java.io.Serializable {
 		this.tipoRelacao = tipoRelacao;
 	}
 
+	@Override
+	public String toString() {
+		return "RelacaoPacienteFamiliar [\nid=" + id + ", \nfamiliar=" + familiar + ", \npaciente=" + paciente
+				+ ", tipoRelacao=" + tipoRelacao + "]";
+	}
+
 }

@@ -8,7 +8,7 @@ import com.mem.app.model.RelacaoPacienteFamiliar;
 
 public interface RelacaoPacienteFamiliarDAO {
 
-	void saveOrUpdate(RelacaoPacienteFamiliar relacaoPacienteFamiliar);
+	int saveOrUpdate(RelacaoPacienteFamiliar relacaoPacienteFamiliar);
 
 	void delete(Familiar familiar);
 

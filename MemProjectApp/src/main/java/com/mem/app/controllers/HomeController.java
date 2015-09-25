@@ -1,10 +1,15 @@
 package com.mem.app.controllers;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.mem.app.model.Tecnico;
 
 /**
  * Handles requests for the application home page.
@@ -12,6 +17,8 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping(value = "/")
 public class HomeController {
+	
+	HttpSession session = null;
 	@Autowired
 	
 	/**
@@ -37,8 +44,14 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value = "/home-private", method = RequestMethod.GET)
-	public ModelAndView privateHome() {
+	public ModelAndView privateHome(HttpServletRequest request) {
 		System.out.println("ola home");
-		return new ModelAndView("home-private");
+		
+		session = request.getSession();
+		Tecnico tecnico = (Tecnico) session.getAttribute("currentTecnico");
+		System.out.println("tecnico no home: " + tecnico);
+		System.out.println("tem nome no home: " + tecnico.getNomeProprio());
+		
+		return new ModelAndView("home-private", "currentTecnico", tecnico);
 	}
 }

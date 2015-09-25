@@ -144,7 +144,7 @@ public class UtilizadorController {
 				System.out.println("Já existe um utilizador igual");
 				result.rejectValue("idTecnico", "CustomMessage", "Já existe um utilizador igual");
 			} else {
-				System.out.println("vai inserir");
+				System.out.println("vai inserir tecnico");
 				tecnicoService.saveOrUpdate(tecnicoModel);
 				System.out.println("ja inseriu");
 				getLoginPage(false, tecnicoModel.getUtilizador(), null, new ModelMap(), request);

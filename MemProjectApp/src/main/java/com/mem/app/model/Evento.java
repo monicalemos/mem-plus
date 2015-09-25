@@ -124,4 +124,10 @@ public class Evento implements java.io.Serializable {
 		this.descricao = descricao;
 	}
 
+	@Override
+	public String toString() {
+		return "Evento [\nid=" + id + ", \nfamiliar=" + familiar + ", \nmorada=" + morada + ", \npaciente=" + paciente
+				+ ", data=" + data + ", tipoEvento=" + tipoEvento + ", descricao=" + descricao + "]";
+	}
+
 }

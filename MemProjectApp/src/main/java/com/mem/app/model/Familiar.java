@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -79,7 +80,7 @@ public class Familiar implements java.io.Serializable {
 	}
 
 	@Id
-
+	@GeneratedValue
 	@Column(name = "idFamiliar", unique = true, nullable = false)
 	public int getIdFamiliar() {
 		return this.idFamiliar;
@@ -246,5 +247,16 @@ public class Familiar implements java.io.Serializable {
 	public void setRelacaoFamiliarFamiliarsForIdFamiliar(List<RelacaoFamiliarFamiliar> RelacaoFamiliarFamiliarsForIdFamiliar) {
 		this.RelacaoFamiliarFamiliarsForIdFamiliar = RelacaoFamiliarFamiliarsForIdFamiliar;
 	}
+
+	@Override
+	public String toString() {
+		return "Familiar [idFamiliar=" + idFamiliar + ", moradaByIdLocalNascimento=" + moradaByIdLocalNascimento
+				+ ", moradaByIdMorada=" + moradaByIdMorada + ", utilizador=" + utilizador + ", nomeCompleto="
+				+ nomeCompleto + ", nomeProprio=" + nomeProprio + ", apelido=" + apelido + ", dataNascimento="
+				+ dataNascimento + ", genero=" + genero + ", estadoCivil=" + estadoCivil + ", profissao=" + profissao
+				+ ", telefone=" + telefone + ", ecuidador=" + ecuidador + ", dataObito=" + dataObito + "]";
+	}
+	
+	
 
 }

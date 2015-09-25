@@ -6,7 +6,7 @@ import com.mem.app.model.Familiar;
 
 public interface FamiliarDAO {
 
-	void saveOrUpdate(Familiar familiar);
+	int saveOrUpdate(Familiar familiar);
 
 	void delete(int familiarId);
 

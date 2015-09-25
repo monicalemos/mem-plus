@@ -5,13 +5,11 @@
 <tiles-definitions>
 
 	<!-- ###### PACIENTES ###### -->
-	<definition 	name="verPaciente" 		extends="DefaultTemplate">
-		<put-attribute 	name="title" 		value="Dados do Paciente" />
+	<definition 	name="ver-paciente" 	extends="pacienteTemplate">
 		<put-attribute 	name="body" 		value="/WEB-INF/views/paciente/verPaciente.jsp" />
 	</definition>
 	
-	<definition 	name="editarPaciente" 	extends="DefaultTemplate">
-		<put-attribute 	name="title" 		value="Editar Paciente" />
+	<definition 	name="editarPaciente" 	extends="pacienteTemplate">
 		<put-attribute 	name="body" 		value="/WEB-INF/views/paciente/editarPaciente.jsp" />
 	</definition>
 	

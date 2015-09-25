@@ -115,4 +115,10 @@ public class Tecnico implements java.io.Serializable {
 		this.pacientes = pacientes;
 	}
 
+	@Override
+	public String toString() {
+		return "Tecnico [idTecnico=" + idTecnico + ", utilizador=" + utilizador + ", nomeProprio=" + nomeProprio
+				+ ", apelido=" + apelido + ", telefone=" + telefone + ", pacientes=" + pacientes + "]";
+	}
+
 }

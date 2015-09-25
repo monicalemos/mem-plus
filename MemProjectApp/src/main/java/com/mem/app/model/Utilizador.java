@@ -116,4 +116,10 @@ public class Utilizador implements java.io.Serializable {
 		this.familiars = familiars;
 	}
 
+	@Override
+	public String toString() {
+		return "Utilizador [idUtilizador=" + idUtilizador + ", nomeUtilizador=" + nomeUtilizador + ", password="
+				+ password + ", tipoUtilizador=" + tipoUtilizador + ", email=" + email + "]";
+	}
+
 }

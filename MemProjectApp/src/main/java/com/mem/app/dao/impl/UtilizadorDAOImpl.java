@@ -69,6 +69,7 @@ public class UtilizadorDAOImpl implements UtilizadorDAO {
 				if (rs.next()) {
 					System.out.println("tem resultados");
 					newId = rs.getInt(1);
+					System.out.println("new id utilizador: " + newId);
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
