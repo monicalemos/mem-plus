@@ -12,7 +12,7 @@
 <div id="page-wrapper">
 	<h1 class="page-header">Dados do Utilizador</h1>
 	<p> <label for="idPaciente"> idPaciente:</label> <%=paciente.getIdPaciente()%></p> 
-	<p> <label for="nomeCompleto"> Nome Completo:</label> <%=paciente.getNomeCompleto()%></p> 
+	<p> <label for="nomeCompleto"> Nome Completo:</label> <%=paciente.getApelido() + ", " + paciente.getNomeProprio()%></p> 
 	<p> <label for="nomeProprio"> Nome Próprio:</label> <%=paciente.getNomeProprio()%></p> 
 	<p> <label for="apelido"> Apelido:</label> <%=paciente.getApelido()%></p> 
 	<p> <label for="dataNascimento"> Data de Nascimento:</label> <%=paciente.getDataNascimento()%></p>

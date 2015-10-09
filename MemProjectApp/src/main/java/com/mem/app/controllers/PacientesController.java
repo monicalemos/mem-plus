@@ -41,7 +41,6 @@ public class PacientesController {
 
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public ModelAndView index() {
-		// TODO Handle the View and Model
 		return new ModelAndView("home-private");
 	}
 
@@ -50,7 +49,6 @@ public class PacientesController {
 		System.out.println("ver Paciente");
 		session = request.getSession();
 		Paciente paciente = (Paciente) session.getAttribute("currentPaciente");
-		System.out.println("paciente session" + paciente);
 		return new ModelAndView("ver-paciente", "currentPaciente", paciente);
 	}
 
@@ -79,12 +77,9 @@ public class PacientesController {
 			System.out.println("não houve erros");
 			if (pacienteService.get(idPaciente) != null) {
 				Paciente paciente = pacienteService.get(idPaciente);
-				System.out.println("encontrou o paciente " + paciente);
 				request.setAttribute("currentPaciente", paciente);
 				
 				session.setAttribute("currentPaciente", paciente);
-				System.out.println("currentPaciente sesssion " + session.getAttribute("currentPaciente"));
-				
 				return new ModelAndView("ver-paciente", "currentPaciente", paciente);
 			} else {
 				model.put("login-error", "Não conseguiu mostrar os dados do paciente");
@@ -101,11 +96,9 @@ public class PacientesController {
 		int idPaciente = 0;
 		if (request.getParameter("idPaciente") != null){
 			idPaciente = Integer.parseInt(request.getParameter("idPaciente"));
-			System.out.println("vem do request");
 		}else {
 			if (session.getAttribute("idPaciente") != null){
 				idPaciente = (Integer) session.getAttribute("idPaciente");
-				System.out.println("vem da sessao");
 			}
 		}
 		System.out.println("tem id ? " + idPaciente);
@@ -127,10 +120,7 @@ public class PacientesController {
 			} else {
 				System.out.println("vai editar paciente");
 				int idPaciente = pacienteService.saveOrUpdate(paciente);
-				System.out.println("ja editou o paciente " + idPaciente);
 				session.setAttribute("idPaciente", idPaciente);
-				int idPacienteSession = (Integer) session.getAttribute("idPaciente");
-				System.out.println("tem o id? " + idPacienteSession);
 				verPaciente(request);
 				paciente.setNomeCompleto(paciente.getApelido() + ", " + paciente.getNomeProprio());
 			}
@@ -155,10 +145,6 @@ public class PacientesController {
 
 		session = request.getSession();
 		Tecnico tecnico = (Tecnico) session.getAttribute("currentTecnico");
-		System.out.println("tecnico: " + tecnico);
-		System.out.println("tem nome: " + tecnico.getNomeProprio());
-
-		System.out.println(paciente.getNomeProprio());
 		paciente.setTecnico(tecnico);
 
 		if (!result.hasErrors()) {
@@ -169,10 +155,7 @@ public class PacientesController {
 			} else {
 				System.out.println("vai inserir paciente");
 				int newId = pacienteService.saveOrUpdate(paciente);
-				System.out.println("ja inseriu o paciente " + newId);
 				session.setAttribute("idPaciente", newId);
-				int idPaciente = (Integer) session.getAttribute("idPaciente");
-				System.out.println("tem o id? " + idPaciente);
 				verPaciente(request);
 			}
 			return new ModelAndView("ver-paciente", "currentPaciente", paciente);
@@ -190,8 +173,6 @@ public class PacientesController {
 
 		session = request.getSession();
 		Tecnico tecnico = (Tecnico) session.getAttribute("currentTecnico");
-		System.out.println("tecnico: " + tecnico);
-		System.out.println("tem nome 2: " + tecnico.getNomeProprio());
 
 		List<Paciente> listPaciente = pacienteService.list(tecnico.getIdTecnico());
 		tecnico.setPacientes(listPaciente);

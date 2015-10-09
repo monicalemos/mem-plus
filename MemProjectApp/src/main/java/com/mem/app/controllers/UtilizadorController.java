@@ -30,10 +30,6 @@ public class UtilizadorController {
 	private static final Logger logger = LoggerFactory.getLogger(UtilizadorController.class);
 
 	HttpSession session = null;
-	// private static final IRepository<Tecnico> repo =
-	// DataRepositoryLocator.getTecnicoRepository();
-	// private static final IRepository<Utilizador> repoUtil =
-	// DataRepositoryLocator.getUtilizadorRepository();
 
 	private UtilizadorService utilizadorService;
 	private TecnicoService tecnicoService;
@@ -78,8 +74,6 @@ public class UtilizadorController {
 			Utilizador utilizador = utilizadorService.get(utilizadorModel.getIdUtilizador());
 
 			if (utilizadorModel.getIdUtilizador() != 0 && utilizador != null) {
-				System.out
-						.println("encontrou o utilizador? " + utilizadorService.get(utilizadorModel.getIdUtilizador()));
 				
 				Object obj = utilizadorService.encontrarUtilizador(utilizador);
 				if (obj instanceof Tecnico) {
@@ -96,20 +90,10 @@ public class UtilizadorController {
 					utilizador = utilizadorService.matchUser(utilizadorModel.getNomeUtilizador(),
 							utilizadorModel.getPassword());
 
-					System.out.println("id do match: " + utilizador.getIdUtilizador());
-					System.out.println("tipo de utilizador do match: " + utilizador.getTipoUtilizador());
-
-					System.out.println(
-							"encontrou o utilizador no match? " + utilizadorService.get(utilizador.getIdUtilizador()));
-					
-					System.out.println("o q esta no view? " + this.index().getModel().get("utilizadorModel"));
-					
 					Object obj = utilizadorService.encontrarUtilizador(utilizador);
 					if (obj instanceof Tecnico) {
-//						mv.addObject("currentTecnico", (Tecnico) obj);
 						currentTecnico = (Tecnico)obj;
 						modelView = new ModelAndView("home-private", "currentTecnico", (Tecnico)obj);
-						System.out.println("o q esta no view? " + modelView.getViewName());
 						session.setAttribute("currentTecnico", (Tecnico)obj);
 						return modelView;
 					}
@@ -146,7 +130,6 @@ public class UtilizadorController {
 			} else {
 				System.out.println("vai inserir tecnico");
 				tecnicoService.saveOrUpdate(tecnicoModel);
-				System.out.println("ja inseriu");
 				getLoginPage(false, tecnicoModel.getUtilizador(), null, new ModelMap(), request);
 			}
 			return null;

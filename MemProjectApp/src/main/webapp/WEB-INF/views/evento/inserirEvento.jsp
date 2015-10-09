@@ -83,11 +83,11 @@ function show(group)
 			
 			<form:label path="id.idEvento" class="sr-only">idEvento </form:label>
 			<form:input path="id.idEvento" id="idEvento"
-			class="form-control" required="required" />
+			class="form-control" required="required" type="hidden" />
 		
 			<form:label path="paciente.idPaciente" class="sr-only">idPaciente </form:label>
 			<form:input path="paciente.idPaciente" id="idPaciente"
-			class="form-control" required="required" />
+			class="form-control" required="required" type="hidden" />
 			
 			<br>
 			<form:label path="data" class="sr-only">Data do Evento</form:label>
@@ -102,6 +102,7 @@ function show(group)
 				<form:option value="Aniversário">Aniversário</form:option>
 				<form:option value="Noivado">Noivado</form:option>
 				<form:option value="Casamento">Casamento</form:option>
+				<form:option value="Divorcio">Divórcio</form:option>
 				<form:option value="Festa">Festa</form:option>
 				<form:option value="Morte">Morte</form:option>
 				<form:option value="Funeral">Funeral</form:option>

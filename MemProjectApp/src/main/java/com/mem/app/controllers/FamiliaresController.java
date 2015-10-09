@@ -23,7 +23,6 @@ import com.mem.app.model.Familiar;
 import com.mem.app.model.Paciente;
 import com.mem.app.model.RelacaoPacienteFamiliar;
 import com.mem.app.model.RelacaoPacienteFamiliarId;
-import com.mem.app.model.Tecnico;
 import com.mem.app.services.FamiliarService;
 import com.mem.app.services.RelacaoPacienteFamiliarService;
 
@@ -61,46 +60,44 @@ public class FamiliaresController {
 
 		Familiar familiar = null;
 		
-		Tecnico tecnico = (Tecnico) session.getAttribute("currentTecnico");
-		System.out.println("tecnico: " + tecnico);
-		
 		Paciente paciente = (Paciente) session.getAttribute("currentPaciente");
-		System.out.println("paciente session " + paciente);
 		
-		RelacaoPacienteFamiliar relacao = (RelacaoPacienteFamiliar)session.getAttribute("currentRelacao");
-		System.out.println("relacao session " + relacao);
+		RelacaoPacienteFamiliar relacao = null;
+		Integer relacaoId = 0;
 		
-		int idRelacaoPacienteFamiliarPacienteFamiliar = 0;
-		if (request.getParameter("idRelacaoPacienteFamiliarPacienteFamiliar") != null){
-			idRelacaoPacienteFamiliarPacienteFamiliar = Integer.parseInt(request.getParameter("idRelacaoPacienteFamiliar"));
-			System.out.println("vem do request");
+		if((RelacaoPacienteFamiliar)session.getAttribute("currentRelacao") != null){
+			relacao = (RelacaoPacienteFamiliar)session.getAttribute("currentRelacao");
+		}
+		else if(session.getAttribute("idRelacaoPacienteFamiliar")!= null){
+			relacaoId = (Integer) session.getAttribute("idRelacaoPacienteFamiliar");
+			relacao = relacaoPacienteFamiliarService.get(relacaoId);
+		}
+		
+		int idRelacaoPacienteFamiliar = 0;
+		if (request.getParameter("idRelacaoPacienteFamiliar") != null){
+			idRelacaoPacienteFamiliar = Integer.parseInt(request.getParameter("idRelacaoPacienteFamiliar"));
 		}else {
-			if (session.getAttribute("idRelacaoPacienteFamiliarPacienteFamiliar") != null){
-				idRelacaoPacienteFamiliarPacienteFamiliar = (Integer) session.getAttribute("idRelacaoPacienteFamiliar");
-				System.out.println("vem da sessao");
+			if (session.getAttribute("idRelacaoPacienteFamiliar") != null){
+				idRelacaoPacienteFamiliar = (Integer) session.getAttribute("idRelacaoPacienteFamiliar");
 			}
 		}
-		System.out.println("tem id ? " + idRelacaoPacienteFamiliarPacienteFamiliar);
-		if(idRelacaoPacienteFamiliarPacienteFamiliar > 0){
-			relacao = relacaoPacienteFamiliarService.get(idRelacaoPacienteFamiliarPacienteFamiliar);
+		if(idRelacaoPacienteFamiliar > 0){
+			relacao = relacaoPacienteFamiliarService.get(idRelacaoPacienteFamiliar);
 			familiar = relacao.getFamiliar();
 		}
 		else{
 			Integer idFamiliar = 0;
 			if (request.getParameter("idFamiliar") != null){
-				System.out.println("request: " + request.getParameter("idFamiliar"));
 				idFamiliar = Integer.parseInt(request.getParameter("idFamiliar"));
 			}
 			else {
 				if (session.getAttribute("idFamiliar") != null)
-					System.out.println("session: " + session.getAttribute("idFamiliar"));
 					idFamiliar = (Integer) session.getAttribute("idFamiliar");
 			}
 			familiar = familiarService.get(idFamiliar);
 			relacao = relacaoPacienteFamiliarService.getWithPatientAndFamily(paciente, familiar);
 		}
 		session.setAttribute("currentRelacao", relacao);
-		System.out.println("currentRelacao sesssion " + session.getAttribute("currentRelacao"));
 		
 		return new ModelAndView("verFamiliar", "currentRelacao", relacao);
 	}
@@ -109,16 +106,9 @@ public class FamiliaresController {
 	public ModelAndView verFamiliar(@RequestParam(value = "error", required = false) boolean error, ModelMap model,
 			HttpServletRequest request) {
 
-		Tecnico tecnico = (Tecnico) session.getAttribute("currentTecnico");
-		System.out.println("tecnico: " + tecnico);
-		
 		Familiar familiar = null;
-		
 		Paciente paciente = (Paciente) session.getAttribute("currentPaciente");
-		System.out.println("paciente session" + paciente);
-		
 		RelacaoPacienteFamiliar relacao = (RelacaoPacienteFamiliar)session.getAttribute("currentRelacao");
-		System.out.println("relacao session " + relacao);
 			
 		if (error) {
 			System.out.println("Houve Erros");
@@ -131,14 +121,11 @@ public class FamiliaresController {
 			int idRelacaoPacienteFamiliar = 0;
 			if (request.getParameter("idRelacaoPacienteFamiliar") != null){
 				idRelacaoPacienteFamiliar = Integer.parseInt(request.getParameter("idRelacaoPacienteFamiliar"));
-				System.out.println("vem do request");
 			}else {
 				if (session.getAttribute("idRelacaoPacienteFamiliar") != null){
 					idRelacaoPacienteFamiliar = (Integer) session.getAttribute("idRelacaoPacienteFamiliar");
-					System.out.println("vem da sessao");
 				}
 			}
-			System.out.println("tem id ? " + idRelacaoPacienteFamiliar);
 			
 			if(idRelacaoPacienteFamiliar > 0){
 				relacao = relacaoPacienteFamiliarService.get(idRelacaoPacienteFamiliar);
@@ -174,7 +161,6 @@ public class FamiliaresController {
 		session = request.getSession();
 		
 		Paciente paciente = (Paciente) session.getAttribute("currentPaciente");
-		System.out.println("paciente session" + paciente);
 				
 		int idFamiliar = 0;
 		if (request.getParameter("idFamiliar") != null){
@@ -186,7 +172,6 @@ public class FamiliaresController {
 		}
 		Familiar familiar = familiarService.get(idFamiliar);
 		RelacaoPacienteFamiliar relacao = relacaoPacienteFamiliarService.getWithPatientAndFamily(paciente, familiar);
-		System.out.println("Encontrou a relacao? " + relacao);
 		return new ModelAndView("editarFamiliar", "relacaoModel", relacao);
 	}
 
@@ -196,17 +181,10 @@ public class FamiliaresController {
 			HttpServletRequest request){
 		System.out.println("Vou editar a relação " + relacao);
 		
-		System.out.println("RelacaoId " + relacao.getId());
-		
 		session = request.getSession();
 
 		Paciente paciente = (Paciente) session.getAttribute("currentPaciente");
-
-		Familiar familiar = relacao.getFamiliar();
 		Paciente pacienteRel = relacao.getPaciente();
-		
-		System.out.println("Paciente relacao " + pacienteRel);
-		System.out.println("Familiar relacao " + familiar);
 		
 		RelacaoPacienteFamiliarId relacaoId = relacao.getId();
 		
@@ -219,10 +197,8 @@ public class FamiliaresController {
 			relacao.setPaciente(paciente);
 		}
 		
-		//System.out.println("Como esta a relacao agr? " + relacao);
 		int idRelacaoPacienteFamiliarId = relacaoId.getIdRelacaoPacienteFamiliar();
 		
-		System.out.println("idRelacaoPacienteFamiliarId " + idRelacaoPacienteFamiliarId);
 		
 		if (!result.hasErrors()) {
 			System.out.println("Não tem erros");
@@ -231,13 +207,9 @@ public class FamiliaresController {
 				result.rejectValue("idRelacaoPacienteFamiliar", "CustomMessage", "Essa relação não existe");
 			} else {
 				System.out.println("vai editar a relacao");
-				int updateFamiliarID = familiarService.saveOrUpdate(relacao.getFamiliar());
-				System.out.println("ja editou o familiar " + updateFamiliarID);
+				familiarService.saveOrUpdate(relacao.getFamiliar());
 				int updateId = relacaoPacienteFamiliarService.saveOrUpdate(relacao);
 				System.out.println("ja editou a relacao " + updateId);
-				session.setAttribute("idRelacaoPacienteFamiliar", updateId);
-				int idRelacaoPacienteFamiliar = (Integer) session.getAttribute("idRelacaoPacienteFamiliar");
-				System.out.println("tem o id? " + idRelacaoPacienteFamiliar);
 				verFamiliar(request);
 			}
 			return new ModelAndView("verFamiliar", "currentRelacao", relacao);
@@ -258,12 +230,7 @@ public class FamiliaresController {
 		
 		session = request.getSession();
 		
-		Tecnico tecnico = (Tecnico) session.getAttribute("currentTecnico");
-		System.out.println("tecnico: " + tecnico);
-		
 		Paciente paciente = (Paciente) session.getAttribute("currentPaciente");
-		System.out.println("paciente session" + paciente);
-		
 		RelacaoPacienteFamiliar relacao = new RelacaoPacienteFamiliar();
 		RelacaoPacienteFamiliarId relacaoId = new RelacaoPacienteFamiliarId();
 		
@@ -282,12 +249,7 @@ public class FamiliaresController {
 
 		Paciente paciente = (Paciente) session.getAttribute("currentPaciente");
 
-		Familiar familiar = relacao.getFamiliar();
 		Paciente pacienteRel = relacao.getPaciente();
-		
-		System.out.println("Paciente relacao " + pacienteRel);
-		System.out.println("Familiar relacao " + familiar);
-		
 		RelacaoPacienteFamiliarId relacaoId = new RelacaoPacienteFamiliarId();
 		
 		relacaoId.setIdPaciente(paciente.getIdPaciente());
@@ -306,10 +268,7 @@ public class FamiliaresController {
 			} else {
 				System.out.println("vai inserir a relacao");
 				int newId = relacaoPacienteFamiliarService.saveOrUpdate(relacao);
-				System.out.println("ja inseriu a relacao " + newId);
 				session.setAttribute("idRelacaoPacienteFamiliar", newId);
-				int idRelacaoPacienteFamiliar = (Integer) session.getAttribute("idRelacaoPacienteFamiliar");
-				System.out.println("tem o id? " + idRelacaoPacienteFamiliar);
 				verFamiliar(request);
 			}
 			return new ModelAndView("verFamiliar", "currentRelacao", relacao);
@@ -330,7 +289,6 @@ public class FamiliaresController {
 		
 		session = request.getSession();
 		Paciente paciente = (Paciente) session.getAttribute("currentPaciente");
-		System.out.println("paciente: " + paciente);
 
 		List<RelacaoPacienteFamiliar> listRelacaoPacienteFamiliar = relacaoPacienteFamiliarService.list(paciente);
 		paciente.setRelacaoPacienteFamiliars(listRelacaoPacienteFamiliar);
@@ -340,8 +298,6 @@ public class FamiliaresController {
 		for(RelacaoPacienteFamiliar relacao : listRelacaoPacienteFamiliar){
 			listFamiliar.put(relacao.getTipoRelacao(), relacao.getFamiliar());
 		}
-		
-		System.out.println("Número de familiares " + listFamiliar.size());
 		
 		return new ModelAndView("listarFamiliares", "listFamiliares", listFamiliar);
 	}	

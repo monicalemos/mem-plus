@@ -12,10 +12,12 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mem.app.model.Evento;
@@ -31,152 +33,263 @@ import com.mem.app.services.RelacaoPacienteFamiliarService;
 @Controller
 @RequestMapping(value = "/Evento")
 public class EventosController {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(EventosController.class);
-//	private static final IRepository<Evento> repo = DataRepositoryLocator.getEventoRepository();
-	
+
 	EventoService eventoService;
 	RelacaoPacienteFamiliarService relacaoPacienteFamiliarService;
 	FamiliarService familiarService;
 
-	public EventosController() {}
-	
+	public EventosController() {
+	}
+
 	@Autowired
 	public void setEventoService(EventoService eventoService) {
 		this.eventoService = eventoService;
 	}
+
 	@Autowired
 	public void setRelacaoPacienteFamiliarService(RelacaoPacienteFamiliarService relacaoPacienteFamiliarService) {
 		this.relacaoPacienteFamiliarService = relacaoPacienteFamiliarService;
 	}
+
 	@Autowired
 	public void setFamiliarService(FamiliarService familiarService) {
 		this.familiarService = familiarService;
 	}
+
 	HttpSession session = null;
-	
-	@RequestMapping(value = "/verEvento", method=RequestMethod.GET)
-	public ModelAndView verEvento()
-	{
+
+	@RequestMapping(value = "/verEvento", method = RequestMethod.GET)
+	public ModelAndView verEvento(HttpServletRequest request) {
 		System.out.println("ver Evento");
-		return new ModelAndView("verEvento");
-	}
-	
-//	@RequestMapping(value = "/verEvento", method = RequestMethod.GET)
-//	public ModelAndView verEvento(int id) {
-//		return new ModelAndView("verEvento","eventoModel",repo.select(id));
-//	}
-	
-	
-	@RequestMapping(value="/editarEvento", method=RequestMethod.GET)
-	public ModelAndView editarEvento()
-	{
-		System.out.println("editar Evento");
-		return new ModelAndView("inserirEvento");
-	}
-	
-//	@RequestMapping(value = "/editarEvento", method = RequestMethod.GET)
-//	public ModelAndView editarEvento(int id) {
-//		return new ModelAndView("editarEvento","eventoModel",repo.select(id));
-//	}
-	
-	@RequestMapping(value = "/editarEvento", method = RequestMethod.POST)
-	public String  editarEvento( int idEvento){
-		//TODO
-		return "editarEvento";
-}
-	
-//	@RequestMapping(value = "/editarEvento", method = RequestMethod.POST)
-//	public String  editarEvento( 
-//			@ModelAttribute("eventoModel") @Valid Evento eventoModel,
-//			BindingResult result) {
-//		if (!result.hasErrors()) {
-//			if (repo.update(eventoModel))
-//				return "verEvento";
-//			else {
-//				result.rejectValue("id", "CustomMessage", "Ocorreu um erro");
-//			}
-//		}
-//		logger.debug("Existem Erros:" +result.hasErrors());
-//		return "editarEvento";
-//	}
-	
-	@RequestMapping(value = "/inserirEvento",  method = RequestMethod.GET)
-	public ModelAndView inserirEvento(HttpServletRequest request) {
-		System.out.println("inserirEvento");
 		
 		session = request.getSession();
-		
 		Tecnico tecnico = (Tecnico) session.getAttribute("currentTecnico");
 		System.out.println("tecnico: " + tecnico);
 		
 		Paciente paciente = (Paciente) session.getAttribute("currentPaciente");
-		System.out.println("paciente session" + paciente);
+		System.out.println("paciente session " + paciente);
 		
-		Evento evento = new Evento();
-		EventoId eventoId = new EventoId();
+		Evento evento = (Evento)session.getAttribute("currentEvento");
+		System.out.println("evento session " + evento);
 		
-		eventoId.setIdPaciente(paciente.getIdPaciente());
-		evento.setId(eventoId);
-		evento.setPaciente(paciente);
+		int idEvento = 0;
+		if(request.getParameter("idEvento") != null){
+			idEvento = Integer.parseInt(request.getParameter("idEvento"));
+			System.out.println("vem do request");
+		}
+		else{
+			if(session.getAttribute("idEvento") != null){
+				idEvento = (Integer)session.getAttribute("idEvento");
+				System.out.println("vem da sessao");
+			}
+		}
+		System.out.println("tem id?  " + idEvento);
+		if(idEvento > 0 && evento == null){
+			evento = eventoService.get(idEvento);
+		}
+
+		session.setAttribute("currentEvento", evento);
+		System.out.println("currentEvento sesssion " + session.getAttribute("currentEvento"));
+
+		session.setAttribute("familiarEvento", evento.getFamiliar().getNomeProprio() + " " + evento.getFamiliar().getApelido());
+		return new ModelAndView("verEvento", "currentEvento", evento);
+	}
+
+	 @RequestMapping(value = "/verEvento", method = RequestMethod.POST)
+	 public ModelAndView verEvento(@RequestParam(value = "error", required = false) boolean error, ModelMap model,
+				HttpServletRequest request) {
+		 
+			Paciente paciente = (Paciente) session.getAttribute("currentPaciente");
+			Evento evento = (Evento)session.getAttribute("currentEvento");
+			
+			if (error) {
+				System.out.println("Houve Erros");
+				model.put("viewEvento-error", "Não conseguiu mostrar os dados do evento");
+				return new ModelAndView("ver-paciente", "currentPaciente", paciente);
+			} else {
+				model.put("viewEvento-error", "");
+				System.out.println("não houve erros");
+				
+				int idEvento = 0;
+				if (request.getParameter("idEvento") != null){
+					idEvento = Integer.parseInt(request.getParameter("idEvento"));
+				}else {
+					if (session.getAttribute("idEvento") != null){
+						idEvento = (Integer) session.getAttribute("idEvento");
+					}
+				}
+				if(idEvento > 0 ){
+					evento = eventoService.get(idEvento);
+				}
+				if(evento != null)
+					return new ModelAndView("verEvento", "currentEvento", evento);
+				else {
+					model.put("verEvento-error", "Não conseguiu mostrar os dados do evento");
+					return new ModelAndView("ver-paciente", "currentPaciente", paciente);
+				}
+			}
+	 }
+
+	@RequestMapping(value = "/editarEvento", method = RequestMethod.GET)
+	public ModelAndView editarEvento(HttpServletRequest request)
+	{
+		System.out.println("editar Evento");
 		
-		System.out.println("Tem paciente: " + evento.getPaciente());
+		session = request.getSession();
+		
+		Paciente paciente = (Paciente) session.getAttribute("currentPaciente");
+				
+		int idEvento = 0;
+		if (request.getParameter("idEvento") != null){
+			idEvento = Integer.parseInt(request.getParameter("idEvento"));
+		}
+		else {
+			if (session.getAttribute("idEvento") != null)
+				idEvento = (Integer) session.getAttribute("idEvento");
+		}
+		Evento evento = eventoService.get(idEvento);
 		
 		List<RelacaoPacienteFamiliar> listRelacaoPacienteFamiliar = relacaoPacienteFamiliarService.list(paciente);
 		paciente.setRelacaoPacienteFamiliars(listRelacaoPacienteFamiliar);
-		
+
 		HashMap<String, Familiar> listFamiliar = new HashMap<String, Familiar>();
-		
-		for(RelacaoPacienteFamiliar relacao : listRelacaoPacienteFamiliar){
+
+		for (RelacaoPacienteFamiliar relacao : listRelacaoPacienteFamiliar) {
 			listFamiliar.put(relacao.getTipoRelacao(), relacao.getFamiliar());
 		}
-		
-		System.out.println("Número de familiares " + listFamiliar.size());
+
 		session.setAttribute("listFamiliares", listFamiliar);
 		
+		return new ModelAndView("editarEvento", "eventoModel", evento);
+	}
+
+	@RequestMapping(value = "/editarEvento", method = RequestMethod.POST)
+	public ModelAndView editarEvento(@ModelAttribute("currentEvento") @Valid Evento evento , BindingResult result,
+			HttpServletRequest request){
+		System.out.println("Vou editar o evento " + evento);
+		
+		Paciente paciente = (Paciente) session.getAttribute("currentPaciente");
+		
+		int idEventoId = evento.getId().getIdEvento();
+		
+		if(!result.hasErrors()){
+			System.out.println("Não teve erros");
+			if (idEventoId == 0 && eventoService.get(idEventoId) == null) {
+				System.out.println("Esse evento não existe");
+				result.rejectValue("idEvento", "CustomMessage", "Esse evento não existe");
+			} else {
+				System.out.println("vai editar a relacao");
+				int updateId = 0;
+				if(evento.getFamiliar()!= null){
+					updateId = eventoService.saveOrUpdateWithFamily(evento);
+				}else{
+					updateId = eventoService.saveOrUpdateWithoutFamily(evento);
+				}
+				session.setAttribute("idEvento", updateId);
+				verEvento(request);
+			}
+			return new ModelAndView("verEvento", "currentEvento", evento);
+		}
+		else{
+			System.out.println(result.getAllErrors().toString());
+			System.out.println("ocorreu um erro");
+			logger.debug("Existem Erros:" + result.hasErrors());
+			Evento eventoNew = new Evento();
+			eventoNew.setPaciente(paciente);
+			return new ModelAndView("editarEvento", "currentEvento", eventoNew);
+		}
+	}
+	
+	@RequestMapping(value = "/inserirEvento", method = RequestMethod.GET)
+	public ModelAndView inserirEvento(HttpServletRequest request) {
+		System.out.println("inserirEvento");
+
+		session = request.getSession();
+
+		Paciente paciente = (Paciente) session.getAttribute("currentPaciente");
+		Evento evento = new Evento();
+		EventoId eventoId = new EventoId();
+
+		eventoId.setIdPaciente(paciente.getIdPaciente());
+		evento.setId(eventoId);
+		evento.setPaciente(paciente);
+
+		List<RelacaoPacienteFamiliar> listRelacaoPacienteFamiliar = relacaoPacienteFamiliarService.list(paciente);
+		paciente.setRelacaoPacienteFamiliars(listRelacaoPacienteFamiliar);
+
+		HashMap<String, Familiar> listFamiliar = new HashMap<String, Familiar>();
+
+		for (RelacaoPacienteFamiliar relacao : listRelacaoPacienteFamiliar) {
+			listFamiliar.put(relacao.getTipoRelacao(), relacao.getFamiliar());
+		}
+
+		session.setAttribute("listFamiliares", listFamiliar);
+
 		return new ModelAndView("inserirEvento", "eventoModel", evento);
 	}
-	
-	@RequestMapping(value = "/inserirEvento", method = RequestMethod.POST)
-	public ModelAndView  inserirEvento( 
-			@ModelAttribute("eventoModel") @Valid Evento evento,
-			BindingResult result, HttpServletRequest request) {
-			
-			System.out.println("inserir evento post");
-			session = request.getSession();
 
-			int idFamiliar = evento.getFamiliar().getIdFamiliar();
-			System.out.println("IdFamiliar " + idFamiliar);
-			Paciente pacienteEvento = evento.getPaciente();
-			System.out.println("Paciente evento" + pacienteEvento);
-			
-			EventoId eventoId = evento.getId();
-			System.out.println("eventoId " + eventoId);
-			
-			if (!result.hasErrors()) {	
-				Familiar familiar = null;
-				if(idFamiliar > 0 ){
-					familiar = familiarService.get(idFamiliar);
-					System.out.println("Encontrou o familiar do evento: " + familiar);
-				}
-				evento.setFamiliar(familiar);
+	@RequestMapping(value = "/inserirEvento", method = RequestMethod.POST)
+	public ModelAndView inserirEvento(@ModelAttribute("eventoModel") @Valid Evento evento, BindingResult result,
+			HttpServletRequest request) {
+
+		System.out.println("inserir evento post");
+		session = request.getSession();
+		
+		int idFamiliar = 0;
+		if(request.getAttribute("temFamiliar") != null){
+			idFamiliar = evento.getFamiliar().getIdFamiliar();
+		}
+
+		Paciente pacienteEvento = evento.getPaciente();
+
+		EventoId eventoId = evento.getId();
+		int idEventoId = eventoId.getIdEvento();
+		if (!result.hasErrors()) {
+			System.out.println("Não tem erros");
+			if (idEventoId != 0 && eventoService.get(idEventoId) != null) {
+				System.out.println("Já existe esse evento");
+				result.rejectValue("idEventoId", "CustomMessage", "Já existe um evento igual");
+			} else {
+				int newId = 0;
 				
-				return new ModelAndView("verEvento", "currentEvento", evento);
-			}else {
-				System.out.println(result.getAllErrors().toString());
-				System.out.println("ocorreu um erro");
-				logger.debug("Existem Erros:" + result.hasErrors());
-				Evento eventoNew = new Evento();
-				eventoNew.setPaciente(pacienteEvento);
-				return new ModelAndView("inserirEvento", "currentEvento", eventoNew);
+				if (idFamiliar > 0) {
+					Familiar familiar = familiarService.get(idFamiliar);
+					evento.setFamiliar(familiar);
+					newId = eventoService.saveOrUpdateWithFamily(evento);
+				}
+				else{
+					newId = eventoService.saveOrUpdateWithoutFamily(evento);
+				}
+				
+				session.setAttribute("idEvento", newId);
+				session.removeAttribute("listFamiliares");
+				verEvento(request);
 			}
+			return new ModelAndView("verEvento", "currentEvento", evento);
+		} else {
+			System.out.println(result.getAllErrors().toString());
+			System.out.println("ocorreu um erro");
+			logger.debug("Existem Erros:" + result.hasErrors());
+			Evento eventoNew = new Evento();
+			eventoNew.setPaciente(pacienteEvento);
+			return new ModelAndView("inserirEvento", "currentEvento", eventoNew);
+		}
 	}
-	
-	@RequestMapping(value = "/listarEventos",  method = RequestMethod.GET)
-	public ModelAndView listarEvento()
+
+	@RequestMapping(value = "/listarEventos", method = RequestMethod.GET)
+	public ModelAndView listarEvento(HttpServletRequest request)
 	{
-		System.out.println("listar Evento");
-		return new ModelAndView("listarEventos");
-	}	
-	
+		System.out.println("listar Eventos");
+
+		session = request.getSession();
+
+		Paciente paciente = (Paciente) session.getAttribute("currentPaciente");
+		
+		List<Evento> listEvento = eventoService.list(paciente);
+		paciente.setEventos(listEvento);
+		return new ModelAndView("listarEventos", "listEventos", listEvento);
+	}
+
 }
