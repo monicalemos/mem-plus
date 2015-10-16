@@ -5,24 +5,45 @@
 <tiles-definitions>
 
 	<!-- ###### Familiares ###### -->
-	<definition 	name="verFamiliar" 		extends="pacienteTemplate">
-		<put-attribute 	name="title" 		value="Dados do Familiar" />
-		<put-attribute 	name="body" 		value="/WEB-INF/views/familiar/verFamiliar.jsp" />
+	<definition 		name="verFamiliar" 		extends="familiarTemplate">
+		<put-attribute 	name="title" 			value="Dados do Familiar" />
+		<put-attribute 	name="body" 			value="/WEB-INF/views/familiar/verFamiliar.jsp" />
+	</definition>
+
+	<definition 		name="editarFamiliar" 	extends="familiarTemplate">
+		<put-attribute 	name="title" 			value="Editar Familiar" />
+		<put-attribute 	name="body" 			value="/WEB-INF/views/familiar/editarFamiliar.jsp" />
 	</definition>
 	
-	<definition 	name="editarFamiliar" 	extends="pacienteTemplate">
-		<put-attribute 	name="title" 		value="Editar Familiar" />
-		<put-attribute 	name="body" 		value="/WEB-INF/views/familiar/editarFamiliar.jsp" />
+	<definition 		name="listarFamiliares" extends="pacienteTemplate">
+		<put-attribute 	name="title" 			value="Lista de Familiares" />
+		<put-attribute 	name="body" 			value="/WEB-INF/views/familiar/listarFamiliares.jsp" />
 	</definition>
 	
-	<definition 	name="listarFamiliares" extends="pacienteTemplate">
-		<put-attribute 	name="title" 		value="Lista de Familiares" />
-		<put-attribute 	name="body" 		value="/WEB-INF/views/familiar/listarFamiliares.jsp" />
+	<definition 		name="inserirFamiliar" 	extends="pacienteTemplate">
+		<put-attribute 	name="title" 			value="Inserir Familiar" />
+		<put-attribute 	name="body" 			value="/WEB-INF/views/familiar/inserirFamiliar.jsp" />
 	</definition>
 	
-	<definition name="inserirFamiliar" 		extends="pacienteTemplate">
-		<put-attribute name="title" 		value="Inserir Familiar" />
-		<put-attribute name="body" 			value="/WEB-INF/views/familiar/inserirFamiliar.jsp" />
+
+	<!-- Familiares Segundo Grau: -->
+	<definition 		name="verSegundoGrauFamiliar" 		extends="familiarTemplate">
+		<put-attribute 	name="title" 						value="Inserir Familiar" />
+		<put-attribute 	name="body" 						value="/WEB-INF/views/familiar/verSegundoGrauFamiliar.jsp" />
 	</definition>
 	
+	<definition 		name="editarSegundoGrauFamiliar" 	extends="familiarTemplate">
+		<put-attribute 	name="title" 						value="Editar Familiar" />
+		<put-attribute 	name="body" 						value="/WEB-INF/views/familiar/editarSegundoGrauFamiliar.jsp" />
+	</definition>
+	
+	<definition 		name="listarSegundoGrauFamiliares" 	extends="familiarTemplate">
+		<put-attribute 	name="title" 						value="Lista de Familiares" />
+		<put-attribute 	name="body" 						value="/WEB-INF/views/familiar/listarSegundoGrauFamiliares.jsp" />
+	</definition>
+	
+	<definition 		name="inserirSegundoGrauFamiliar" 	extends="familiarTemplate">
+		<put-attribute 	name="title" 						value="Inserir Familiar" />
+		<put-attribute 	name="body" 						value="/WEB-INF/views/familiar/inserirSegundoGrauFamiliar.jsp" />
+	</definition>
 </tiles-definitions>

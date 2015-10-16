@@ -53,7 +53,7 @@ public class UtilizadorDAOImpl implements UtilizadorDAO {
 			final String password = utilizador.getPassword();
 			final String tipoUtilizador = utilizador.getTipoUtilizador();
 			final String email = utilizador.getEmail();
-			System.out.println("variaveis definidas no insert");
+			System.out.println("variaveis definidas no insert " + nomeUtilizador + ", " + password + ", " + tipoUtilizador + ", " + email);
 
 			PreparedStatement ps;
 			try {

@@ -77,7 +77,10 @@ public class FamiliarDAOImpl implements FamiliarDAO {
 			final boolean eCuidador = familiar.getEcuidador();
 			final Date dataObito =  familiar.getDataObito();
 			final int idFamiliar = familiar.getIdFamiliar();
-			final int idUtilizador = familiar.getUtilizador().getIdUtilizador();
+			Integer idUtilizador = null; 
+			if(familiar.getUtilizador()!= null){
+				idUtilizador = familiar.getUtilizador().getIdUtilizador();
+			}
 			
 			PreparedStatement ps;
 			try {
@@ -102,7 +105,11 @@ public class FamiliarDAOImpl implements FamiliarDAO {
 					ps.setDate(12, new java.sql.Date(dataObito.getTime()));
 				}
 				
-				ps.setInt(13, idUtilizador);
+				if(idUtilizador != null)
+					ps.setInt(13, idUtilizador);
+				else{
+					ps.setNull(13, java.sql.Types.INTEGER);
+				}
 				ps.setInt(14,  idFamiliar);
 			
 				ps.executeUpdate();
@@ -147,7 +154,11 @@ public class FamiliarDAOImpl implements FamiliarDAO {
 			final int telefone = familiar.getTelefone();
 			final boolean eCuidador = familiar.getEcuidador();
 			final Date dataObito =  familiar.getDataObito();
-			final int idUtilizador = familiar.getUtilizador().getIdUtilizador();
+			Integer idUtilizador = null; 
+			if(familiar.getUtilizador()!= null){
+				idUtilizador = familiar.getUtilizador().getIdUtilizador();
+			}
+		
 
 			System.out.println("variaveis definidas no insert idFamiliar " + nomeCompleto + ", " + nomeProprio + ", "
 					+ apelido + ", " + dataNascimento + ", " + idLocalNascimento + ", " + idMorada + ", " + genero
@@ -176,8 +187,11 @@ public class FamiliarDAOImpl implements FamiliarDAO {
 					ps.setDate(12, new java.sql.Date(dataObito.getTime()));
 				}
 				
-				ps.setInt(13, idUtilizador);
-			
+				if(idUtilizador != null)
+					ps.setInt(13, idUtilizador);
+				else{
+					ps.setNull(13, java.sql.Types.INTEGER);
+				}
 				ps.executeUpdate();
 
 				System.out.println("executou a query");

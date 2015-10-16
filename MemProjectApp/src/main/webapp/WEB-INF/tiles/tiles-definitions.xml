@@ -32,6 +32,15 @@
 		<put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp" />
 	</definition>
 	
+	<!-- Paciente -->
+	<definition name="familiarTemplate" template="/WEB-INF/views/template/template.jsp">
+		<put-attribute name="title" value="MEM+" />
+		<put-attribute name="header" value="/WEB-INF/views/template/header.jsp" />
+		<put-attribute name="menu" value="/WEB-INF/views/template/menuFamiliar.jsp" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp" />
+	</definition>
+		
 	<!-- PUBLIC -->
 	<definition name="home" extends="publicTemplate">
 		<put-attribute name="body" value="/WEB-INF/views/public/index.jsp" />

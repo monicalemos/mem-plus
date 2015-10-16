@@ -23,27 +23,27 @@ public class RelacaoFamiliarFamiliar implements java.io.Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private RelacaoFamiliarFamiliarId id;
-	private Familiar familiarByIdFamiliar1;
 	private Familiar familiarByIdFamiliar;
+	private Familiar familiarByIdFamiliar1;
 	private Paciente paciente;
 	private String tipoRelacao;
 
 	public RelacaoFamiliarFamiliar() {
 	}
 
-	public RelacaoFamiliarFamiliar(RelacaoFamiliarFamiliarId id, Familiar familiarByIdFamiliar1,
-			Familiar familiarByIdFamiliar, Paciente paciente) {
+	public RelacaoFamiliarFamiliar(RelacaoFamiliarFamiliarId id, Familiar familiarByIdFamiliar,
+			Familiar familiarByIdFamiliar1, Paciente paciente) {
 		this.id = id;
-		this.familiarByIdFamiliar1 = familiarByIdFamiliar1;
 		this.familiarByIdFamiliar = familiarByIdFamiliar;
+		this.familiarByIdFamiliar1 = familiarByIdFamiliar1;
 		this.paciente = paciente;
 	}
 
-	public RelacaoFamiliarFamiliar(RelacaoFamiliarFamiliarId id, Familiar familiarByIdFamiliar1,
-			Familiar familiarByIdFamiliar, Paciente paciente, String tipoRelacao) {
+	public RelacaoFamiliarFamiliar(RelacaoFamiliarFamiliarId id, Familiar familiarByIdFamiliar,
+			Familiar familiarByIdFamiliar1, Paciente paciente, String tipoRelacao) {
 		this.id = id;
-		this.familiarByIdFamiliar1 = familiarByIdFamiliar1;
 		this.familiarByIdFamiliar = familiarByIdFamiliar;
+		this.familiarByIdFamiliar1 = familiarByIdFamiliar1;
 		this.paciente = paciente;
 		this.tipoRelacao = tipoRelacao;
 	}

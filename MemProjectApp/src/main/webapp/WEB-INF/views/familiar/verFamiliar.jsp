@@ -38,4 +38,8 @@
          <input type="hidden" name="idFamiliar" value="<%=familiar.getIdFamiliar()%>"/>
          <button type="submit">Editar</button>
      </form>   	
+      <form action="inserirSegundoGrauFamiliar" method="get">
+         <input type="hidden" name="idFamiliar" value="<%=familiar.getIdFamiliar()%>"/>
+         <button type="submit">Inserir Familiar</button>
+     </form>   	
 </div>
