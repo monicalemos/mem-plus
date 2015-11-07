@@ -1,5 +1,6 @@
 package com.mem.app.controllers;
 
+import java.util.Enumeration;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -39,8 +40,20 @@ public class PacientesController {
 	public PacientesController() {
 	}
 
+	public void removeFamilySessionAttributes() {
+		Enumeration<?> lista = session.getAttributeNames();
+		while (lista.hasMoreElements()) {
+			String value = (String) lista.nextElement();
+			System.out.println("Atttribute name " + value);
+			if (value.contains("Familiar") || value.contains("Relacao")){
+				session.removeAttribute(value);
+			}
+		}
+	}
+
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public ModelAndView index() {
+		removeFamilySessionAttributes();
 		return new ModelAndView("home-private");
 	}
 
@@ -49,6 +62,7 @@ public class PacientesController {
 		System.out.println("ver Paciente");
 		session = request.getSession();
 		Paciente paciente = (Paciente) session.getAttribute("currentPaciente");
+		removeFamilySessionAttributes();
 		return new ModelAndView("ver-paciente", "currentPaciente", paciente);
 	}
 
@@ -78,11 +92,13 @@ public class PacientesController {
 			if (pacienteService.get(idPaciente) != null) {
 				Paciente paciente = pacienteService.get(idPaciente);
 				request.setAttribute("currentPaciente", paciente);
-				
+
 				session.setAttribute("currentPaciente", paciente);
+				removeFamilySessionAttributes();
 				return new ModelAndView("ver-paciente", "currentPaciente", paciente);
 			} else {
 				model.put("login-error", "Não conseguiu mostrar os dados do paciente");
+				removeFamilySessionAttributes();
 				return new ModelAndView("home-private", "currentTecnico", tecnico);
 			}
 		}
@@ -94,23 +110,24 @@ public class PacientesController {
 		session = request.getSession();
 		Paciente paciente = null;
 		int idPaciente = 0;
-		if (request.getParameter("idPaciente") != null){
+		if (request.getParameter("idPaciente") != null) {
 			idPaciente = Integer.parseInt(request.getParameter("idPaciente"));
-		}else {
-			if (session.getAttribute("idPaciente") != null){
+		} else {
+			if (session.getAttribute("idPaciente") != null) {
 				idPaciente = (Integer) session.getAttribute("idPaciente");
 			}
 		}
 		System.out.println("tem id ? " + idPaciente);
 		paciente = pacienteService.get(idPaciente);
-
+		removeFamilySessionAttributes();
 		return new ModelAndView("editarPaciente", "currentPaciente", paciente);
 	}
 
 	@RequestMapping(value = "/editarPaciente", method = RequestMethod.POST)
-	public ModelAndView editarPaciente(@ModelAttribute("currentPaciente") @Valid Paciente paciente, BindingResult result,
-			HttpServletRequest request) {
-		System.out.println("vou ver editar o paciente " + paciente.getIdPaciente() + " - " + paciente.getApelido() + " - " + paciente.getNomeProprio());
+	public ModelAndView editarPaciente(@ModelAttribute("currentPaciente") @Valid Paciente paciente,
+			BindingResult result, HttpServletRequest request) {
+		System.out.println("vou ver editar o paciente " + paciente.getIdPaciente() + " - " + paciente.getApelido()
+				+ " - " + paciente.getNomeProprio());
 
 		if (!result.hasErrors()) {
 			System.out.println("Não tem erros");
@@ -124,11 +141,13 @@ public class PacientesController {
 				verPaciente(request);
 				paciente.setNomeCompleto(paciente.getApelido() + ", " + paciente.getNomeProprio());
 			}
+			removeFamilySessionAttributes();
 			return new ModelAndView("ver-paciente", "currentPaciente", paciente);
 		} else {
 			System.out.println(result.getAllErrors().toString());
 			System.out.println("ocorreu um erro");
 			logger.debug("Existem Erros:" + result.hasErrors());
+			removeFamilySessionAttributes();
 			return new ModelAndView("editarPaciente", "currentPaciente", paciente);
 		}
 	}
@@ -136,6 +155,7 @@ public class PacientesController {
 	@RequestMapping(value = "/inserirPaciente", method = RequestMethod.GET)
 	public ModelAndView inserirPaciente() {
 		System.out.println("inserirPaciente");
+		removeFamilySessionAttributes();
 		return new ModelAndView("inserirPaciente", "pacienteModel", new Paciente());
 	}
 
@@ -158,11 +178,13 @@ public class PacientesController {
 				session.setAttribute("idPaciente", newId);
 				verPaciente(request);
 			}
+			removeFamilySessionAttributes();
 			return new ModelAndView("ver-paciente", "currentPaciente", paciente);
 		} else {
 			System.out.println(result.getAllErrors().toString());
 			System.out.println("ocorreu um erro");
 			logger.debug("Existem Erros:" + result.hasErrors());
+			removeFamilySessionAttributes();
 			return new ModelAndView("inserirPaciente", "pacienteModel", new Paciente());
 		}
 	}
@@ -176,6 +198,7 @@ public class PacientesController {
 
 		List<Paciente> listPaciente = pacienteService.list(tecnico.getIdTecnico());
 		tecnico.setPacientes(listPaciente);
+		removeFamilySessionAttributes();
 		return new ModelAndView("listarPacientes", "currentTecnico", tecnico);
 	}
 }

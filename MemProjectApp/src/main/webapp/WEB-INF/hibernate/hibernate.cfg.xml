@@ -27,5 +27,6 @@
 		<mapping class="com.mem.app.model.RelacaoPacienteFamiliar" />
 		<mapping class="com.mem.app.model.RelacaoPacienteFamiliarId" />
 		<mapping class="com.mem.app.model.Utilizador" />
+		<mapping class="com.mem.app.model.Tecnico" />
 	</session-factory>
 </hibernate-configuration>

@@ -101,4 +101,11 @@ public class RelacaoFamiliarFamiliar implements java.io.Serializable {
 		this.tipoRelacao = tipoRelacao;
 	}
 
+	@Override
+	public String toString() {
+		return "RelacaoFamiliarFamiliar [id=" + id + ", \n familiarByIdFamiliar=" + familiarByIdFamiliar
+				+ ", \n  familiarByIdFamiliar1=" + familiarByIdFamiliar1 + ",\n   paciente=" + paciente + ", \ntipoRelacao="
+				+ tipoRelacao + "]";
+	}
+
 }
