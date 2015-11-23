@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <%@page import="java.util.*"%>
 <%@page import="com.mem.app.model.*"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
@@ -109,7 +108,7 @@ label {
 </style>
 <div id="page-wrapper">
 	<h1 class="page-header">Dados do Familiar</h1>
-	<div class="newspaper">
+	<div > <!-- class="newspaper" -->
 		<p>
 			<label for="Partentesco:"> Parentesco com Paciente:</label>
 			<%=relacao.getTipoRelacao()%></p>
