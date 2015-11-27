@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+
 <%@page import="java.util.*"%>
 <%@page import="com.mem.app.model.*"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
@@ -10,54 +12,12 @@
 			.getAttribute("listFamiliares"));
 %>
 
+<link href="<c:url value="/resources/static/css/TreeListView.css" />" rel="stylesheet">
+
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script> 
-<style> 
-label {
-	word-spacing: 30px !important;
-	cursor:pointer;
-}
-.treeview {
-	cursor:pointer;
-	list-style-type: none;
-	border: 2px solid #eae5e5;
-	background: #F8F8F8;
-    
-}
-ul .buttons, .row, .subButtons {
-	cursor:pointer;
-    background: #fcfcfc;
-    list-style-type: none;
-   	padding: 10px;
-   	padding-left:20px;
-   	padding-top:7px;
-   	padding-bottom: 7px;
-   	margin-top:8px;
-   	margin-left:8px;
-   	margin-left:-50px;
-   	margin-right:30px;
-   	border: 2px solid white;
-    /*  border: 5px solid red; */
-}
-ul .row{
-   	margin-top:-25px;
-   	margin-right:30px;
-   	/* border: 2px solid red; */
-    /*  border: 5px solid red; */
-}
-ul .subButtons{ 
-	background: #ffffff;
-	border: 2px solid #eae5e5;
-}
-ul .list {
-	cursor:pointer;
-	list-style-type: none;
-    margin:10px;
-    /*  border: 5px solid red; */
-}
-</style>
 
 <div id="page-wrapper">
-	<h1 class="page-header">LISTAR PACIENTES </h1>
+	<h1 class="page-header">LISTAR FAMILIARES </h1>
 	<%
 		System.out.println("listFamiliar: " + listFamiliares.size());
 		for (RelacaoPacienteFamiliar relacao1 : listFamiliares) {
@@ -90,7 +50,7 @@ ul .list {
     		</label> 
     	</span>
 		<div class="hiddenDiv">
-			<ul>
+			<ul class="treeviewSub">
 				<li class="buttons"> 
 					<span class="Collapsable"> 
 						<button form="verFamiliar" type="submit" value="Ver">Ver</button>
@@ -101,7 +61,7 @@ ul .list {
 				<form id="verSegundoGrauFamiliar" action="verSegundoGrauFamiliar" method="get">
 					<input type="hidden" name="idFamiliarSegundoGrau" value="${grau.getFamiliarByIdFamiliar1().getIdFamiliar()}" /> 
 				</form>
-				<li class="sublist row">
+				<li class="row">
 					<span class="Collapsable"> 
 						<label> 
 							<c:out value="${grau.getFamiliarByIdFamiliar1().getIdFamiliar()}"/> - 
@@ -139,5 +99,29 @@ ul .list {
     $(".Collapsable").click(function () {
         $(this).parent().children().toggle();
         $(this).toggle();
+        
+      /*   alert("Class before: " + $(this).parent().parent().attr('class'));     */
+        if($(this).parent().parent().attr('class') == "treeview"){
+      		$(this).parent().parent().removeClass("treeview"); 
+        	$(this).parent().parent().toggleClass("treeviewActive");
+        }
+        else if($(this).parent().parent().attr('class') == "treeviewActive"){
+        	$(this).parent().parent().removeClass("treeviewActive");
+        	$(this).parent().parent().toggleClass("treeview");
+        }
+       /*  alert("Class after: " + $(this).parent().parent().attr('class')) */
+        
+       /*  alert("Class sub before: " + $(this).parent().attr('class')) */
+        if($(this).parent().parent().attr('class') == "treeviewSub"){
+            if($(this).parent().attr('class') == "row"){
+            	$(this).parent().removeClass("row");
+        		$(this).parent().toggleClass("rowActive");
+            }
+            else if($(this).parent().attr('class') == "rowActive"){
+            	$(this).parent().removeClass("rowActive");
+        		$(this).parent().toggleClass("row");
+            }
+        }
+   /*      alert("Class sub after: " + $(this).parent().attr('class')) */
     });
 </script>
