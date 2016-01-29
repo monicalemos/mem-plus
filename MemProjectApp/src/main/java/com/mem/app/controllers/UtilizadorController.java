@@ -47,13 +47,13 @@ public class UtilizadorController {
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public ModelAndView index() {
 		System.out.println("ola utilizador");
-		return new ModelAndView("utilizador-login", "utilizadorModel", new Utilizador());
+		return new ModelAndView("login", "utilizadorModel", new Utilizador());
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView login() {
 		System.out.println("login method get");
-		return new ModelAndView("utilizador-login", "utilizadorModel", new Utilizador());
+		return new ModelAndView("login", "utilizadorModel", new Utilizador());
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -77,9 +77,10 @@ public class UtilizadorController {
 				
 				Object obj = utilizadorService.encontrarUtilizador(utilizador);
 				if (obj instanceof Tecnico) {
-					modelView = new ModelAndView("home-private", "currentTecnico", (Tecnico)obj);
+					System.out.println("HOME_private1");
 					session.setAttribute("currentTecnico", (Tecnico)obj);
-					return modelView;
+					System.out.println("Tem tecnico: " + (Tecnico)obj);
+					return new ModelAndView("home-private", "currentTecnico", (Tecnico)obj);
 				}				
 			} else {
 				utilizador = utilizadorService.matchUser(utilizadorModel.getNomeUtilizador(),
@@ -94,6 +95,7 @@ public class UtilizadorController {
 					if (obj instanceof Tecnico) {
 						currentTecnico = (Tecnico)obj;
 						modelView = new ModelAndView("home-private", "currentTecnico", (Tecnico)obj);
+						System.out.println("HOME_private");
 						session.setAttribute("currentTecnico", (Tecnico)obj);
 						return modelView;
 					}
@@ -104,7 +106,7 @@ public class UtilizadorController {
 				}
 			}
 		}
-		return new ModelAndView("utilizador-login", "utilizadorModel", new Utilizador());
+		return new ModelAndView("login", "utilizadorModel", new Utilizador());
 	}
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
@@ -120,9 +122,9 @@ public class UtilizadorController {
 	}
 
 	@RequestMapping(value = "/registrarUtilizador", method = RequestMethod.POST)
-	public String registrar(@Valid @ModelAttribute("tecnicoModel") Tecnico tecnicoModel, 
+	public ModelAndView registrar(@Valid @ModelAttribute("tecnicoModel") Tecnico tecnicoModel, 
 			BindingResult result, HttpServletRequest request) {
-
+			ModelAndView model = new ModelAndView();
 		if (!result.hasErrors()) {
 			if (tecnicoModel.getIdTecnico() != 0 && tecnicoService.get(tecnicoModel.getIdTecnico()) != null) {
 				System.out.println("Já existe um utilizador igual");
@@ -130,13 +132,13 @@ public class UtilizadorController {
 			} else {
 				System.out.println("vai inserir tecnico");
 				tecnicoService.saveOrUpdate(tecnicoModel);
-				getLoginPage(false, tecnicoModel.getUtilizador(), null, new ModelMap(), request);
+				model = getLoginPage(false, tecnicoModel.getUtilizador(), null, new ModelMap(), request);
 			}
-			return null;
+			return model;
 		} else {
 			result.rejectValue("id", "CustomMessage", "Ocorreu um erro");
 			logger.debug("Existem Erros:" + result.hasErrors());
-			return "registrarUtilizador";
+			return new ModelAndView("registrarUtilizador");
 		}
 	}
 }

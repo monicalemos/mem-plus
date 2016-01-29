@@ -68,7 +68,7 @@ public class FamiliaresController {
 		System.out.println("ver Familiar directo");
 
 		session = request.getSession();
-		session.removeAttribute("idRelacaoFamiliarFamiliar");
+		//session.removeAttribute("idRelacaoFamiliarFamiliar");
 
 		Familiar familiar = null;
 
@@ -97,14 +97,22 @@ public class FamiliaresController {
 			familiar = relacao.getFamiliar();
 		} else {
 			Integer idFamiliar = 0;
+			//na tabela vem daqui
 			if (request.getParameter("idFamiliar") != null) {
-				System.out.println("id Familiar: " + request.getParameter("idFamiliar") );
+				System.out.println("id Familiar: " + request.getParameter("idFamiliar"));
 				idFamiliar = Integer.parseInt(request.getParameter("idFamiliar"));
+				familiar = familiarService.get(idFamiliar);
 			} else {
-				if (session.getAttribute("idFamiliar") != null)
+				if (session.getAttribute("idFamiliar") != null){
 					idFamiliar = (Integer) session.getAttribute("idFamiliar");
+					familiar = familiarService.get(idFamiliar);
+				}
+				else if(null != session.getAttribute("currentFamiliar")){
+					System.out.println("tem familiar na session");
+					familiar = (Familiar)session.getAttribute("currentFamiliar");
+				}
 			}
-			familiar = familiarService.get(idFamiliar);
+		
 			relacao = relacaoPacienteFamiliarService.getWithPatientAndFamily(paciente, familiar);
 		}
 		session.setAttribute("currentRelacao", relacao);
@@ -138,7 +146,7 @@ public class FamiliaresController {
 	@RequestMapping(value = "/verFamiliar", method = RequestMethod.POST)
 	public ModelAndView verFamiliar(@RequestParam(value = "error", required = false) boolean error, ModelMap model,
 			HttpServletRequest request) {
-		
+
 		System.out.println("Vamos tentar o post");
 		Familiar familiar = null;
 		Paciente paciente = (Paciente) session.getAttribute("currentPaciente");
@@ -176,27 +184,13 @@ public class FamiliaresController {
 				relacao = relacaoPacienteFamiliarService.getWithPatientAndFamily(paciente, familiar);
 			}
 
-//			if (familiar != null) {
-//				session.setAttribute("currentFamiliar", familiar);
-//				Familiar fam = (Familiar) session.getAttribute("currentFamiliar");
-//				System.out.println("familiar: " + fam);
-//
-//				session.removeAttribute("currentRelacao");
-//				session.removeAttribute("idRelacaoPacienteFamiliar");
-//				session.removeAttribute("listFamiliares");
-//				session.removeAttribute("idRelacaoFamiliarFamiliar");
-//
-//				return new ModelAndView("verFamiliar", "currentFamiliar", familiar);
-//			} else {
-//				model.put("viewFamiliar-error", "Não conseguiu mostrar os dados do familiar");
-//				return new ModelAndView("ver-paciente", "currentPaciente", paciente);
-//			}
-
 			session.setAttribute("currentRelacao", relacao);
 
 			session.setAttribute("currentFamiliar", familiar);
 			Familiar fam = (Familiar) session.getAttribute("currentFamiliar");
 			System.out.println("familiar: " + fam);
+			System.out.println("Tem id? " + fam.getIdFamiliar());
+			System.out.println("tem relação? " + relacao);
 
 			System.out.println("listar Familiar");
 
@@ -228,15 +222,21 @@ public class FamiliaresController {
 		session = request.getSession();
 
 		Paciente paciente = (Paciente) session.getAttribute("currentPaciente");
-
+		Familiar familiar = null;
 		int idFamiliar = 0;
 		if (request.getParameter("idFamiliar") != null) {
 			idFamiliar = Integer.parseInt(request.getParameter("idFamiliar"));
+			familiar = familiarService.get(idFamiliar);
 		} else {
-			if (session.getAttribute("idFamiliar") != null)
+			if (session.getAttribute("idFamiliar") != null){
 				idFamiliar = (Integer) session.getAttribute("idFamiliar");
+				familiar = familiarService.get(idFamiliar);
+			}else if(null != session.getAttribute("currentFamiliar")){
+				System.out.println("tem familiar na session");
+				familiar = (Familiar)session.getAttribute("currentFamiliar");
+			}
 		}
-		Familiar familiar = familiarService.get(idFamiliar);
+		
 		RelacaoPacienteFamiliar relacao = relacaoPacienteFamiliarService.getWithPatientAndFamily(paciente, familiar);
 		return new ModelAndView("editarFamiliar", "relacaoModel", relacao);
 	}
@@ -304,7 +304,9 @@ public class FamiliaresController {
 		Paciente paciente = (Paciente) session.getAttribute("currentPaciente");
 		RelacaoPacienteFamiliar relacao = new RelacaoPacienteFamiliar();
 		RelacaoPacienteFamiliarId relacaoId = new RelacaoPacienteFamiliarId();
-
+		
+		System.out.println("Tem paciente: " + paciente);
+		
 		relacaoId.setIdPaciente(paciente.getIdPaciente());
 		relacao.setId(relacaoId);
 		relacao.setPaciente(paciente);
@@ -393,51 +395,37 @@ public class FamiliaresController {
 
 	@RequestMapping(value = "/verSegundoGrauFamiliar", method = RequestMethod.GET)
 	public ModelAndView verSegundoGrauFamiliar(HttpServletRequest request) {
-		System.out.println("ver Familiar 2º grau");
+		System.out.println("ver Familiar 2º grau get");
 
 		session = request.getSession();
 
-		Familiar familiar = (Familiar) session.getAttribute("currentFamiliar");
-		System.out.println("Current Familiar " + familiar);
-
 		Familiar familiar1 = null;
 
-		Paciente paciente = (Paciente) session.getAttribute("currentPaciente");
+//		Paciente paciente = (Paciente) session.getAttribute("currentPaciente");
 
 		RelacaoFamiliarFamiliar relacao = null;
-		Integer relacaoId = 0;
 		System.out.println("Relacao: " + session.getAttribute("currentRelacao"));
-		if ((RelacaoFamiliarFamiliar) session.getAttribute("currentRelacao") != null) {
-			relacao = (RelacaoFamiliarFamiliar) session.getAttribute("currentRelacao");
-		} else if (session.getAttribute("idRelacaoFamiliarFamiliar") != null) {
-			relacaoId = (Integer) session.getAttribute("idRelacaoFamiliarFamiliar");
-			relacao = relacaoFamiliarFamiliarService.get(relacaoId);
+		Integer idFamiliar = 0;
+		if(null != session.getAttribute("currentRelacao")){
+			relacao = (RelacaoFamiliarFamiliar)session.getAttribute("currentRelacao");
+			if(null != relacao.getFamiliarByIdFamiliar1()){
+				idFamiliar = relacao.getFamiliarByIdFamiliar1().getIdFamiliar();
+			}
+			
 		}
 
-		int idRelacaoFamiliarFamiliar = 0;
-		if (request.getParameter("idRelacaoFamiliarFamiliar") != null) {
-			idRelacaoFamiliarFamiliar = Integer.parseInt(request.getParameter("idRelacaoFamiliarFamiliar"));
+		/*if (request.getParameter("idFamiliarSegundoGrau") != null) {
+			idFamiliar = Integer.parseInt(request.getParameter("idFamiliarSegundoGrau"));
+			System.out.println("idFamiliar "  + idFamiliar);
 		} else {
-			if (session.getAttribute("idRelacaoFamiliarFamiliar") != null) {
-				idRelacaoFamiliarFamiliar = (Integer) session.getAttribute("idRelacaoFamiliarFamiliar");
-			}
-		}
-		if (idRelacaoFamiliarFamiliar > 0) {
-			relacao = relacaoFamiliarFamiliarService.get(idRelacaoFamiliarFamiliar);
-			familiar1 = relacao.getFamiliarByIdFamiliar1();
-			familiar = relacao.getFamiliarByIdFamiliar();
-			System.out.println("Tem familiar? " + familiar);
-		} else {
-			Integer idFamiliar = 0;
-			if (request.getParameter("idFamiliarSegundoGrau") != null) {
-				idFamiliar = Integer.parseInt(request.getParameter("idFamiliarSegundoGrau"));
-			} else {
-				if (session.getAttribute("idFamiliarSegundoGrau") != null)
-					idFamiliar = (Integer) session.getAttribute("idFamiliarSegundoGrau");
-			}
-			familiar1 = familiarService.get(idFamiliar);
-			relacao = relacaoFamiliarFamiliarService.getWithPatientAndFamily(paciente, familiar, familiar1);
-		}
+			if (session.getAttribute("idFamiliarSegundoGrau") != null)
+				System.out.println("idFamiliar "  + idFamiliar);
+				idFamiliar = (Integer) session.getAttribute("idFamiliarSegundoGrau");
+		}*/
+		familiar1 = familiarService.get(idFamiliar);
+		System.out.println("Familiar1: " + familiar1);
+		//relacao = relacaoFamiliarFamiliarService.getWithPatientAndFamily2grau(paciente, familiar1);
+
 		session.setAttribute("currentRelacao", relacao);
 
 		session.setAttribute("currentFamiliar", familiar1);
@@ -447,16 +435,16 @@ public class FamiliaresController {
 		return new ModelAndView("verSegundoGrauFamiliar", "currentRelacao", relacao);
 	}
 
-	@RequestMapping(value = "/verSegundoGrauFamiliar", method = RequestMethod.POST)
+	@RequestMapping(value = "/verSegundoGrauFamiliar", method = RequestMethod.POST, params = {"idFamiliarSegundoGrau"})
 	public ModelAndView verSegundoGrauFamiliar(@RequestParam(value = "error", required = false) boolean error,
 			ModelMap model, HttpServletRequest request) {
-
+		System.out.println("ver Familiar 2º grau post");
 		Familiar familiar1 = null;
 		// Familiar familiar = (Familiar)
 		// session.getAttribute("currentFamiliar");
 		Paciente paciente = (Paciente) session.getAttribute("currentPaciente");
 		RelacaoFamiliarFamiliar relacao = (RelacaoFamiliarFamiliar) session.getAttribute("currentRelacao");
-
+		System.out.println("Tem id familiar2? " + request.getAttribute("idFamiliarSegundoGrau"));
 		if (error) {
 			System.out.println("Houve Erros");
 			model.put("viewFamiliar-error", "Não conseguiu mostrar os dados do familiar");
@@ -529,7 +517,9 @@ public class FamiliaresController {
 		session = request.getSession();
 
 		Paciente paciente = (Paciente) session.getAttribute("currentPaciente");
+		System.out.println("Tem paciente: " + paciente);
 		Familiar familiar = (Familiar) session.getAttribute("currentFamiliar");
+		System.out.println("Tem familiar: " + familiar);
 
 		Paciente pacienteRel = relacao.getPaciente();
 		Familiar familiarRel = relacao.getFamiliarByIdFamiliar();

@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <%@page import="java.util.*"%>
 <%@page import="com.mem.app.model.*"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%
-RelacaoFamiliarFamiliar relacao = (RelacaoFamiliarFamiliar)request.getAttribute("currentRelacao");
+	RelacaoFamiliarFamiliar relacao = (RelacaoFamiliarFamiliar)request.getAttribute("currentRelacao");
+	System.out.println("tem relacao no jsp; " + relacao);
 	Familiar familiar = relacao.getFamiliarByIdFamiliar1();
+	System.out.println("Tem familiar no jsp: " + familiar);
 %>
 
 <div id="page-wrapper">
@@ -16,7 +19,7 @@ RelacaoFamiliarFamiliar relacao = (RelacaoFamiliarFamiliar)request.getAttribute(
 	<p> <label for="nomeCompleto"> Nome Completo:</label> <%=(familiar.getNomeCompleto() == null ? familiar.getApelido() + ", " + familiar.getNomeProprio() : familiar.getNomeCompleto())%></p> 
 	<p> <label for="nomeProprio"> Nome Próprio:</label> <%=familiar.getNomeProprio()%></p> 
 	<p> <label for="apelido"> Apelido:</label> <%=familiar.getApelido()%></p> 
-	<p> <label for="dataNascimento"> Data de Nascimento:</label> <%=familiar.getDataNascimento()%></p>
+	<p> <label for="dataNascimento"> Data de Nascimento:</label> <fmt:formatDate pattern="dd-MM-yyyy" value="<%=familiar.getDataNascimento()%>"/></p>
 	
 	<p> <label for="moradaByIdLocalNascimento"> Local de Nascimento:</label></p>
 	<p> <span style="padding-left:2em"> <label for="moradaByIdLocalNascimento.pais"> Pais:</label> <%=familiar.getMoradaByIdLocalNascimento().getPais()%></span></p>

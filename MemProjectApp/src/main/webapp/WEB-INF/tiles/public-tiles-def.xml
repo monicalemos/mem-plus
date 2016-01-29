@@ -14,7 +14,7 @@
 	</definition>
 
 	<!-- /Account -->
-	<definition name="utilizador-login" extends="publicTemplate">
+	<definition name="login" extends="publicTemplate">
 		<put-attribute name="menu" value="" />
 		<put-attribute name="body" value="/WEB-INF/views/utilizador/login.jsp" />
 	</definition>

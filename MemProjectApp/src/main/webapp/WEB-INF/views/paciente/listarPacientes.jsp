@@ -36,15 +36,16 @@
 		pageContext.setAttribute("pacientes", paciente);
 	%>
 	<c:forEach items="${pacientes}" var="current">
-	<form id="verPaciente" action="verPaciente" method="post">
-		<input type="hidden" name="idPaciente" value="${current.id}"/>
-	</form>
+	
 
 	<form id="editarPaciente" action="editarPaciente" method="post">
 		<input type="hidden" name="idPaciente" value="${current.id}"/>
 	</form>
 	<ul class="treeview">
     <li class="list"> 
+    	<form id="verPaciente" action="verPaciente" method="post">
+    		<%-- <input type="hidden" name="idPaciente" value="${current.id}"/> --%>
+		</form>
     	<span class="Collapsable"> 
     		<label> 
     			<c:out value="${current.id}" /> - 
@@ -58,7 +59,7 @@
 			<ul class="treeviewSub">
 				<li class="buttons"> 
 					<span class="Collapsable"> 
-						<button form="verPaciente" type="submit" value="Ver">Ver</button>
+						<button form="verPaciente" type="submit" name='idPaciente' value="${current.id}" >Ver</button>
 						<button form="editarPaciente" type="submit" value="editar">Editar</button>
 					</span>
 				</li>

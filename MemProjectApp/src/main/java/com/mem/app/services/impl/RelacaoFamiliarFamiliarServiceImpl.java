@@ -130,6 +130,7 @@ public class RelacaoFamiliarFamiliarServiceImpl implements RelacaoFamiliarFamili
 
 	@Override
 	public RelacaoFamiliarFamiliar getWithPatientAndFamily2grau(Paciente paciente, Familiar familiar1) {
+		System.out.println("IMPL: " + familiar1);
 		return this.relacaoFamiliarFamiliarDao.getWithPatientAndFamily2grau(paciente, familiar1);
 	}
 

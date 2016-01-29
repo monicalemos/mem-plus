@@ -2,6 +2,7 @@
 
 <%@page import="java.util.*"%>
 <%@page import="com.mem.app.model.*"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -58,8 +59,8 @@
 					</span>
 				</li>
 				<c:forEach items="${current.getFamiliar().getRelacaoFamiliarFamiliarsForIdFamiliar1()}" var="grau" varStatus="innerLoop">  
-				<form id="verSegundoGrauFamiliar" action="verSegundoGrauFamiliar" method="get">
-					<input type="hidden" name="idFamiliarSegundoGrau" value="${grau.getFamiliarByIdFamiliar1().getIdFamiliar()}" /> 
+				<form id="verSegundoGrauFamiliar" action="verSegundoGrauFamiliar" method="post">
+					<%-- <input type="hidden" name="idFamiliarSegundoGrau" value="${grau.getFamiliarByIdFamiliar1().getIdFamiliar()}" /> --%> 
 				</form>
 				<li class="row">
 					<span class="Collapsable"> 
@@ -77,7 +78,7 @@
 					<ul>
 						<li class="subButtons"> 
 							<span class="Collapsable"> 
-								<button form="verSegundoGrauFamiliar" type="submit" value="Ver">Ver</button>
+								<button form="verSegundoGrauFamiliar" type="submit" name='idFamiliarSegundoGrau' value="${grau.getFamiliarByIdFamiliar1().getIdFamiliar()}" >Ver</button>
 								<button form="editarFamiliar" type="submit" value="editar">Editar</button>
 							</span>
 						</li>

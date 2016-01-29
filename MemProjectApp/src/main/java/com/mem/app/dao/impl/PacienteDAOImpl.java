@@ -1,11 +1,11 @@
 package com.mem.app.dao.impl;
 
 import java.sql.Connection;
-import java.util.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Date;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -184,7 +184,7 @@ public class PacienteDAOImpl implements PacienteDAO {
 					Morada morada = moradaImpl.get(rs.getInt("idMorada"));
 					Morada local_nascimento = moradaImpl.get(rs.getInt("idLocalNascimento"));
 					Tecnico tecnico = tecnicoImpl.get(rs.getInt("idTecnico"));
-					
+									
 					Paciente paciente = new Paciente();
 					paciente.setIdPaciente(rs.getInt("idPaciente"));
 					paciente.setNomeCompleto(rs.getString("nomeCompleto"));

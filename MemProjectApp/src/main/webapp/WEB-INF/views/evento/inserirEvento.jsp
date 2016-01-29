@@ -1,5 +1,6 @@
 <%@page import="java.util.*"%>
 <%@page import="com.mem.app.model.*"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -91,6 +92,7 @@ function show(group)
 			
 			<br>
 			<form:label path="data" class="sr-only">Data do Evento</form:label>
+			<fmt:formatDate value="${evento.data}" var="dateString" pattern="dd/MM/yyyy" />
 			<form:input path="data" id="data" class="form-control" required="required"
 				placeholder="Data do Evento" />
 

@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <%@page import="java.util.*"%>
 <%@page import="com.mem.app.model.*"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%
 	Paciente paciente = (Paciente) request.getAttribute("currentPaciente");
+	System.out.println("TEm paciente na pagina? " + paciente);
 %>
 
 <div id="page-wrapper">

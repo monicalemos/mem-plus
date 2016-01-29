@@ -57,6 +57,8 @@ public class UtilizadorDAOImpl implements UtilizadorDAO {
 
 			PreparedStatement ps;
 			try {
+				System.out.println("Connection: " + connection);
+				System.out.print("SQL_INSERT: " + INSERT_SQL);
 				ps = connection.prepareStatement(INSERT_SQL.toString(), Statement.RETURN_GENERATED_KEYS);
 				ps.setString(1, nomeUtilizador);
 				ps.setString(2, password);
