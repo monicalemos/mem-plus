@@ -44,7 +44,7 @@ public class RelacaoFamiliarFamiliarDAOImpl implements RelacaoFamiliarFamiliarDA
 
 	@Override
 	public int saveOrUpdate(RelacaoFamiliarFamiliar relacaoFamiliarFamiliar) {
-		if (relacaoFamiliarFamiliar.getId().getIdRelacaoFamiliarFamiliar() > 0) {
+		if (relacaoFamiliarFamiliar.getId().getIdRelacao() > 0) {
 			// update
 			System.out.println("UPDATE");
 			String sql = "UPDATE RelacaoFamiliarFamiliar SET " 
@@ -55,13 +55,13 @@ public class RelacaoFamiliarFamiliarDAOImpl implements RelacaoFamiliarFamiliarDA
 					+ "WHERE idRelacaoFamiliarFamiliar=?";
 
 			jdbcTemplate.update(sql, 
-					relacaoFamiliarFamiliar.getFamiliarByIdFamiliar().getIdFamiliar(),
-					relacaoFamiliarFamiliar.getFamiliarByIdFamiliar1().getIdFamiliar(),
+					relacaoFamiliarFamiliar.getFamiliar().getIdFamiliar(),
+					relacaoFamiliarFamiliar.getFamiliar1().getIdFamiliar(),
 					relacaoFamiliarFamiliar.getPaciente().getIdPaciente(), 
 					relacaoFamiliarFamiliar.getTipoRelacao(),
-					relacaoFamiliarFamiliar.getId().getIdRelacaoFamiliarFamiliar());
+					relacaoFamiliarFamiliar.getId().getIdRelacao());
 			
-			return relacaoFamiliarFamiliar.getId().getIdRelacaoFamiliarFamiliar();
+			return relacaoFamiliarFamiliar.getId().getIdRelacao();
 		} else {
 			// insert
 			System.out.println("INSERT");
@@ -73,8 +73,8 @@ public class RelacaoFamiliarFamiliarDAOImpl implements RelacaoFamiliarFamiliarDA
 					+ " VALUES (?, ?, ?, ?)";
 			
 			int newId = 0;
-			final int idFamiliar = relacaoFamiliarFamiliar.getFamiliarByIdFamiliar().getIdFamiliar();
-			final int idFamiliar1 = relacaoFamiliarFamiliar.getFamiliarByIdFamiliar1().getIdFamiliar();
+			final int idFamiliar = relacaoFamiliarFamiliar.getFamiliar().getIdFamiliar();
+			final int idFamiliar1 = relacaoFamiliarFamiliar.getFamiliar1().getIdFamiliar();
 			final int idPaciente = relacaoFamiliarFamiliar.getPaciente().getIdPaciente();
 			final String tipoRelacao = relacaoFamiliarFamiliar.getTipoRelacao(); 
 			
@@ -133,8 +133,8 @@ public class RelacaoFamiliarFamiliarDAOImpl implements RelacaoFamiliarFamiliarDA
 
 					RelacaoFamiliarFamiliar relacaoFamiliarFamiliar = new RelacaoFamiliarFamiliar();
 					relacaoFamiliarFamiliar.setId(relId);
-					relacaoFamiliarFamiliar.setFamiliarByIdFamiliar(familiar);
-					relacaoFamiliarFamiliar.setFamiliarByIdFamiliar1(familiar1);
+					relacaoFamiliarFamiliar.setFamiliar(familiar);
+					relacaoFamiliarFamiliar.setFamiliar1(familiar1);
 					relacaoFamiliarFamiliar.setPaciente(paciente);
 					relacaoFamiliarFamiliar.setTipoRelacao(rs.getString("tipoRelacao"));
 					return relacaoFamiliarFamiliar;
@@ -167,8 +167,8 @@ public class RelacaoFamiliarFamiliarDAOImpl implements RelacaoFamiliarFamiliarDA
 
 						RelacaoFamiliarFamiliar relacaoFamiliarFamiliar = new RelacaoFamiliarFamiliar();
 						relacaoFamiliarFamiliar.setId(relId);
-						relacaoFamiliarFamiliar.setFamiliarByIdFamiliar(familiar);
-						relacaoFamiliarFamiliar.setFamiliarByIdFamiliar1(familiar1);
+						relacaoFamiliarFamiliar.setFamiliar(familiar);
+						relacaoFamiliarFamiliar.setFamiliar1(familiar1);
 						relacaoFamiliarFamiliar.setPaciente(paciente);
 						relacaoFamiliarFamiliar.setTipoRelacao(rs.getString("tipoRelacao"));
 						return relacaoFamiliarFamiliar;
@@ -183,9 +183,10 @@ public class RelacaoFamiliarFamiliarDAOImpl implements RelacaoFamiliarFamiliarDA
 	@Override
 	public List<RelacaoFamiliarFamiliar> listFromFamily(Paciente paciente, Familiar familiar) {
 		String sql = "SELECT * FROM RelacaoFamiliarFamiliar " 
-				+ "WHERE idPaciente=" + paciente.getIdPaciente()
-				+ " AND (idFamiliar = " +  familiar.getIdFamiliar() 
-				+ " OR idFamiliar1 = " + familiar.getIdFamiliar() + ")";
+				+ "WHERE idPaciente=" + paciente.getIdPaciente() 
+				+ " AND (idFamiliar = " +  familiar.getIdFamiliar()+ ")";
+//				+ " AND (idFamiliar = " +  familiar.getIdFamiliar() 
+//				+ " OR idFamiliar1 = " + familiar.getIdFamiliar() + ")";
 
 	List<RelacaoFamiliarFamiliar> listRelacaoFamiliarFamiliar = jdbcTemplate.query(sql,
 			new RowMapper<RelacaoFamiliarFamiliar>() {
@@ -202,8 +203,8 @@ public class RelacaoFamiliarFamiliarDAOImpl implements RelacaoFamiliarFamiliarDA
 
 					RelacaoFamiliarFamiliar relacaoFamiliarFamiliar = new RelacaoFamiliarFamiliar();
 					relacaoFamiliarFamiliar.setId(relId);
-					relacaoFamiliarFamiliar.setFamiliarByIdFamiliar(familiar);
-					relacaoFamiliarFamiliar.setFamiliarByIdFamiliar1(familiar1);
+					relacaoFamiliarFamiliar.setFamiliar(familiar);
+					relacaoFamiliarFamiliar.setFamiliar1(familiar1);
 					relacaoFamiliarFamiliar.setPaciente(paciente);
 					relacaoFamiliarFamiliar.setTipoRelacao(rs.getString("tipoRelacao"));
 					return relacaoFamiliarFamiliar;
@@ -236,8 +237,8 @@ public class RelacaoFamiliarFamiliarDAOImpl implements RelacaoFamiliarFamiliarDA
 
 					RelacaoFamiliarFamiliar relacaoPacienteFamiliar = new RelacaoFamiliarFamiliar();
 					relacaoPacienteFamiliar.setId(relId);
-					relacaoPacienteFamiliar.setFamiliarByIdFamiliar(familiar);
-					relacaoPacienteFamiliar.setFamiliarByIdFamiliar1(familiar1);
+					relacaoPacienteFamiliar.setFamiliar(familiar);
+					relacaoPacienteFamiliar.setFamiliar1(familiar1);
 					relacaoPacienteFamiliar.setPaciente(paciente);
 					relacaoPacienteFamiliar.setTipoRelacao(rs.getString("tipoRelacao"));
 					return relacaoPacienteFamiliar;
@@ -270,8 +271,8 @@ public class RelacaoFamiliarFamiliarDAOImpl implements RelacaoFamiliarFamiliarDA
 
 					RelacaoFamiliarFamiliar relacaoPacienteFamiliar = new RelacaoFamiliarFamiliar();
 					relacaoPacienteFamiliar.setId(relId);
-					relacaoPacienteFamiliar.setFamiliarByIdFamiliar(familiar);
-					relacaoPacienteFamiliar.setFamiliarByIdFamiliar1(familiar1);
+					relacaoPacienteFamiliar.setFamiliar(familiar);
+					relacaoPacienteFamiliar.setFamiliar1(familiar1);
 					relacaoPacienteFamiliar.setPaciente(paciente);
 					relacaoPacienteFamiliar.setTipoRelacao(rs.getString("tipoRelacao"));
 					return relacaoPacienteFamiliar;

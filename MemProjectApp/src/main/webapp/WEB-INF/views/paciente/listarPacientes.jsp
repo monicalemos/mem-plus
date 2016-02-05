@@ -34,10 +34,11 @@
 			paciente.add(pac);
 		}
 		pageContext.setAttribute("pacientes", paciente);
+		pageContext.setAttribute("numPacientes", paciente.size());
 	%>
+<c:set var="numPac" scope = "session" value="${numPacientes}"/>
+<c:if test="${numPac > 0 }">
 	<c:forEach items="${pacientes}" var="current">
-	
-
 	<form id="editarPaciente" action="editarPaciente" method="post">
 		<input type="hidden" name="idPaciente" value="${current.id}"/>
 	</form>
@@ -66,10 +67,12 @@
 			</ul>
 		</div>
     </li>
-</ul>
-				
+</ul>	
 </c:forEach>
-
+</c:if>
+<c:if test="${numPac == 0 }">
+	<h4> Não há pacientes para apresentar.</h4>
+</c:if>
 </div>
 
 <script type="text/javascript">

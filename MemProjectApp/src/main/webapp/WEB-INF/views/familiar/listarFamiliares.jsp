@@ -8,9 +8,12 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%
-	@SuppressWarnings("unchecked")
 	List<RelacaoPacienteFamiliar> listFamiliares = (List<RelacaoPacienteFamiliar>) (request
 			.getAttribute("listFamiliares"));
+	 
+	System.out.println("listFamiliar JSP" + listFamiliares.size());
+	pageContext.setAttribute("familiares", listFamiliares);
+	pageContext.setAttribute("numFamiliares", listFamiliares.size());
 %>
 
 <link href="<c:url value="/resources/static/css/TreeListView.css" />" rel="stylesheet">
@@ -19,79 +22,74 @@
 
 <div id="page-wrapper">
 	<h1 class="page-header">LISTAR FAMILIARES </h1>
-	<%
-		System.out.println("listFamiliar: " + listFamiliares.size());
-		for (RelacaoPacienteFamiliar relacao1 : listFamiliares) {
-			System.out.println("familiar id: " + relacao1.getFamiliar().getIdFamiliar());
-			System.out.println("listFamiliar 2 : "
-					+ relacao1.getFamiliar().getRelacaoFamiliarFamiliarsForIdFamiliar1().size());
-		}
 
-		pageContext.setAttribute("familiares", listFamiliares);
-	%>
-<c:forEach items="${familiares}" var="current" varStatus="loop">
-<form id="verFamiliar" action="verFamiliar" method="get">
-	<input type="hidden" name="idFamiliar" value="${current.getFamiliar().getIdFamiliar()}" />
-</form>
-<form id="editarFamiliar" action="editarFamiliar" method="get">
-	<input type="hidden" name="idFamiliar" value="${current.getFamiliar().getIdFamiliar()}" />
-</form>
-
-<ul class="treeview">
-    <li class="list"> 
-    	<span class="Collapsable"> 
-    		<label> 
-    			<c:out value="${current.getFamiliar().getIdFamiliar()}"/> - 
-    			<c:out value="${current.getFamiliar().getNomeProprio()}"/> - 
-    			<c:out value="${current.getFamiliar().getApelido()}"/> - 
-    			<c:out value="${current.getFamiliar().getTelefone()}"/> - 
-    			<c:out value="${current.getFamiliar().getDataNascimento()}"/> - 
-    			<c:out value="${current.getFamiliar().getProfissao()}"/> - 
-    			<c:out value="${current.getTipoRelacao()}"/>
-    		</label> 
-    	</span>
-		<div class="hiddenDiv">
-			<ul class="treeviewSub">
-				<li class="buttons"> 
-					<span class="Collapsable"> 
-						<button form="verFamiliar" type="submit" value="Ver">Ver</button>
-						<button form="editarFamiliar" type="submit" value="editar">Editar</button>
-					</span>
-				</li>
-				<c:forEach items="${current.getFamiliar().getRelacaoFamiliarFamiliarsForIdFamiliar1()}" var="grau" varStatus="innerLoop">  
-				<form id="verSegundoGrauFamiliar" action="verSegundoGrauFamiliar" method="post">
-					<%-- <input type="hidden" name="idFamiliarSegundoGrau" value="${grau.getFamiliarByIdFamiliar1().getIdFamiliar()}" /> --%> 
-				</form>
-				<li class="row">
-					<span class="Collapsable"> 
-						<label> 
-							<c:out value="${grau.getFamiliarByIdFamiliar1().getIdFamiliar()}"/> - 
-							<c:out value="${grau.getFamiliarByIdFamiliar1().getNomeProprio()}"/> - 
-							<c:out value="${grau.getFamiliarByIdFamiliar1().getApelido()}"/> - 
-							<c:out value="${grau.getFamiliarByIdFamiliar1().getTelefone()}"/> - 
-							<c:out value="${grau.getFamiliarByIdFamiliar1().getDataNascimento()}"/> - 
-							<c:out value="${grau.getFamiliarByIdFamiliar1().getProfissao()}"/> -
-							<c:out value="${grau.getTipoRelacao()}" /> 
-						</label> 
-					</span>
-				<div  class="hiddenDiv">
-					<ul>
-						<li class="subButtons"> 
+<c:set var="numFam" scope = "session" value="${numFamiliares}"/>
+<c:if test="${numFam > 0 }">
+	<c:forEach items="${familiares}" var="current" varStatus="loop">
+	<form id="verFamiliar" action="verFamiliar" method="get">
+		<%-- <input type="hidden" name="idFamiliar" value="${current.getFamiliar().getIdFamiliar()}" /> --%>
+	</form>
+	<form id="editarFamiliar" action="editarFamiliar" method="get">
+		<%-- <input type="hidden" name="idFamiliar" value="${current.getFamiliar().getIdFamiliar()}" /> --%>
+	</form>
+		<ul class="treeview">
+		    <li class="list"> 
+		    	<span class="Collapsable"> 
+		    		<label> 
+		    			<c:out value="${current.getFamiliar().getIdFamiliar()}"/> - 
+		    			<c:out value="${current.getFamiliar().getNomeProprio()}"/> - 
+		    			<c:out value="${current.getFamiliar().getApelido()}"/> - 
+		    			<c:out value="${current.getFamiliar().getTelefone()}"/> - 
+		    			<c:out value="${current.getFamiliar().getDataNascimento()}"/> - 
+		    			<c:out value="${current.getFamiliar().getProfissao()}"/> - 
+		    			<c:out value="${current.getTipoRelacao()}"/>
+		    		</label> 
+		    	</span>
+				<div class="hiddenDiv">
+					<ul class="treeviewSub">
+						<li class="buttons"> 
 							<span class="Collapsable"> 
-								<button form="verSegundoGrauFamiliar" type="submit" name='idFamiliarSegundoGrau' value="${grau.getFamiliarByIdFamiliar1().getIdFamiliar()}" >Ver</button>
-								<button form="editarFamiliar" type="submit" value="editar">Editar</button>
+								<button form="verFamiliar" type="submit" value="${current.getFamiliar().getIdFamiliar()}" name='idFamiliar' >Ver</button>
+								<button form="editarFamiliar" type="submit" value="${current.getFamiliar().getIdFamiliar()}" name='idFamiliar'>Editar</button>
 							</span>
 						</li>
+						<c:forEach items="${current.getFamiliar().getRelacaoFamiliarFamiliarsForIdFamiliar1()}" var="grau" varStatus="innerLoop">  
+						<form id="verSegundoGrauFamiliar" action="verSegundoGrauFamiliar" method="post">
+						</form>
+						<li class="row">
+							<span class="Collapsable"> 
+								<label> 
+									<c:out value="${grau.getFamiliar1().getIdFamiliar()}"/> - 
+									<c:out value="${grau.getFamiliar1().getNomeProprio()}"/> - 
+									<c:out value="${grau.getFamiliar1().getApelido()}"/> - 
+									<c:out value="${grau.getFamiliar1().getTelefone()}"/> - 
+									<c:out value="${grau.getFamiliar1().getDataNascimento()}"/> - 
+									<c:out value="${grau.getFamiliar1().getProfissao()}"/> -
+									<c:out value="${grau.getTipoRelacao()}" /> 
+								</label> 
+							</span>
+						<div  class="hiddenDiv">
+							<ul>
+								<li class="subButtons"> 
+									<span class="Collapsable"> 
+									
+										<button form="verFamiliar" type="submit" name='idFamiliar' value="${grau.getFamiliar1().getIdFamiliar()}" >Ver</button>
+										<button form="editarFamiliar" type="submit" name='idFamiliar' value="${grau.getFamiliar1().getIdFamiliar()}">Editar</button>
+									</span>
+								</li>
+							</ul>
+						</div>
+						</li>
+						</c:forEach>
 					</ul>
 				</div>
-				</li>
-				</c:forEach>
-			</ul>
-		</div>
-    </li>
-</ul>
-
-</c:forEach>
+		    </li>
+		</ul>
+	</c:forEach>
+</c:if>
+<c:if test="${numFam == 0 }">
+	<h4> Não há familiares para apresentar.</h4>
+</c:if>
 </div>
 
 

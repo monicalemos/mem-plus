@@ -299,12 +299,12 @@ public class Paciente implements java.io.Serializable {
 
 	@Override
 	public String toString() {
-		return "Paciente [idPaciente=" + idPaciente + ", moradaByIdLocalNascimento=" + moradaByIdLocalNascimento
-				+ ", moradaByIdMorada=" + moradaByIdMorada + ", tecnico=" + tecnico + ", nomeCompleto=" + nomeCompleto
+		return "Paciente [idPaciente=" + idPaciente  + ", nomeCompleto=" + nomeCompleto
 				+ ", nomeProprio=" + nomeProprio + ", apelido=" + apelido + ", dataNascimento=" + dataNascimento
 				+ ", genero=" + genero + ", profissao=" + profissao + ", escolaridade=" + escolaridade
 				+ ", estadoCivil=" + estadoCivil + ", nivelDoenca=" + nivelDoenca + ", nomeMedico=" + nomeMedico
-				+ ", especialidadeMedico=" + especialidadeMedico + ", nivelSessao=" + nivelSessao + "]";
+				+ ", especialidadeMedico=" + especialidadeMedico + ", nivelSessao=" + nivelSessao + ", moradaByIdLocalNascimento=" + moradaByIdLocalNascimento
+				+ ", moradaByIdMorada=" + moradaByIdMorada + ", tecnico=" + tecnico+ "]";
 	}
 	
 }

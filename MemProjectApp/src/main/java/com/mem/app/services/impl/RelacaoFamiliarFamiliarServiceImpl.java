@@ -49,8 +49,8 @@ public class RelacaoFamiliarFamiliarServiceImpl implements RelacaoFamiliarFamili
 			return 0;
 		}
 		
-		if (relacao.getFamiliarByIdFamiliar() != null) {
-			familiar = relacao.getFamiliarByIdFamiliar();
+		if (relacao.getFamiliar() != null) {
+			familiar = relacao.getFamiliar();
 			System.out.println("Tem familiar definido com id "+ familiar.getIdFamiliar());
 			System.out.println("no relacaoId " + relacaoId.getIdFamiliar());
 			if(relacaoId.getIdFamiliar() == 0){
@@ -61,9 +61,9 @@ public class RelacaoFamiliarFamiliarServiceImpl implements RelacaoFamiliarFamili
 			return 0;
 		}
 		
-		if (relacao.getFamiliarByIdFamiliar1() != null) {
+		if (relacao.getFamiliar1() != null) {
 
-			Familiar familiar1 = relacao.getFamiliarByIdFamiliar1();
+			Familiar familiar1 = relacao.getFamiliar1();
 			System.out.println("Tem familiar c id " + familiar1.getIdFamiliar());
 			
 			if (familiar1.getIdFamiliar() == 0 || familiarService.get(familiar1.getIdFamiliar()) == null) {
@@ -80,7 +80,7 @@ public class RelacaoFamiliarFamiliarServiceImpl implements RelacaoFamiliarFamili
 				}
 			} else {
 				System.out.println("Já tem o familiar1 na BD");
-				idFamiliar1 = relacao.getFamiliarByIdFamiliar1().getIdFamiliar(); 
+				idFamiliar1 = relacao.getFamiliar1().getIdFamiliar(); 
 			}
 		} else {
 			System.out.println("Não tem familiar1 definido");
@@ -91,10 +91,10 @@ public class RelacaoFamiliarFamiliarServiceImpl implements RelacaoFamiliarFamili
 			System.out.println("Vou inserir ou atualizar a relacao");
 			int newId = this.relacaoFamiliarFamiliarDao.saveOrUpdate(relacao);
 			
-			relacaoId.setIdRelacaoFamiliarFamiliar(newId);
+			relacaoId.setIdRelacao(newId);
 			relacao.setId(relacaoId);
 			
-			System.out.println("inseri " + this.get(relacao.getId().getIdRelacaoFamiliarFamiliar()));
+			System.out.println("inseri " + this.get(relacao.getId().getIdRelacao()));
 			return newId;
 		} else {
 			System.out.println("algo deu erro");

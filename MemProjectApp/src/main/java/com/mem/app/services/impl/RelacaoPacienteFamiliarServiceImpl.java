@@ -81,10 +81,10 @@ public class RelacaoPacienteFamiliarServiceImpl implements RelacaoPacienteFamili
 			System.out.println("Vou inserir ou atualizar a relacao");
 			int newId = this.relacaoPacienteFamiliarDao.saveOrUpdate(relacao);
 			
-			relacaoId.setIdRelacaoPacienteFamiliar(newId);
+			relacaoId.setIdRelacao(newId);
 			relacao.setId(relacaoId);
 			
-			System.out.println("inseri " + this.get(relacao.getId().getIdRelacaoPacienteFamiliar()));
+			System.out.println("inseri " + this.get(relacao.getId().getIdRelacao()));
 			return newId;
 		} else {
 			System.out.println("algo deu erro");

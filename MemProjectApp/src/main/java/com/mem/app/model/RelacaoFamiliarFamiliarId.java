@@ -15,26 +15,26 @@ public class RelacaoFamiliarFamiliarId implements java.io.Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private int idRelacaoFamiliarFamiliar;
+	private int idRelacao;
 	private int idFamiliar;
 	private int idFamiliar1;
 
 	public RelacaoFamiliarFamiliarId() {
 	}
 
-	public RelacaoFamiliarFamiliarId(int idRelacaoFamiliarFamiliar, int idFamiliar, int idFamiliar1) {
-		this.idRelacaoFamiliarFamiliar = idRelacaoFamiliarFamiliar;
+	public RelacaoFamiliarFamiliarId(int idRelacao, int idFamiliar, int idFamiliar1) {
+		this.idRelacao = idRelacao;
 		this.idFamiliar = idFamiliar;
 		this.idFamiliar1 = idFamiliar1;
 	}
 	@GeneratedValue
-	@Column(name = "idRelacaoFamiliarFamiliar", nullable = false)
-	public int getIdRelacaoFamiliarFamiliar() {
-		return this.idRelacaoFamiliarFamiliar;
+	@Column(name = "idRelacao", nullable = false)
+	public int getIdRelacao() {
+		return this.idRelacao;
 	}
 
-	public void setIdRelacaoFamiliarFamiliar(int idRelacaoFamiliarFamiliar) {
-		this.idRelacaoFamiliarFamiliar = idRelacaoFamiliarFamiliar;
+	public void setIdRelacao(int idRelacao) {
+		this.idRelacao = idRelacao;
 	}
 
 	@Column(name = "idFamiliar", nullable = false)
@@ -64,7 +64,7 @@ public class RelacaoFamiliarFamiliarId implements java.io.Serializable {
 			return false;
 		RelacaoFamiliarFamiliarId castOther = (RelacaoFamiliarFamiliarId) other;
 
-		return (this.getIdRelacaoFamiliarFamiliar() == castOther.getIdRelacaoFamiliarFamiliar())
+		return (this.getIdRelacao() == castOther.getIdRelacao())
 				&& (this.getIdFamiliar() == castOther.getIdFamiliar())
 				&& (this.getIdFamiliar1() == castOther.getIdFamiliar1());
 	}
@@ -72,7 +72,7 @@ public class RelacaoFamiliarFamiliarId implements java.io.Serializable {
 	public int hashCode() {
 		int result = 17;
 
-		result = 37 * result + this.getIdRelacaoFamiliarFamiliar();
+		result = 37 * result + this.getIdRelacao();
 		result = 37 * result + this.getIdFamiliar();
 		result = 37 * result + this.getIdFamiliar1();
 		return result;

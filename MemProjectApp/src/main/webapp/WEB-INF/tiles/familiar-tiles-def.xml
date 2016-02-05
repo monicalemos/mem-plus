@@ -27,7 +27,7 @@
 	
 
 	<!-- Familiares Segundo Grau: -->
-	<definition 		name="verSegundoGrauFamiliar" 		extends="familiarTemplate">
+<!-- 	<definition 		name="verSegundoGrauFamiliar" 		extends="familiarTemplate">
 		<put-attribute 	name="title" 						value="Inserir Familiar" />
 		<put-attribute 	name="body" 						value="/WEB-INF/views/familiar/verSegundoGrauFamiliar.jsp" />
 	</definition>
@@ -35,7 +35,7 @@
 	<definition 		name="editarSegundoGrauFamiliar" 	extends="familiarTemplate">
 		<put-attribute 	name="title" 						value="Editar Familiar" />
 		<put-attribute 	name="body" 						value="/WEB-INF/views/familiar/editarSegundoGrauFamiliar.jsp" />
-	</definition>
+	</definition> -->
 	
 	<definition 		name="listarSegundoGrauFamiliares" 	extends="familiarTemplate">
 		<put-attribute 	name="title" 						value="Lista de Familiares" />

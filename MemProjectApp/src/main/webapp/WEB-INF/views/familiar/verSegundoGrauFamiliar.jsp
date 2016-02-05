@@ -7,9 +7,9 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%
-	RelacaoFamiliarFamiliar relacao = (RelacaoFamiliarFamiliar)request.getAttribute("currentRelacao");
+	RelacaoFamiliarFamiliar relacao = (RelacaoFamiliarFamiliar)request.getAttribute("currentRelacaoFF");
 	System.out.println("tem relacao no jsp; " + relacao);
-	Familiar familiar = relacao.getFamiliarByIdFamiliar1();
+	Familiar familiar = relacao.getFamiliar1();
 	System.out.println("Tem familiar no jsp: " + familiar);
 %>
 

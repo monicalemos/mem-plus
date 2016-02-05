@@ -15,27 +15,27 @@ public class RelacaoPacienteFamiliarId implements java.io.Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private int idRelacaoPacienteFamiliar;
+	private int idRelacao;
 	private int idPaciente;
 	private int idFamiliar;
 
 	public RelacaoPacienteFamiliarId() {
 	}
 
-	public RelacaoPacienteFamiliarId(int idRelacaoPacienteFamiliar, int idPaciente, int idFamiliar) {
-		this.idRelacaoPacienteFamiliar = idRelacaoPacienteFamiliar;
+	public RelacaoPacienteFamiliarId(int idRelacao, int idPaciente, int idFamiliar) {
+		this.idRelacao = idRelacao;
 		this.idPaciente = idPaciente;
 		this.idFamiliar = idFamiliar;
 	}
 
 	@GeneratedValue
-	@Column(name = "idRelacaoPacienteFamiliar", nullable = false)
-	public int getIdRelacaoPacienteFamiliar() {
-		return this.idRelacaoPacienteFamiliar;
+	@Column(name = "idRelacao", nullable = false)
+	public int getIdRelacao() {
+		return this.idRelacao;
 	}
 
-	public void setIdRelacaoPacienteFamiliar(int idRelacaoPacienteFamiliar) {
-		this.idRelacaoPacienteFamiliar = idRelacaoPacienteFamiliar;
+	public void setIdRelacao(int idRelacao) {
+		this.idRelacao = idRelacao;
 	}
 
 	@Column(name = "idPaciente", nullable = false)
@@ -65,7 +65,7 @@ public class RelacaoPacienteFamiliarId implements java.io.Serializable {
 			return false;
 		RelacaoPacienteFamiliarId castOther = (RelacaoPacienteFamiliarId) other;
 
-		return (this.getIdRelacaoPacienteFamiliar() == castOther.getIdRelacaoPacienteFamiliar())
+		return (this.getIdRelacao() == castOther.getIdRelacao())
 				&& (this.getIdPaciente() == castOther.getIdPaciente())
 				&& (this.getIdFamiliar() == castOther.getIdFamiliar());
 	}
@@ -73,7 +73,7 @@ public class RelacaoPacienteFamiliarId implements java.io.Serializable {
 	public int hashCode() {
 		int result = 17;
 
-		result = 37 * result + this.getIdRelacaoPacienteFamiliar();
+		result = 37 * result + this.getIdRelacao();
 		result = 37 * result + this.getIdPaciente();
 		result = 37 * result + this.getIdFamiliar();
 		return result;
@@ -81,7 +81,7 @@ public class RelacaoPacienteFamiliarId implements java.io.Serializable {
 
 	@Override
 	public String toString() {
-		return "RelacaoPacienteFamiliarId [idRelacaoPacienteFamiliar=" + idRelacaoPacienteFamiliar + ", idPaciente="
+		return "RelacaoPacienteFamiliarId [idRelacaoPacienteFamiliar=" + idRelacao + ", idPaciente="
 				+ idPaciente + ", idFamiliar=" + idFamiliar + "]";
 	}
 

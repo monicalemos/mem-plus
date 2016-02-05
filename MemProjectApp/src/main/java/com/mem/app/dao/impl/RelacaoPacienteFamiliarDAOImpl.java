@@ -45,7 +45,7 @@ public class RelacaoPacienteFamiliarDAOImpl implements RelacaoPacienteFamiliarDA
 
 	@Override
 	public int saveOrUpdate(RelacaoPacienteFamiliar relacaoPacienteFamiliar) {
-		if (relacaoPacienteFamiliar.getId().getIdRelacaoPacienteFamiliar() > 0) {
+		if (relacaoPacienteFamiliar.getId().getIdRelacao() > 0) {
 			// update
 			System.out.println("UPDATE");
 			String sql = "UPDATE relacaoPacienteFamiliar SET " 
@@ -58,9 +58,9 @@ public class RelacaoPacienteFamiliarDAOImpl implements RelacaoPacienteFamiliarDA
 					relacaoPacienteFamiliar.getFamiliar().getIdFamiliar(),
 					relacaoPacienteFamiliar.getPaciente().getIdPaciente(), 
 					relacaoPacienteFamiliar.getTipoRelacao(),
-					relacaoPacienteFamiliar.getId().getIdRelacaoPacienteFamiliar());
+					relacaoPacienteFamiliar.getId().getIdRelacao());
 			
-			return relacaoPacienteFamiliar.getId().getIdRelacaoPacienteFamiliar();
+			return relacaoPacienteFamiliar.getId().getIdRelacao();
 		} else {
 			// insert
 			System.out.println("INSERT");

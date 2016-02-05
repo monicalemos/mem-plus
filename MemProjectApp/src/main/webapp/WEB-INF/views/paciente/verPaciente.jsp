@@ -21,7 +21,7 @@
 }
 </style>
 <div id="page-wrapper">
-	<h1 class="page-header">Dados do Utilizador</h1>
+	<h1 class="page-header">Dados do Paciente</h1>
 	<div class="newspaper">
 		<%-- <p> <label for="idPaciente"> idPaciente:</label> <%=paciente.getIdPaciente()%></p> --%> 
 		<p> <label for="nomeCompleto"> Nome Completo:</label> <%=paciente.getApelido() + ", " + paciente.getNomeProprio()%></p> 

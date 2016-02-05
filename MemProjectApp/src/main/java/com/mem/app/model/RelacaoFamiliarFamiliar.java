@@ -23,27 +23,27 @@ public class RelacaoFamiliarFamiliar implements java.io.Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private RelacaoFamiliarFamiliarId id;
-	private Familiar familiarByIdFamiliar;
-	private Familiar familiarByIdFamiliar1;
+	private Familiar familiar;
+	private Familiar familiar1;
 	private Paciente paciente;
 	private String tipoRelacao;
 
 	public RelacaoFamiliarFamiliar() {
 	}
 
-	public RelacaoFamiliarFamiliar(RelacaoFamiliarFamiliarId id, Familiar familiarByIdFamiliar,
-			Familiar familiarByIdFamiliar1, Paciente paciente) {
+	public RelacaoFamiliarFamiliar(RelacaoFamiliarFamiliarId id, Familiar familiar,
+			Familiar familiar1, Paciente paciente) {
 		this.id = id;
-		this.familiarByIdFamiliar = familiarByIdFamiliar;
-		this.familiarByIdFamiliar1 = familiarByIdFamiliar1;
+		this.familiar = familiar;
+		this.familiar1 = familiar1;
 		this.paciente = paciente;
 	}
 
-	public RelacaoFamiliarFamiliar(RelacaoFamiliarFamiliarId id, Familiar familiarByIdFamiliar,
-			Familiar familiarByIdFamiliar1, Paciente paciente, String tipoRelacao) {
+	public RelacaoFamiliarFamiliar(RelacaoFamiliarFamiliarId id, Familiar familiar,
+			Familiar familiar1, Paciente paciente, String tipoRelacao) {
 		this.id = id;
-		this.familiarByIdFamiliar = familiarByIdFamiliar;
-		this.familiarByIdFamiliar1 = familiarByIdFamiliar1;
+		this.familiar = familiar;
+		this.familiar1 = familiar1;
 		this.paciente = paciente;
 		this.tipoRelacao = tipoRelacao;
 	}
@@ -64,22 +64,22 @@ public class RelacaoFamiliarFamiliar implements java.io.Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "idFamiliar1", nullable = false, insertable = false, updatable = false)
-	public Familiar getFamiliarByIdFamiliar1() {
-		return this.familiarByIdFamiliar1;
+	public Familiar getFamiliar1() {
+		return this.familiar1;
 	}
 
-	public void setFamiliarByIdFamiliar1(Familiar familiarByIdFamiliar1) {
-		this.familiarByIdFamiliar1 = familiarByIdFamiliar1;
+	public void setFamiliar1(Familiar familiar1) {
+		this.familiar1 = familiar1;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "idFamiliar", nullable = false, insertable = false, updatable = false)
-	public Familiar getFamiliarByIdFamiliar() {
-		return this.familiarByIdFamiliar;
+	public Familiar getFamiliar() {
+		return this.familiar;
 	}
 
-	public void setFamiliarByIdFamiliar(Familiar familiarByIdFamiliar) {
-		this.familiarByIdFamiliar = familiarByIdFamiliar;
+	public void setFamiliar(Familiar familiar) {
+		this.familiar = familiar;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -103,8 +103,8 @@ public class RelacaoFamiliarFamiliar implements java.io.Serializable {
 
 	@Override
 	public String toString() {
-		return "RelacaoFamiliarFamiliar [id=" + id + ", \n familiarByIdFamiliar=" + familiarByIdFamiliar
-				+ ", \n  familiarByIdFamiliar1=" + familiarByIdFamiliar1 + ",\n   paciente=" + paciente + ", \ntipoRelacao="
+		return "RelacaoFamiliarFamiliar [id=" + id + ", \n familiar=" + familiar
+				+ ", \n  familiar1=" + familiar1 + ",\n   paciente=" + paciente + ", \ntipoRelacao="
 				+ tipoRelacao + "]";
 	}
 

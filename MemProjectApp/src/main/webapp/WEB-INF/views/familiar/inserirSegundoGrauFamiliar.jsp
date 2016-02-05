@@ -79,72 +79,72 @@
 		
 			<h2 class="form-signin-heading">Dados do Novo Familiar</h2>
 
-			<form:label path="familiarByIdFamiliar.idFamiliar" class="sr-only">Id Familiar: </form:label>
-			<form:input type="hidden" path="familiarByIdFamiliar.idFamiliar" id="idFamiliar" class="form-control"
+			<form:label path="familiar.idFamiliar" class="sr-only">Id Familiar: </form:label>
+			<form:input type="hidden" path="familiar.idFamiliar" id="idFamiliar" class="form-control"
 				required="required" placeholder="Id Familiar" />
 				
-			<form:label path="familiarByIdFamiliar1.nomeProprio" class="sr-only">Nome Próprio</form:label>
-			<form:input path="familiarByIdFamiliar1.nomeProprio" id="nomeProprio" class="form-control"
+			<form:label path="familiar1.nomeProprio" class="sr-only">Nome Próprio</form:label>
+			<form:input path="familiar1.nomeProprio" id="nomeProprio" class="form-control"
 				required="required" placeholder="Nome Próprio" />
 
 			<br>
-			<form:label path="familiarByIdFamiliar1.apelido" class="sr-only">Apelido</form:label>
-			<form:input path="familiarByIdFamiliar1.apelido" id="apelido" class="form-control"
+			<form:label path="familiar1.apelido" class="sr-only">Apelido</form:label>
+			<form:input path="familiar1.apelido" id="apelido" class="form-control"
 				required="required" placeholder="Apelido" />
 
 			<br>
-			<form:label path="familiarByIdFamiliar1.dataNascimento" class="sr-only">Data de Nascimento</form:label>
-			<form:input path="familiarByIdFamiliar1.dataNascimento" id="dataNascimento"
+			<form:label path="familiar1.dataNascimento" class="sr-only">Data de Nascimento</form:label>
+			<form:input path="familiar1.dataNascimento" id="dataNascimento"
 				class="form-control" required="required"
 				placeholder="Data de Nascimento" />
 
 			<br>
-			<form:label path="familiarByIdFamiliar1.moradaByIdLocalNascimento">Local de Nascimento:</form:label>
+			<form:label path="familiar1.moradaByIdLocalNascimento">Local de Nascimento:</form:label>
 			<br>
-			<form:label path="familiarByIdFamiliar1.moradaByIdLocalNascimento.pais" class="sr-only">Pais</form:label>
-			<form:input path="familiarByIdFamiliar1.moradaByIdLocalNascimento.pais" id="paisNascimento"
+			<form:label path="familiar1.moradaByIdLocalNascimento.pais" class="sr-only">Pais</form:label>
+			<form:input path="familiar1.moradaByIdLocalNascimento.pais" id="paisNascimento"
 				class="form-control" required="required"
 				placeholder="Pais Nascimento" />
 			<br>
-			<form:label path="familiarByIdFamiliar1.moradaByIdLocalNascimento.regiao" class="sr-only">Região</form:label>
-			<form:input path="familiarByIdFamiliar1.moradaByIdLocalNascimento.regiao"
+			<form:label path="familiar1.moradaByIdLocalNascimento.regiao" class="sr-only">Região</form:label>
+			<form:input path="familiar1.moradaByIdLocalNascimento.regiao"
 				id="regiaoNascimento" class="form-control" required="required"
 				placeholder="Regiao Nascimento" />
 			<br>
-			<form:label path="familiarByIdFamiliar1.moradaByIdLocalNascimento.cidade" class="sr-only">Cidade</form:label>
-			<form:input path="familiarByIdFamiliar1.moradaByIdLocalNascimento.cidade"
+			<form:label path="familiar1.moradaByIdLocalNascimento.cidade" class="sr-only">Cidade</form:label>
+			<form:input path="familiar1.moradaByIdLocalNascimento.cidade"
 				id="cidadeNascimento" class="form-control" required="required"
 				placeholder="Cidade Nascimento" />
 
-			<form:label path="familiarByIdFamiliar1.moradaByIdMorada">Morada:</form:label>
+			<form:label path="familiar1.moradaByIdMorada">Morada:</form:label>
 			<br>
-			<form:label path="familiarByIdFamiliar1.moradaByIdMorada.pais" class="sr-only">Pais</form:label>
-			<form:input path="familiarByIdFamiliar1.moradaByIdMorada.pais" id="pais"
+			<form:label path="familiar1.moradaByIdMorada.pais" class="sr-only">Pais</form:label>
+			<form:input path="familiar1.moradaByIdMorada.pais" id="pais"
 				class="form-control" required="required" placeholder="Pais" />
 			<br>
-			<form:label path="familiarByIdFamiliar1.moradaByIdMorada.regiao" class="sr-only">Região</form:label>
-			<form:input path="familiarByIdFamiliar1.moradaByIdMorada.regiao" id="regiao"
+			<form:label path="familiar1.moradaByIdMorada.regiao" class="sr-only">Região</form:label>
+			<form:input path="familiar1.moradaByIdMorada.regiao" id="regiao"
 				class="form-control" required="required" placeholder="Regiao" />
 			<br>
-			<form:label path="familiarByIdFamiliar1.moradaByIdMorada.cidade" class="sr-only">Cidade</form:label>
-			<form:input path="familiarByIdFamiliar1.moradaByIdMorada.cidade" id="cidade"
+			<form:label path="familiar1.moradaByIdMorada.cidade" class="sr-only">Cidade</form:label>
+			<form:input path="familiar1.moradaByIdMorada.cidade" id="cidade"
 				class="form-control" required="required" placeholder="Cidade" />
 
 			<br>
-			<form:label path="familiarByIdFamiliar1.genero">Género</form:label>
-			<form:select path="familiarByIdFamiliar1.genero" placeholder="Género" class="form-control">
+			<form:label path="familiar1.genero">Género</form:label>
+			<form:select path="familiar1.genero" placeholder="Género" class="form-control">
 				<form:option value="Masculino">Masculino</form:option>
 				<form:option value="Feminino">Feminino</form:option>
 			</form:select>
 
 			<br>
-			<form:label path="familiarByIdFamiliar1.profissao" class="sr-only">Profissão</form:label>
-			<form:input path="familiarByIdFamiliar1.profissao" id="profissao" class="form-control"
+			<form:label path="familiar1.profissao" class="sr-only">Profissão</form:label>
+			<form:input path="familiar1.profissao" id="profissao" class="form-control"
 				required="required" placeholder="Profissão" />
 
 			<br>
-			<form:label path="familiarByIdFamiliar1.estadoCivil">Estado Civil:</form:label>
-			<form:select path="familiarByIdFamiliar1.estadoCivil" class="form-control">
+			<form:label path="familiar1.estadoCivil">Estado Civil:</form:label>
+			<form:select path="familiar1.estadoCivil" class="form-control">
 				<form:option value="Solteiro">Solteiro</form:option>
 				<form:option value="Casado">Casado</form:option>
 				<form:option value="Divorciado">Divorciado</form:option>
@@ -152,8 +152,8 @@
 			</form:select>
 
 			<br>
-			<form:label path="familiarByIdFamiliar1.telefone" class="sr-only">Telefone</form:label>
-			<form:input path="familiarByIdFamiliar1.telefone" id="telefone" class="form-control"
+			<form:label path="familiar1.telefone" class="sr-only">Telefone</form:label>
+			<form:input path="familiar1.telefone" id="telefone" class="form-control"
 				required="required" placeholder="Telefone" />
 
 			<br>
@@ -171,26 +171,26 @@
 
 			<br>
 			<div class="checkbox">
-				<form:label path="familiarByIdFamiliar1.ecuidador"> É Cuidador</form:label>
+				<form:label path="familiar1.ecuidador"> É Cuidador</form:label>
 				<span style="padding-left:2em">
-					<form:checkbox path="familiarByIdFamiliar1.ecuidador"  value="1" 
+					<form:checkbox path="familiar1.ecuidador"  value="1" 
 					id="eCuidador" onclick="showHide(this, 'myGroup');" />
 				</span>
 			</div>
 
 			<span id="myGroup" style="visibility: hidden"> 
-			<form:label path="familiarByIdFamiliar1.utilizador.email" class="sr-only">Email</form:label> 
-			<form:input path="familiarByIdFamiliar1.utilizador.email" id="email" class="form-control" 
+			<form:label path="familiar1.utilizador.email" class="sr-only">Email</form:label> 
+			<form:input path="familiar1.utilizador.email" id="email" class="form-control" 
 						placeholder="Email" /> 
 					
 			<br> 
-			<form:label path="familiarByIdFamiliar1.utilizador.nomeUtilizador" class="sr-only">Nome Utilizador</form:label>
-			<form:input path="familiarByIdFamiliar1.utilizador.nomeUtilizador" id="nomeUtilizador" class="form-control" 
+			<form:label path="familiar1.utilizador.nomeUtilizador" class="sr-only">Nome Utilizador</form:label>
+			<form:input path="familiar1.utilizador.nomeUtilizador" id="nomeUtilizador" class="form-control" 
 						placeholder="Telefone" />
 
 			<br> 
-			<form:label path="familiarByIdFamiliar1.utilizador.password" class="sr-only">Password</form:label>
-			<form:password path="familiarByIdFamiliar1.utilizador.password" id="password"
+			<form:label path="familiar1.utilizador.password" class="sr-only">Password</form:label>
+			<form:password path="familiar1.utilizador.password" id="password"
 					class="form-control" placeholder="Password" />
 			</span>
 
