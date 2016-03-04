@@ -1,5 +1,7 @@
 package com.mem.app.dao.impl;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -15,28 +17,62 @@ import org.springframework.stereotype.Repository;
 
 import com.mem.app.dao.InteresseDAO;
 import com.mem.app.model.Interesse;
+import com.mysql.jdbc.Statement;
 @Repository
 public class InteresseDAOImpl implements InteresseDAO {
 
 	private JdbcTemplate jdbcTemplate;
+	private Connection connection;
 
 	@Autowired
-	public InteresseDAOImpl(DataSource nomeSource) {
-		jdbcTemplate = new JdbcTemplate(nomeSource);
+	public InteresseDAOImpl(DataSource dataSource) {
+		jdbcTemplate = new JdbcTemplate(dataSource);
+		
+		try {
+			this.connection = dataSource.getConnection();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@Override
-	public void saveOrUpdate(Interesse interesse) {
+	public int saveOrUpdate(Interesse interesse) {
 		if (interesse.getIdInteresse() > 0) {
 			// update
 			String sql = "UPDATE interesse SET nome=? WHERE idInteresse=?";
 
 			jdbcTemplate.update(sql, interesse.getNome(), interesse.getIdInteresse() );
+			return interesse.getIdInteresse();
 		} else {
 			// insert
-			String sql = "INSERT INTO interesse (nome, idInteresse)"
+			final String INSERT_SQL = "INSERT INTO interesse (nome)"
 					+ " VALUES (?, ?)";
-			jdbcTemplate.update(sql, interesse.getNome(), interesse.getIdInteresse() );
+			
+			int newId = 0;
+			final String nome = interesse.getNome();
+			
+			System.out.println("Variaveis definidas no insert do interesse " + nome);
+			
+			PreparedStatement ps;
+			try{
+				ps = connection.prepareStatement(INSERT_SQL.toString(), Statement.RETURN_GENERATED_KEYS);
+				ps.setString(1,  nome);
+				
+				ps.executeUpdate();
+				
+				System.out.println("executou a query");
+				ResultSet rs = ps.getGeneratedKeys();
+				if(rs.next()){
+					System.out.println("tem resultados");
+					newId = rs.getInt(1);
+				}
+			}
+			catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+			System.out.println("novo id do interesse: " + newId);
+			return newId;
 		}
 	}
 

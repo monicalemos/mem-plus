@@ -6,7 +6,7 @@ import com.mem.app.model.Tecnico;
 
 public interface TecnicoService {
 	
-	void saveOrUpdate(Tecnico tecnico);
+	int saveOrUpdate(Tecnico tecnico);
 
 	void delete(int tecnicoId);
 

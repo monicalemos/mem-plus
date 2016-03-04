@@ -6,7 +6,7 @@ import com.mem.app.model.Questionario;
 
 public interface QuestionarioService {
 
-	void saveOrUpdate(Questionario questionario);
+	int saveOrUpdate(Questionario questionario);
 
 	void delete(int idQuestionario);
 

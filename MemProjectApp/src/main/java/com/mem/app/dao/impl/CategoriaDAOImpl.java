@@ -1,5 +1,7 @@
 package com.mem.app.dao.impl;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -15,28 +17,62 @@ import org.springframework.stereotype.Repository;
 
 import com.mem.app.dao.CategoriaDAO;
 import com.mem.app.model.Categoria;
+import com.mysql.jdbc.Statement;
 @Repository
 public class CategoriaDAOImpl implements CategoriaDAO {
 
 	private JdbcTemplate jdbcTemplate;
+	private Connection connection;
 
 	@Autowired
 	public CategoriaDAOImpl(DataSource dataSource) {
 		jdbcTemplate = new JdbcTemplate(dataSource);
+		
+		try {
+			this.connection = dataSource.getConnection();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@Override
-	public void saveOrUpdate(Categoria categoria) {
+	public int saveOrUpdate(Categoria categoria) {
 		if (categoria.getIdCategoria() > 0) {
 			// update
 			String sql = "UPDATE categoria SET name=? WHERE idCategoria=?";
 
 			jdbcTemplate.update(sql, categoria.getNome(), categoria.getIdCategoria() );
+			
+			return categoria.getIdCategoria();
 		} else {
 			// insert
-			String sql = "INSERT INTO categoria (idCategoria, nome)"
-					+ " VALUES (?, ?)";
-			jdbcTemplate.update(sql, categoria.getIdCategoria(), categoria.getNome());
+			final String INSERT_SQL = "INSERT INTO categoria (nome)"
+					+ " VALUES (?)";
+			int newId = 0;
+			final String nome = categoria.getNome();
+			
+			System.out.println("Variaveis definidas no insert da categoria " + nome);
+			
+			PreparedStatement ps;
+			try{
+				ps = connection.prepareStatement(INSERT_SQL.toString(), Statement.RETURN_GENERATED_KEYS);
+				ps.setString(1,  nome);
+				
+				ps.executeUpdate();
+				
+				System.out.println("executou a query");
+				ResultSet rs = ps.getGeneratedKeys();
+				if(rs.next()){
+					System.out.println("tem resultados");
+					newId = rs.getInt(1);
+				}
+			}
+			catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+			System.out.println("novo id da categoria: " + newId);
+			return newId;
 		}
 	}
 
@@ -86,5 +122,4 @@ public class CategoriaDAOImpl implements CategoriaDAO {
 
 		return listCategoria;
 	}
-
 }

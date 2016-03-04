@@ -33,7 +33,6 @@
 		</property>
 		<property name="annotatedClasses">
 			<list>
-				<value>com.mem.app.model.Atividade</value>
 				<value>com.mem.app.model.Categoria</value>
 				<value>com.mem.app.model.Evento</value>
 				<value>com.mem.app.model.EventoId</value>
@@ -45,6 +44,8 @@
 				<value>com.mem.app.model.Morada</value>
 				<value>com.mem.app.model.Paciente</value>
 				<value>com.mem.app.model.Questionario</value>
+				<value>com.mem.app.model.Pergunta</value>
+				<value>com.mem.app.model.Resposta</value>
 				<value>com.mem.app.model.RelacaoFamiliarFamiliar</value>
 				<value>com.mem.app.model.RelacaoFamiliarFamiliarId</value>
 				<value>com.mem.app.model.RelacaoPacienteFamiliar</value>

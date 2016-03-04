@@ -29,6 +29,7 @@
 		}
 	}
 	pageContext.setAttribute("tipoRelacao", tipoRelacao); */
+	@SuppressWarnings("unchecked")
 	List<RelacaoFamiliarFamiliar> listFamiliares = (List<RelacaoFamiliarFamiliar>) (request
 			.getAttribute("listFamiliares"));
 	// List<RelacaoPacienteFamiliar> listFamiliaresPF = null;

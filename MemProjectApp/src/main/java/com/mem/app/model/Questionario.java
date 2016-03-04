@@ -1,12 +1,16 @@
 package com.mem.app.model;
 // Generated 21/Ago/2015 19:35:12 by Hibernate Tools 4.3.1
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -23,20 +27,40 @@ public class Questionario implements java.io.Serializable {
 	private int idQuestionario;
 	private Categoria categoria;
 	private Interacao interacao;
-	private int numPerguntas;
-	private String nivel;
-
+	private Integer numPerguntas;
+	private Integer respostasCertas;
+	private Integer nivel;
+	
+	private List<Pergunta> perguntas = new ArrayList<Pergunta>(0);
 	public Questionario() {
 	}
 
-	public Questionario(int idQuestionario, Categoria categoria, Interacao interacao, int numPerguntas, String nivel) {
+	public Questionario(int idQuestionario, Categoria categoria, Interacao interacao, Integer numPerguntas, Integer numRespostasCertas, Integer nivel) {
+		this.idQuestionario = idQuestionario;
+		this.categoria = categoria;
+		this.interacao = interacao;
+		this.numPerguntas = numPerguntas;
+		this.respostasCertas = numRespostasCertas;
+		this.nivel = nivel;
+	}
+	public Questionario(int idQuestionario, Categoria categoria, Interacao interacao, Integer numPerguntas, Integer numRespostasCertas, Integer nivel, List<Pergunta> perguntas) {
+		this.idQuestionario = idQuestionario;
+		this.categoria = categoria;
+		this.interacao = interacao;
+		this.numPerguntas = numPerguntas;
+		this.respostasCertas = numRespostasCertas;
+		this.nivel = nivel;
+		this.perguntas = perguntas;
+	}
+	
+	public Questionario(int idQuestionario, Categoria categoria, Interacao interacao, Integer numPerguntas, Integer nivel, List<Pergunta> perguntas) {
 		this.idQuestionario = idQuestionario;
 		this.categoria = categoria;
 		this.interacao = interacao;
 		this.numPerguntas = numPerguntas;
 		this.nivel = nivel;
+		this.perguntas = perguntas;
 	}
-
 	@Id
 
 	@Column(name = "idQuestionario", unique = true, nullable = false)
@@ -69,21 +93,41 @@ public class Questionario implements java.io.Serializable {
 	}
 
 	@Column(name = "numPerguntas", nullable = false)
-	public int getNumPerguntas() {
+	public Integer getNumPerguntas() {
 		return this.numPerguntas;
 	}
 
-	public void setNumPerguntas(int numPerguntas) {
+	public void setNumPerguntas(Integer numPerguntas) {
 		this.numPerguntas = numPerguntas;
 	}
 
-	@Column(name = "nivel", nullable = false, length = 45)
-	public String getNivel() {
+	@Column(name = "respostasCertas", nullable = false)
+	public Integer getRespostasCertas() {
+		return this.respostasCertas;
+	}
+
+	public void setRespostasCertas(Integer respostasCertas) {
+		this.respostasCertas = respostasCertas;
+	}
+	
+	@Column(name = "nivel", nullable = false)
+	public Integer getNivel() {
 		return this.nivel;
 	}
 
-	public void setNivel(String nivel) {
+	public void setNivel(Integer nivel) {
 		this.nivel = nivel;
 	}
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "questionario")
+	public List<Pergunta> getPerguntas() {
+		return perguntas;
+	}
 
+	public void setPerguntas(List<Pergunta> perguntas) {
+		this.perguntas = perguntas;
+	}
+	
+	public void addPergunta(Pergunta pergunta){
+		this.perguntas.add(pergunta);
+	}
 }

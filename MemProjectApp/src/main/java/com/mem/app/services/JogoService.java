@@ -6,7 +6,7 @@ import com.mem.app.model.Jogo;
 
 public interface JogoService {
 	
-	void saveOrUpdate(Jogo jogo);
+	int saveOrUpdate(Jogo jogo);
 
 	void delete(int idJogo);
 

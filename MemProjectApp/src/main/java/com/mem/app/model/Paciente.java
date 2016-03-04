@@ -47,7 +47,6 @@ public class Paciente implements java.io.Serializable {
 	private String nomeMedico;
 	private String especialidadeMedico;
 	private Integer nivelSessao;
-	private List<Atividade> atividades = new ArrayList<Atividade>(0);
 	private List<Interesse> interesses = new ArrayList<Interesse>(0);
 	private List<Evento> eventos = new ArrayList<Evento>(0);
 	private List<RelacaoFamiliarFamiliar> RelacaoFamiliarFamiliars = new ArrayList<RelacaoFamiliarFamiliar>(0);
@@ -67,7 +66,7 @@ public class Paciente implements java.io.Serializable {
 	public Paciente(int idPaciente, Morada moradaByIdLocalNascimento, Morada moradaByIdMorada, Tecnico tecnico,
 			String nomeCompleto, String nomeProprio, String apelido, Date dataNascimento, String genero,
 			String profissao, String escolaridade, String estadoCivil, Integer nivelDoenca, String nomeMedico,
-			String especialidadeMedico, Integer nivelSessao, List<Atividade> atividades, List<Interesse> interesses, List<Evento> eventos,
+			String especialidadeMedico, Integer nivelSessao, List<Interesse> interesses, List<Evento> eventos,
 			List<RelacaoFamiliarFamiliar> RelacaoFamiliarFamiliars, List<RelacaoPacienteFamiliar> RelacaoPacienteFamiliars, List<Interacao> interacaos) {
 		this.idPaciente = idPaciente;
 		this.moradaByIdLocalNascimento = moradaByIdLocalNascimento;
@@ -85,7 +84,6 @@ public class Paciente implements java.io.Serializable {
 		this.nomeMedico = nomeMedico;
 		this.especialidadeMedico = especialidadeMedico;
 		this.nivelSessao = nivelSessao;
-		this.atividades = atividades;
 		this.interesses = interesses;
 		this.eventos = eventos;
 		this.RelacaoFamiliarFamiliars = RelacaoFamiliarFamiliars;
@@ -241,15 +239,6 @@ public class Paciente implements java.io.Serializable {
 
 	public void setNivelSessao(Integer nivelSessao) {
 		this.nivelSessao = nivelSessao;
-	}
-
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "pacientes")
-	public List<Atividade> getAtividades() {
-		return this.atividades;
-	}
-
-	public void setAtividades(List<Atividade> atividades) {
-		this.atividades = atividades;
 	}
 
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "pacientes")

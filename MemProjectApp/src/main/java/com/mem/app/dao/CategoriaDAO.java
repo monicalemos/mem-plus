@@ -6,7 +6,7 @@ import com.mem.app.model.Categoria;
 
 public interface CategoriaDAO {
 
-	void saveOrUpdate(Categoria categoria);
+	int saveOrUpdate(Categoria categoria);
 
 	void delete(int categoriaId);
 

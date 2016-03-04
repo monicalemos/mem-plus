@@ -1,5 +1,7 @@
 package com.mem.app.dao.impl;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -17,25 +19,36 @@ import com.mem.app.dao.QuestionarioDAO;
 import com.mem.app.model.Categoria;
 import com.mem.app.model.Interacao;
 import com.mem.app.model.Questionario;
+import com.mysql.jdbc.Statement;
 @Repository
 public class QuestionarioDAOImpl implements QuestionarioDAO {
 
 	private JdbcTemplate jdbcTemplate;
 	private InteracaoDAOImpl interacaoImpl;
 	private CategoriaDAOImpl categoriaImpl;
+	
+	private Connection connection;
+	
 	@Autowired
 	public QuestionarioDAOImpl(DataSource dataSource) {
 		jdbcTemplate = new JdbcTemplate(dataSource);
 		interacaoImpl = new InteracaoDAOImpl(dataSource);
 		categoriaImpl = new CategoriaDAOImpl(dataSource);
+		
+		try {
+			this.connection = dataSource.getConnection();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@Override
-	public void saveOrUpdate(Questionario questionario) {
+	public int saveOrUpdate(Questionario questionario) {
 		if (questionario.getIdQuestionario() > 0) {
 			// update
 			String sql = "UPDATE questionario SET "
 					+ "numPerguntas=?, "
+					+ "respostasCertas=?, "
 					+ "nivel=?, "
 					+ "idInteracao=?, "
 					+ "idCategoria=? "
@@ -43,24 +56,54 @@ public class QuestionarioDAOImpl implements QuestionarioDAO {
 
 			jdbcTemplate.update(sql, 
 					questionario.getNumPerguntas(), 
+					questionario.getRespostasCertas(),
 					questionario.getNivel(), 
 					questionario.getInteracao().getIdInteracao(),
 					questionario.getCategoria().getIdCategoria(),
 					questionario.getIdQuestionario() );
+			
+			return questionario.getIdQuestionario();
 		} else {
 			// insert
-			String sql = "INSERT INTO questionario "
-					+ "(idQuestionario, "
-					+ "numPerguntas, "
+			final String INSERT_SQL = "INSERT INTO questionario "
+					+ "(numPerguntas, "
+					+ "respostasCertas, "
 					+ "nivel, "
 					+ "idInteracao, "
 					+ "idCategoria) "
-					+ " VALUES (?, ?, ?, ?, ?, ?)";
-			jdbcTemplate.update(sql, 
-					questionario.getIdQuestionario(),
-					questionario.getNumPerguntas(), 
-					questionario.getInteracao().getIdInteracao(),
-					questionario.getCategoria().getIdCategoria());
+					+ " VALUES (?, ?, ?, ?, ?)";
+			
+			int newId = 0;
+			final Integer numPerguntas = questionario.getNumPerguntas();
+			final Integer respostasCertas = questionario.getRespostasCertas();
+			final Integer nivel = questionario.getNivel();
+			final Integer idInteracao = questionario.getInteracao().getIdInteracao();
+			final Integer idCategoria = questionario.getCategoria().getIdCategoria();
+			
+			PreparedStatement ps;
+			try{
+				ps = connection.prepareStatement(INSERT_SQL.toString(), Statement.RETURN_GENERATED_KEYS);
+				ps.setInt(1, numPerguntas);
+				ps.setInt(3, respostasCertas);
+				ps.setInt(3, nivel);
+				ps.setInt(4, idInteracao);
+				ps.setInt(5, idCategoria);
+				
+				ps.executeUpdate();
+				
+				System.out.println("executou a query");
+				ResultSet rs = ps.getGeneratedKeys();
+				if(rs.next()){
+					System.out.println("tem resultados");
+					newId = rs.getInt(1);
+				}
+			}
+			catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+			System.out.println("novo id do questionario: " + newId);
+			return newId;
 		}
 	}
 
@@ -85,7 +128,8 @@ public class QuestionarioDAOImpl implements QuestionarioDAO {
 					Questionario questionario = new Questionario();
 					questionario.setIdQuestionario(rs.getInt("idQuestionario"));
 					questionario.setNumPerguntas(rs.getInt("numPerguntas"));
-					questionario.setNivel(rs.getString("nivel"));
+					questionario.setRespostasCertas(rs.getInt("respostasCertas"));
+					questionario.setNivel(rs.getInt("nivel"));
 					questionario.setInteracao(interacao);
 					questionario.setCategoria(categoria);
 					return questionario;
@@ -111,7 +155,8 @@ public class QuestionarioDAOImpl implements QuestionarioDAO {
 
 				aQuestionario.setIdQuestionario(rs.getInt("idQuestionario"));
 				aQuestionario.setNumPerguntas(rs.getInt("numPerguntas"));
-				aQuestionario.setNivel(rs.getString("nivel"));
+				aQuestionario.setRespostasCertas(rs.getInt("respostasCertas"));
+				aQuestionario.setNivel(rs.getInt("nivel"));
 				aQuestionario.setInteracao(interacao);
 				aQuestionario.setCategoria(categoria);
 				return aQuestionario;
@@ -136,7 +181,8 @@ public class QuestionarioDAOImpl implements QuestionarioDAO {
 
 				aQuestionario.setIdQuestionario(rs.getInt("idQuestionario"));
 				aQuestionario.setNumPerguntas(rs.getInt("numPerguntas"));
-				aQuestionario.setNivel(rs.getString("nivel"));
+				aQuestionario.setRespostasCertas(rs.getInt("respostasCertas"));
+				aQuestionario.setNivel(rs.getInt("nivel"));
 				aQuestionario.setInteracao(interacao);
 				aQuestionario.setCategoria(categoria);
 				return aQuestionario;
@@ -161,7 +207,8 @@ public class QuestionarioDAOImpl implements QuestionarioDAO {
 
 				aQuestionario.setIdQuestionario(rs.getInt("idQuestionario"));
 				aQuestionario.setNumPerguntas(rs.getInt("numPerguntas"));
-				aQuestionario.setNivel(rs.getString("nivel"));
+				aQuestionario.setRespostasCertas(rs.getInt("respostasCertas"));
+				aQuestionario.setNivel(rs.getInt("nivel"));
 				aQuestionario.setInteracao(interacao);
 				aQuestionario.setCategoria(categoria);
 				return aQuestionario;

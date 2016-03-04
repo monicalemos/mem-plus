@@ -1,7 +1,10 @@
 package com.mem.app.dao.impl;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -16,42 +19,76 @@ import org.springframework.stereotype.Repository;
 import com.mem.app.dao.InteracaoDAO;
 import com.mem.app.model.Interacao;
 import com.mem.app.model.Paciente;
+import com.mysql.jdbc.Statement;
 @Repository
 public class InteracaoDAOImpl implements InteracaoDAO {
 
 	private JdbcTemplate jdbcTemplate;
 	private PacienteDAOImpl pacienteImpl;
+	
+	private Connection connection;
 
 	@Autowired
 	public InteracaoDAOImpl(DataSource dataSource) {
 		jdbcTemplate = new JdbcTemplate(dataSource);
 		pacienteImpl = new PacienteDAOImpl(dataSource);
+		
+		try {
+			this.connection = dataSource.getConnection();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
-	public void saveOrUpdate(Interacao interacao) {
+	public int saveOrUpdate(Interacao interacao) {
 		if (interacao.getIdInteracao() > 0) {
 			// update
-			String sql = "UPDATE interacao SET "
+			final String UPDATE_SQL = "UPDATE interacao SET "
 					+ "data=?, "
 					+ "idPaciente=? "
 					+ "WHERE idInteracao=?";
 
-			jdbcTemplate.update(sql, 
+			jdbcTemplate.update(UPDATE_SQL, 
 					interacao.getData(),
 					interacao.getPaciente().getIdPaciente(), 
 					interacao.getIdInteracao() );
+			
+			return interacao.getIdInteracao();
 		} else {
 			// insert
-			String sql = "INSERT INTO interacao "
-					+ "(idInteracao, "
-					+ "data, "
+			final String INSERT_SQL = "INSERT INTO interacao "
+					+ "(data, "
 					+ "idPaciente)"
 					+ " VALUES (?, ?)";
-			jdbcTemplate.update(sql, 
-					interacao.getIdInteracao(), 
-					interacao.getData(), 
-					interacao.getPaciente().getIdPaciente());
+			
+			int newId = 0;
+			final Date data = interacao.getData();
+			final int idPaciente = interacao.getPaciente().getIdPaciente();
+			
+			System.out.println("Variaveis definidas no insert interacao " + data + ", " + idPaciente);
+			
+			PreparedStatement ps;
+			try{
+				ps = connection.prepareStatement(INSERT_SQL.toString(), Statement.RETURN_GENERATED_KEYS);
+				ps.setDate(1,  new java.sql.Date(data.getTime()));
+				ps.setInt(2,  idPaciente);
+				
+				ps.executeUpdate();
+				
+				System.out.println("executou a query");
+				ResultSet rs = ps.getGeneratedKeys();
+				if(rs.next()){
+					System.out.println("tem resultados");
+					newId = rs.getInt(1);
+				}
+			}
+			catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+			System.out.println("novo id da interacao: " + newId);
+			return newId;
 		}
 	}
 

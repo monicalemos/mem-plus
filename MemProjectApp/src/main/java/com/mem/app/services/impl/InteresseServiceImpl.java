@@ -20,8 +20,8 @@ public class InteresseServiceImpl implements InteresseService {
 	}
 	
 	@Override
-	public void saveOrUpdate(Interesse interesse) {
-		this.interesseDao.saveOrUpdate(interesse);
+	public int saveOrUpdate(Interesse interesse) {
+		return this.interesseDao.saveOrUpdate(interesse);
 	}
 
 	@Override

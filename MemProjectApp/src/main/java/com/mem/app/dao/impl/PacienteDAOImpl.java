@@ -18,6 +18,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.mem.app.dao.PacienteDAO;
+import com.mem.app.model.Interesse;
 import com.mem.app.model.Morada;
 import com.mem.app.model.Paciente;
 import com.mem.app.model.Tecnico;
@@ -43,6 +44,32 @@ public class PacienteDAOImpl implements PacienteDAO {
 		}
 	}
 
+	public void saveOrUpdateInteresse(Interesse interesse, int idPaciente){
+		String sql = "SELECT count(1) FROM pacientehasinteresse WHERE idPaciente=" + idPaciente + " AND idInteresse=" + interesse.getIdInteresse();
+		Statement st;
+		boolean temInteresse = false;
+		try {
+			st = connection.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			rs.next();
+			int count = rs.getInt(1);
+			if(count > 0)
+				temInteresse = true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		if(temInteresse){
+			//update
+			String sqlUpdate = "UPDATE pacientehasinteresse SET "
+					+ "idInteresse = ?, "
+					+ "WHERE idPaciente = ?";
+			jdbcTemplate.update(sqlUpdate, interesse.getIdInteresse(), idPaciente);
+		}else{
+			//insert
+			String sqlInsert = "INSERT INTO pacientehasinteresse (idInteresse, idPaciente) VALUES(?, ?)";
+			jdbcTemplate.update(sqlInsert, interesse.getIdInteresse(), idPaciente);
+		}
+	}
 	@Override
 	public int saveOrUpdate(Paciente paciente) {
 		if (paciente.getIdPaciente() > 0) {
@@ -124,7 +151,7 @@ public class PacienteDAOImpl implements PacienteDAO {
 			final int idTecnico = paciente.getTecnico().getIdTecnico();		
 			
 			
-			System.out.println("variaveis definidas no insert idTecnico " + nomeCompleto + ", " + nomeProprio + ", " + apelido+
+			System.out.println("variaveis definidas no insert Paciente " + nomeCompleto + ", " + nomeProprio + ", " + apelido+
 					", "+ dataNascimento + ", "+ idLocalNascimento + ", "+ idMorada + ", " + genero + ", " + profissao + ", " + 
 			escolaridade + ", " + estadoCivil + ", " + nivelDoenca + ", "+ nomeMedico+ ", "+ especialidadeMedico + 
 			", " + nivelSessao);
@@ -210,7 +237,6 @@ public class PacienteDAOImpl implements PacienteDAO {
 
 		});
 	}
-
 	
 	@Override
 	public List<Paciente> list(int idTecnico) {

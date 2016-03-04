@@ -20,8 +20,8 @@ public class QuestionarioServiceImpl implements QuestionarioService {
 	}
 	
 	@Override
-	public void saveOrUpdate(Questionario questionario) {
-		this.questionarioDao.saveOrUpdate(questionario);
+	public int saveOrUpdate(Questionario questionario) {
+		return this.questionarioDao.saveOrUpdate(questionario);
 	}
 
 	@Override

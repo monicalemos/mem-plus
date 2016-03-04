@@ -6,7 +6,7 @@ import com.mem.app.model.Interesse;
 
 public interface InteresseService {
 
-	void saveOrUpdate(Interesse interesse);
+	int saveOrUpdate(Interesse interesse);
 
 	void delete(int interesseId);
 

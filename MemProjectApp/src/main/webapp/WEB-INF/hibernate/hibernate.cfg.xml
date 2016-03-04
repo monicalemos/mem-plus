@@ -11,7 +11,6 @@
 		<property name="hibernate.default_schema">memdb</property>
 		<property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
 
-		<mapping class="com.mem.app.model.Atividade" />
 		<mapping class="com.mem.app.model.Categoria" />
 		<mapping class="com.mem.app.model.Evento" />
 		<mapping class="com.mem.app.model.EventoId" />
@@ -23,6 +22,8 @@
 		<mapping class="com.mem.app.model.Morada" />
 		<mapping class="com.mem.app.model.Paciente" />
 		<mapping class="com.mem.app.model.Questionario" />
+		<mapping class="com.mem.app.model.Pergunta" />
+		<mapping class="com.mem.app.model.Resposta" />
 		<mapping class="com.mem.app.model.RelacaoFamiliarFamiliar" />
 		<mapping class="com.mem.app.model.RelacaoFamiliarFamiliarId" />
 		<mapping class="com.mem.app.model.RelacaoPacienteFamiliar" />

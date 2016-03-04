@@ -20,8 +20,8 @@ public class JogoServiceImpl implements JogoService {
 	}
 	
 	@Override
-	public void saveOrUpdate(Jogo jogo) {
-		this.jogoDao.saveOrUpdate(jogo);
+	public int saveOrUpdate(Jogo jogo) {
+		return this.jogoDao.saveOrUpdate(jogo);
 	}
 
 	@Override

@@ -6,7 +6,7 @@ import com.mem.app.model.Interacao;
 
 public interface InteracaoDAO {
 	
-	void saveOrUpdate(Interacao interacao);
+	int saveOrUpdate(Interacao interacao);
 
 	void delete(int idInteracao);
 

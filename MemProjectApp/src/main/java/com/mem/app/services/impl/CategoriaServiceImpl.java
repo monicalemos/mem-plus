@@ -20,8 +20,8 @@ public class CategoriaServiceImpl implements CategoriaService {
 	}
 	
 	@Override
-	public void saveOrUpdate(Categoria categoria) {
-		this.categoriaDao.saveOrUpdate(categoria);
+	public int saveOrUpdate(Categoria categoria) {
+		return this.categoriaDao.saveOrUpdate(categoria);
 	}
 
 	@Override

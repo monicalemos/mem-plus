@@ -6,7 +6,7 @@ import com.mem.app.model.Interesse;
 
 public interface InteresseDAO {
 
-	void saveOrUpdate(Interesse interesse);
+	int saveOrUpdate(Interesse interesse);
 
 	void delete(int interesseId);
 

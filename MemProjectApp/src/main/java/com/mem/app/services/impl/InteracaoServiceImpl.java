@@ -20,8 +20,8 @@ public class InteracaoServiceImpl implements InteracaoService {
 	}
 	
 	@Override
-	public void saveOrUpdate(Interacao interacao) {
-		this.interacaoDao.saveOrUpdate(interacao);
+	public int saveOrUpdate(Interacao interacao) {
+		return this.interacaoDao.saveOrUpdate(interacao);
 	}
 
 	@Override

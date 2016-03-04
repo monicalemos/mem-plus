@@ -29,7 +29,7 @@ public class TecnicoServiceImpl implements TecnicoService {
 	
 
 	@Override
-	public void saveOrUpdate(Tecnico tecnico) {
+	public int saveOrUpdate(Tecnico tecnico) {
 		System.out.println("vou verificar o utilizador do tecnico");
 		if (tecnico.getUtilizador() != null) {
 			Utilizador utilizador = tecnico.getUtilizador();
@@ -45,6 +45,8 @@ public class TecnicoServiceImpl implements TecnicoService {
 		int newId = this.tecnicoDao.saveOrUpdate(tecnico);
 		tecnico.setIdTecnico(newId);
 		System.out.println("inseri " + this.get(tecnico.getIdTecnico()));
+		
+		return newId;
 	}
 
 	@Override
